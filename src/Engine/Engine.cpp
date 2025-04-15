@@ -46,6 +46,7 @@ void Engine::clean()
 
 void Engine::update(float deltaTime)
 {
+    std::cout << "Updating engine... with deltaTime: " << deltaTime << std::endl;
     for (auto &system : _systems) {
         system->update(gameObjects, deltaTime);
     }

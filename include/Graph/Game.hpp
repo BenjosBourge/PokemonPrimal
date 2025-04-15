@@ -14,6 +14,7 @@
 #include <SFML/Network/TcpSocket.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+#include <string>
 
 
 enum class GameState {

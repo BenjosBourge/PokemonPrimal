@@ -1,157 +1,42 @@
-cmake_minimum_required(VERSION 3.16)
-project(PokemonPrimal)
+cmake_minimum_required(VERSION 3.23)
 
-########### R-Type Standard ###########
+set(PROJECT_NAME PokemonPrimal)
+project(${PROJECT_NAME})
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 
-if (UNIX)
-    set(CMAKE_CXX_FLAGS "-g3 -O2")
-elseif(WIN32)
-    set(CMAKE_CXX_FLAGS "-O2 /EHsc")
-endif()
+file( GLOB SRC src/Engine/Entities/*.cpp src/Engine/Systems/*.cpp src/Engine/*.cpp
+        src/Graph/*.cpp)
 
-if (UNIX)
-    if (DEFINED CLANG)
-        find_program(TIDY "clang-tidy")
+file ( GLOB CLIENT src/Client/*.cpp)
 
-        if (TIDY)
-            set(CMAKE_CXX_CLANG_TIDY "clang-tidy")
-        endif()
-    endif()
-endif()
+file ( GLOB SERVER src/Server/*.cpp)
 
-if (CMAKE_BUILD_TYPE MATCHES Debug)
-    set(CMAKE_VERBOSE_MAKEFILE ON)
-endif()
 
-add_subdirectory(src/Error)
-add_subdirectory(src/Graph)
-add_subdirectory(src/CtrlC)
-
-########### R-Type Server ###########
-
-set(POKEMON_PRIMAL_SERVER PokemonPrimal_server) # will be the bin created at the end
-set(SERVER_DIR src/Server) # server dir containing the server files
-set(ENGINE_DIR src/Engine) # server dir containing the engine files
-
-file(GLOB_RECURSE POKEMON_PRIMAL_SERVER_SRC
-    ${SERVER_DIR}/*.cpp
-    ${ENGINE_DIR}/*.cpp
-) # kind of wildcard here
-
-# create the "r-type_server" binary
-add_executable(${POKEMON_PRIMAL_SERVER} ${POKEMON_PRIMAL_SERVER_SRC})
-
-if (WIN32)
-    target_link_libraries(${POKEMON_PRIMAL_SERVER} wsock32 ws2_32) # support for windows
-endif()
-
-set_property(TARGET ${POKEMON_PRIMAL_SERVER} PROPERTY CXX_STANDARD 20)
-target_compile_options(${POKEMON_PRIMAL_SERVER} PUBLIC ${CXX_FLAGS})
-
-target_link_libraries(${POKEMON_PRIMAL_SERVER} Error GraphSFML CtrlC)
-target_include_directories(${POKEMON_PRIMAL_SERVER} PRIVATE include)
-
-########### R-Type Client ###########
-
-set(POKEMON_PRIMAL_CLIENT PokemonPrimal_client) # will be the bin created at the end
-set(CLIENT_DIR src/Client) # server dir containing the files
-
-file(GLOB POKEMON_PRIMAL_CLIENT_SRC
-    ${CLIENT_DIR}/*.cpp
-) # kind of wildcard here
-
-add_executable(${POKEMON_PRIMAL_CLIENT} ${POKEMON_PRIMAL_CLIENT_SRC})
-
-set_property(TARGET ${POKEMON_PRIMAL_CLIENT} PROPERTY CXX_STANDARD 20)
-target_compile_options(${POKEMON_PRIMAL_CLIENT} PUBLIC ${CXX_FLAGS})
-
-target_link_libraries(${POKEMON_PRIMAL_CLIENT} Error GraphSFML CtrlC)
-
-target_include_directories(${POKEMON_PRIMAL_CLIENT} PRIVATE include)
-
-########### R-Type Packing ###########
-
-include(CPack)
-
-set(CPACK_GENERATOR ZIP)
-set(CPACK_PACKAGE_FILE_NAME "R-Type")
-
-# Include the executable binaries in the package
-install(TARGETS ${POKEMON_PRIMAL_SERVER} ${POKEMON_PRIMAL_CLIENT}
-    RUNTIME DESTINATION bin
+add_executable(${PROJECT_NAME}_Client
+        ${SRC}
+        ${CLIENT}
 )
 
-if (WIN32)
-    # Copy executables from Debug folder to main build folder
-    add_custom_command(TARGET ${POKEMON_PRIMAL_SERVER} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${POKEMON_PRIMAL_SERVER}> ${CMAKE_BINARY_DIR}/
-    )
-    add_custom_command(TARGET ${POKEMON_PRIMAL_CLIENT} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${POKEMON_PRIMAL_CLIENT}> ${CMAKE_BINARY_DIR}/
-    )
-
-    # Remove the out directory after build
-    add_custom_command(TARGET ${POKEMON_PRIMAL_SERVER} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/out/
-    )
-
-    install(FILES ${CMAKE_BINARY_DIR}/Release/GraphSFML.dll
-        DESTINATION bin
-        CONFIGURATIONS Release
-    )
-endif()
-
-# Include the header files and other necessary files
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/
-    DESTINATION include
+target_include_directories(${PROJECT_NAME}_Client
+        PRIVATE
+        ${CMAKE_SOURCE_DIR}/include
 )
 
-# Set CPack options
-set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
-set(CPACK_PACKAGE_VERSION_MAJOR "1")
-set(CPACK_PACKAGE_VERSION_MINOR "0")
-set(CPACK_PACKAGE_VERSION_PATCH "0")
+add_executable(${PROJECT_NAME}_Server
+        ${SRC}
+        ${SERVER}
+)
 
-########### R-Type Tests ###########
+target_include_directories(${PROJECT_NAME}_Server
+        PRIVATE
+        ${CMAKE_SOURCE_DIR}/include
+)
 
-set(TEST_DIR r-type_tests)
+include(build-SFML.cmake)
 
-if (DEFINED TESTS)
-    include(FetchContent)
-
-    FetchContent_Declare(
-        googletest
-        URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
-        SOURCE_DIR ${CMAKE_BINARY_DIR}/googletest-src
-    )
-
-    FetchContent_GetProperties(googletest)
-
-    if (NOT googletest_POPULATED)
-        FetchContent_Populate(googletest)
-        add_subdirectory(${CMAKE_BINARY_DIR}/googletest-src ${CMAKE_BINARY_DIR}/googletest-build)
-    endif()
-
-    if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fprofile-arcs -ftest-coverage")
-        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
-    endif()
-
-    file(GLOB TESTS_SRC
-        tests/*.cpp
-    )
-
-    list(APPEND TESTS_SRC
-        src/Client/ClientConnection.cpp
-    )
-
-    add_executable(${TEST_DIR} ${TESTS_SRC})
-
-    target_link_libraries(${TEST_DIR} Error GraphSFML CtrlC gtest gtest_main gmock pthread)
-
-    target_include_directories(${TEST_DIR} PRIVATE include)
-    target_include_directories(${TEST_DIR} PRIVATE ${CMAKE_BINARY_DIR}/googletest-src/googletest/include)
-    target_include_directories(${TEST_DIR} PRIVATE ${CMAKE_BINARY_DIR}/googletest-src/googlemock/include)
-endif()
+add_custom_command(
+        TARGET ${PROJECT_NAME}_Client POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_BINARY_DIR}/assets"
+        COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/assets" "${CMAKE_BINARY_DIR}/assets"
+)

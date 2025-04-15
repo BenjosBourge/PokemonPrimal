@@ -5,6 +5,7 @@
 ** Game
 */
 
+#include <SFML/Graphics.hpp>
 #include <Graph/Game.hpp>
 
 Game::Game(std::string assetsPath)
@@ -21,7 +22,7 @@ Game::~Game()
 void Game::run()
 {
     // Create the main window
-    sf::RenderWindow window(sf::VideoMode({800, 600}), "SFML window");
+    sf::RenderWindow window(sf::VideoMode({800, 600}), "Pokemon Primal");
  
     // Start the game loop
     while (window.isOpen())
