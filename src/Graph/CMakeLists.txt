@@ -24,7 +24,7 @@ include(FetchContent)
 # Use CPM for SFML
 FetchContent_Declare(
     sfml
-    URL https://github.com/SFML/SFML/archive/refs/tags/2.6.1.zip
+    URL https://github.com/SFML/SFML/archive/refs/tags/3.0.0.zip
 )
 FetchContent_MakeAvailable(sfml)
 
@@ -33,7 +33,7 @@ file(GLOB SOURCES "*.cpp")
 add_library(${PROJECT_NAME} STATIC ${SOURCES})
 
 # Link against SFML
-target_link_libraries(${PROJECT_NAME} PUBLIC sfml-graphics sfml-window sfml-system sfml-audio sfml-network)
+target_link_libraries(${PROJECT_NAME} PUBLIC SFML::Graphics SFML::Audio SFML::Network SFML::Window SFML::System)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../../include)
 

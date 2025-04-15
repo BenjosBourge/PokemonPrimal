@@ -10,7 +10,6 @@
 Game::Game(std::string assetsPath)
 {
     this->assetsPath = assetsPath;
-    this->window.create(sf::VideoMode(1920, 1080), "R-Type", sf::Style::Default);
     this->window.setFramerateLimit(60);
 }
 
@@ -21,13 +20,24 @@ Game::~Game()
 
 void Game::run()
 {
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
+    // Create the main window
+    sf::RenderWindow window(sf::VideoMode({800, 600}), "SFML window");
+ 
+    // Start the game loop
+    while (window.isOpen())
+    {
+        // Process events
+        while (const std::optional event = window.pollEvent())
+        {
+            // Close window: exit
+            if (event->is<sf::Event::Closed>())
                 window.close();
         }
-        window.clear(sf::Color::Black);
+ 
+        // Clear screen
+        window.clear();
+ 
+        // Update the window
         window.display();
     }
 }
