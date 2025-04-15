@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(R-Type)
+project(PokemonPrimal)
 
 ########### R-Type Standard ###########
 
@@ -31,45 +31,45 @@ add_subdirectory(src/CtrlC)
 
 ########### R-Type Server ###########
 
-set(RTYPE_SERVER r-type_server) # will be the bin created at the end
+set(POKEMON_PRIMAL_SERVER PokemonPrimal_server) # will be the bin created at the end
 set(SERVER_DIR src/Server) # server dir containing the server files
 set(ENGINE_DIR src/Engine) # server dir containing the engine files
 
-file(GLOB_RECURSE RTYPE_SERVER_SRC
+file(GLOB_RECURSE POKEMON_PRIMAL_SERVER_SRC
     ${SERVER_DIR}/*.cpp
     ${ENGINE_DIR}/*.cpp
 ) # kind of wildcard here
 
 # create the "r-type_server" binary
-add_executable(${RTYPE_SERVER} ${RTYPE_SERVER_SRC})
+add_executable(${POKEMON_PRIMAL_SERVER} ${POKEMON_PRIMAL_SERVER_SRC})
 
 if (WIN32)
-    target_link_libraries(${RTYPE_SERVER} wsock32 ws2_32) # support for windows
+    target_link_libraries(${POKEMON_PRIMAL_SERVER} wsock32 ws2_32) # support for windows
 endif()
 
-set_property(TARGET ${RTYPE_SERVER} PROPERTY CXX_STANDARD 20)
-target_compile_options(${RTYPE_SERVER} PUBLIC ${CXX_FLAGS})
+set_property(TARGET ${POKEMON_PRIMAL_SERVER} PROPERTY CXX_STANDARD 20)
+target_compile_options(${POKEMON_PRIMAL_SERVER} PUBLIC ${CXX_FLAGS})
 
-target_link_libraries(${RTYPE_SERVER} Error GraphSFML CtrlC)
-target_include_directories(${RTYPE_SERVER} PRIVATE include)
+target_link_libraries(${POKEMON_PRIMAL_SERVER} Error GraphSFML CtrlC)
+target_include_directories(${POKEMON_PRIMAL_SERVER} PRIVATE include)
 
 ########### R-Type Client ###########
 
-set(RTYPE_CLIENT r-type_client) # will be the bin created at the end
+set(POKEMON_PRIMAL_CLIENT PokemonPrimal_client) # will be the bin created at the end
 set(CLIENT_DIR src/Client) # server dir containing the files
 
-file(GLOB RTYPE_CLIENT_SRC
+file(GLOB POKEMON_PRIMAL_CLIENT_SRC
     ${CLIENT_DIR}/*.cpp
 ) # kind of wildcard here
 
-add_executable(${RTYPE_CLIENT} ${RTYPE_CLIENT_SRC})
+add_executable(${POKEMON_PRIMAL_CLIENT} ${POKEMON_PRIMAL_CLIENT_SRC})
 
-set_property(TARGET ${RTYPE_CLIENT} PROPERTY CXX_STANDARD 20)
-target_compile_options(${RTYPE_CLIENT} PUBLIC ${CXX_FLAGS})
+set_property(TARGET ${POKEMON_PRIMAL_CLIENT} PROPERTY CXX_STANDARD 20)
+target_compile_options(${POKEMON_PRIMAL_CLIENT} PUBLIC ${CXX_FLAGS})
 
-target_link_libraries(${RTYPE_CLIENT} Error GraphSFML CtrlC)
+target_link_libraries(${POKEMON_PRIMAL_CLIENT} Error GraphSFML CtrlC)
 
-target_include_directories(${RTYPE_CLIENT} PRIVATE include)
+target_include_directories(${POKEMON_PRIMAL_CLIENT} PRIVATE include)
 
 ########### R-Type Packing ###########
 
@@ -79,21 +79,21 @@ set(CPACK_GENERATOR ZIP)
 set(CPACK_PACKAGE_FILE_NAME "R-Type")
 
 # Include the executable binaries in the package
-install(TARGETS ${RTYPE_SERVER} ${RTYPE_CLIENT}
+install(TARGETS ${POKEMON_PRIMAL_SERVER} ${POKEMON_PRIMAL_CLIENT}
     RUNTIME DESTINATION bin
 )
 
 if (WIN32)
     # Copy executables from Debug folder to main build folder
-    add_custom_command(TARGET ${RTYPE_SERVER} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${RTYPE_SERVER}> ${CMAKE_BINARY_DIR}/
+    add_custom_command(TARGET ${POKEMON_PRIMAL_SERVER} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${POKEMON_PRIMAL_SERVER}> ${CMAKE_BINARY_DIR}/
     )
-    add_custom_command(TARGET ${RTYPE_CLIENT} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${RTYPE_CLIENT}> ${CMAKE_BINARY_DIR}/
+    add_custom_command(TARGET ${POKEMON_PRIMAL_CLIENT} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${POKEMON_PRIMAL_CLIENT}> ${CMAKE_BINARY_DIR}/
     )
 
     # Remove the out directory after build
-    add_custom_command(TARGET ${RTYPE_SERVER} POST_BUILD
+    add_custom_command(TARGET ${POKEMON_PRIMAL_SERVER} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/out/
     )
 

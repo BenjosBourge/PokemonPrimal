@@ -1,13 +1,5 @@
 @echo off
 
-rem Vérifier le dossier de lancement
-if not "%cd:~-39%"=="B-CPP-500-LYN-5-2-rtype-erwann.laplante" (
-    echo Lancer depuis l'explorateur de fichiers. Changement de répertoire.
-    cd ../..
-) else (
-    echo Lancer en ligne de commande. Aucun changement de répertoire.
-)
-
 echo Lancement dans %cd%
 
 rem Vérifier les argument
@@ -50,9 +42,6 @@ rem Fonction de construction du projet
 :build
 echo [INFO]: Building project.
 
-rem Supprimer le répertoire build s'il existe déjà
-rmdir /s /q build
-
 rem Créer le répertoire build et s'y déplacer
 mkdir build && cd build
 
@@ -72,15 +61,10 @@ if not exist "build" (
     goto :build
 ) else (
     echo [INFO]: Re-Building project.
-
-    rem Supprimer le répertoire build s'il existe déjà
-    cd build
-
-    rem Construire le projet avec Visual Studio
-    cmake --build .
+    rm -rf build
+    goto :build
 )
 goto :eof
-
 
 
 rem Fonction de re construction du projet
