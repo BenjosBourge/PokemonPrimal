@@ -14,8 +14,13 @@
 #include <SFML/Network/TcpSocket.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-#include <string>
 
+#include <Graph/Scene/Menu.hpp>
+
+#include <map>
+#include <memory>
+#include <iostream>
+#include <string>
 
 enum class GameState {
     //? state who need keyboard events
@@ -35,10 +40,19 @@ public:
     ~Game();
 
     void run();
-
+    void handleEvent();
+    void update();
+    void draw();
+    void restart();
+    void setState(GameState state);
 private:
+
     sf::RenderWindow window;
-    std::string assetsPath;   
+    std::string assetsPath;
+
+    std::map<GameState, std::shared_ptr<IScene>> scenes;
+
+
 };
 
 #endif /* !GAME_HPP_ */

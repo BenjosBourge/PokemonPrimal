@@ -33,6 +33,10 @@ void Game::run()
             // Close window: exit
             if (event->is<sf::Event::Closed>())
                 window.close();
+            // Escape pressed: exit
+            if (event->is<sf::Event::KeyPressed>() && event->as<sf::Event::KeyPressed>().key == sf::Keyboard::Escape)
+                window.close();
+            
         }
  
         // Clear screen
