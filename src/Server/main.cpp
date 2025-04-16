@@ -5,7 +5,6 @@
 ** main.cpp
 */
 
-#include <Error/Error.hpp>
 #include <Engine/Engine.hpp>
 #include <Server/Server.hpp>
 #include <SFML/System/Clock.hpp>
@@ -21,13 +20,8 @@ int start_engine() {
 
     while (isRunning) {
         float deltaTime = clock.restart().asSeconds();
-        timeElapsed += deltaTime;
 
-        if (timeElapsed >= 1.0f) {
-            std::cout << "Updating engine..." << std::endl;
-            engine->update(timeElapsed);
-            timeElapsed = 0;
-        }
+        engine->update(deltaTime);
     }
     return 0;
 }
@@ -35,7 +29,6 @@ int start_engine() {
 int main(int argc, char** argv)
 {
     (void)argv;
+    std::cout << "Starting server..." << std::endl;
     return start_engine();
- 
-
 }
