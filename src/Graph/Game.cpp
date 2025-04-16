@@ -1,29 +1,27 @@
 /*
-** EPITECH PROJECT, 2023
-** B-CPP-500-LYN-5-2-rtype-erwann.laplante
+** Pokemon Primal
 ** File description:
 ** Game
 */
 
-#include <SFML/Graphics.hpp>
 #include <Graph/Game.hpp>
 
 Game::Game(std::string assetsPath)
 {
     this->assetsPath = assetsPath;
-    this->window.setFramerateLimit(60);
+    currentState = GameState::stateMenu;
+    scenes[GameState::stateMenu] = std::make_shared<Menu>();
 }
 
 Game::~Game()
 {
-    this->window.close();
 }
 
 void Game::run()
 {
-    // Create the main window
-    sf::RenderWindow window(sf::VideoMode({800, 600}), "Pokemon Primal");
- 
+
+    sf::VideoMode mode = sf::VideoMode::getDesktopMode();
+    sf::RenderWindow window(mode, "Pokemon Primal");
     // Start the game loop
     while (window.isOpen())
     {
@@ -32,17 +30,14 @@ void Game::run()
         {
             // Close window: exit
             if (event->is<sf::Event::Closed>())
-                window.close();
-            // Escape pressed: exit
-            if (event->is<sf::Event::KeyPressed>() && event->as<sf::Event::KeyPressed>().key == sf::Keyboard::Escape)
-                window.close();
-            
+                window.close();        
         }
  
         // Clear screen
         window.clear();
- 
+        // Draw the current scene
         // Update the window
+        scenes[currentState]->draw(window);
         window.display();
     }
 }

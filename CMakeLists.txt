@@ -5,10 +5,13 @@ project(${PROJECT_NAME})
 
 set(CMAKE_CXX_STANDARD 17)
 
-file( GLOB SRC src/Engine/Entities/*.cpp src/Engine/Systems/*.cpp src/Engine/*.cpp
-        src/Graph/*.cpp)
+file(GLOB_RECURSE SRC
+    src/Engine/*.cpp
+    src/Graph/*.cpp
+)
 
-file ( GLOB CLIENT src/Client/*.cpp)
+
+file ( GLOB CLIENT src/Client/*.cpp )
 
 file ( GLOB SERVER src/Server/*.cpp)
 

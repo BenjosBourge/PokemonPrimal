@@ -1,13 +1,11 @@
 /*
-** EPITECH PROJECT, 2023
-** B-CPP-500-LYN-5-2-rtype-erwann.laplante
+** Pokemon Primal
 ** File description:
 ** Game
 */
 
 #ifndef GAME_HPP_
 #define GAME_HPP_
-
 
 #include <SFML/Network.hpp>
 #include <SFML/Network/Packet.hpp>
@@ -23,35 +21,21 @@
 #include <string>
 
 enum class GameState {
-    //? state who need keyboard events
-    StartMenu,
-    Playing,
-    LobbyCreation,
-
-    //? state who don't need keyboard events
-    SpectateState,
-    WinState,
-    LoseState
+    stateMenu,
+    stateFight,
 };
 
 class Game {
-public:
-    Game(std::string assetsPath);
-    ~Game();
+    public:
+        Game(std::string assetsPath);
+        ~Game();
+        void run();
 
-    void run();
-    void handleEvent();
-    void update();
-    void draw();
-    void restart();
-    void setState(GameState state);
-private:
-
-    sf::RenderWindow window;
+    private:
     std::string assetsPath;
 
+    GameState currentState;
     std::map<GameState, std::shared_ptr<IScene>> scenes;
-
 
 };
 
