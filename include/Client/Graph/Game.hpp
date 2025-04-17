@@ -15,6 +15,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <NetworkClient.hpp>
 
 
 enum class GameState {
@@ -35,10 +36,17 @@ public:
     ~Game();
 
     void run();
+    void inputHandling();
 
 private:
     sf::RenderWindow window;
-    std::string assetsPath;   
+    std::string assetsPath;
+    NetworkClient _client;
+
+    bool _upPressed;
+    bool _downPressed;
+    bool _leftPressed;
+    bool _rightPressed;
 };
 
 #endif /* !GAME_HPP_ */
