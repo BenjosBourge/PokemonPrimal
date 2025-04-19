@@ -15,8 +15,8 @@ public:
     ClientConnection();
     ~ClientConnection();
 
-    sf::TcpSocket _socket;
-    std::string _ip;
+    sf::TcpSocket _tcpSocket;
+    sf::IpAddress _ip;
     unsigned short _port;
     bool _isConnected;
 };
@@ -29,9 +29,16 @@ public:
     void host(int port);
     void receivePacket();
 
+    void sendTcpPacketToAllClients(const std::string &data);
+    void sendUdpPacketToAllClients(const std::string &data);
+
+    void sendTcpPacket(const std::string &data, int clientId);
+    void sendUdpPacket(const std::string &data, int clientId);
+
     sf::TcpSocket _socket;
     bool _isConnected;
     sf::SocketSelector _selector;
     sf::TcpListener _listener;
+    sf::UdpSocket _udpSocket;
     ClientConnection _clients[4];
 };

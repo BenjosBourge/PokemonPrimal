@@ -25,6 +25,12 @@ int start_engine() {
         float deltaTime = clock.restart().asSeconds();
 
         server.receivePacket();
+
+        for (int i = 0; i < 4; i++) {
+            if (server._clients[i]._isConnected)
+                server.sendUdpPacket("Hello from server", i);
+        }
+
         engine->update(deltaTime);
     }
     return 0;

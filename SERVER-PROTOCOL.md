@@ -1,3 +1,15 @@
+# Server Protocol
+
+The server listens on the port 53000.
+It accepts connections from clients by TCP.
+
+Client -> Server : TCP
+Server -> Client : TCP and UDP
+
+Each client listens on the port 54000 for the UDP protocol.
+
+
+
 ## Client → Server
 
 ### Lobby

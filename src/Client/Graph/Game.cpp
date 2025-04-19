@@ -32,6 +32,7 @@ void Game::run()
         }
 
         inputHandling();
+        _client.receivePacket();
 
         window.clear();
         window.display();

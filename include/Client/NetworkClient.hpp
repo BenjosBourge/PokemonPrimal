@@ -17,9 +17,12 @@ public:
 
     void connect(std::string ip, unsigned int port);
     void sendPacket(std::string data);
+    void receivePacket();
 
     bool _isConnected;
-    sf::TcpSocket _socket;
+    sf::TcpSocket _tcpSocket;
+    sf::UdpSocket _udpSocket;
     sf::IpAddress _ip;
+    sf::SocketSelector _selector;
     unsigned short _port;
 };
