@@ -24,14 +24,17 @@ int start_engine() {
     while (isRunning) {
         float deltaTime = clock.restart().asSeconds();
 
-        server.receivePacket();
+        std::string inputs = server.receivePacket();
 
-        for (int i = 0; i < 4; i++) {
-            if (server._clients[i]._isConnected)
-                server.sendUdpPacket("Hello from server", i);
+        engine->parseServerInput(inputs);
+        std::string datas = engine->update(deltaTime);
+
+        if (inputs != "") {
+            std::cout << "Inputs : " << inputs << std::endl;
         }
-
-        engine->update(deltaTime);
+        if (datas != "") {
+            std::cout << "Datas : " << datas << std::endl;
+        }
     }
     return 0;
 }

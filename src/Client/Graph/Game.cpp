@@ -43,41 +43,41 @@ void Game::inputHandling()
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z)) {
         if (!_upPressed)
-            _client.sendPacket("up_pressed");
+            _client.sendPacket("Up_P");
         _upPressed = true;
     } else {
         if (_upPressed)
-            _client.sendPacket("up_released");
+            _client.sendPacket("Up_R");
         _upPressed = false;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
         if (!_downPressed)
-            _client.sendPacket("down_pressed");
+            _client.sendPacket("Do_P");
         _downPressed = true;
     } else {
         if (_downPressed)
-            _client.sendPacket("down_released");
+            _client.sendPacket("Do_R");
         _downPressed = false;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) {
         if (!_leftPressed)
-            _client.sendPacket("left_pressed");
+            _client.sendPacket("Le_P");
         _leftPressed = true;
     } else {
         if (_leftPressed)
-            _client.sendPacket("left_released");
+            _client.sendPacket("Le_R");
         _leftPressed = false;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
         if (!_rightPressed)
-            _client.sendPacket("right_pressed");
+            _client.sendPacket("Ri_P");
         _rightPressed = true;
     } else {
         if (_rightPressed)
-            _client.sendPacket("right_released");
+            _client.sendPacket("Ri_R");
         _rightPressed = false;
     }
 }

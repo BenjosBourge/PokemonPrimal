@@ -10,22 +10,30 @@
 
 #include <Engine/Entities/EntityManager.hpp>
 #include <Engine/Entities/EntityFactory.hpp>
+
 #include <Engine/Components/Position.hpp>
+#include <Engine/Components/Input.hpp>
+
 #include <Engine/Systems/MvtSystem.hpp>
+#include <Engine/Systems/PlayerMovementSystem.hpp>
 
 class Engine {
-    private:
-        std::vector<std::shared_ptr<ISystem>> _systems;
-    public:
-        std::shared_ptr<EntityManager> gameObjects;
-        EntityFactory _entityFactory;
-        Engine();
-        ~Engine();
-        int addPlayer();
-        void update(float deltaTime);
-        void clean();
-        void start();
-        std::string restart(bool &,  int &);
+private:
+    std::vector<std::shared_ptr<ISystem>> _systems;
+public:
+    std::shared_ptr<EntityManager> gameObjects;
+    EntityFactory _entityFactory;
+
+    Engine();
+    ~Engine();
+
+    std::string update(float deltaTime);
+    void clean();
+    void start();
+    std::string restart(bool &,  int &);
+
+    void parseServerInput(const std::string &data);
+    void processToken(const std::string &token);
 };
 
 #endif /* !ENGINE_HPP_ */

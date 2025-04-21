@@ -5,20 +5,15 @@
 ** MvtSystem
 */
 
-#ifndef MVTSYSTEM_HPP_
-#define MVTSYSTEM_HPP_
+#pragma once
 #include <Engine/Systems/ISystem.hpp>
 #include <Engine/Components/Position.hpp>
+#include <Engine/Components/Input.hpp>
 
-class MvtSystem : virtual public ISystem {
+class PlayerMovementSystem : virtual public ISystem {
 public:
-    MvtSystem();
-    ~MvtSystem();
+    PlayerMovementSystem();
+    ~PlayerMovementSystem();
 
     std::string update(std::shared_ptr<EntityManager>&, float deltaTime);
-
-protected:
-private:
 };
-
-#endif /* !MVTSYSTEM_HPP_ */

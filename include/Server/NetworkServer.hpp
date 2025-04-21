@@ -27,7 +27,8 @@ public:
     ~NetworkServer();
 
     void host(int port);
-    void receivePacket();
+    std::string receivePacket();
+    std::string parseData(const std::string &data, int clientId);
 
     void sendTcpPacketToAllClients(const std::string &data);
     void sendUdpPacketToAllClients(const std::string &data);

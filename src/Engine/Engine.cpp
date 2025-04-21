@@ -1,6 +1,5 @@
 /*
-** EPITECH PROJECT, 2023
-** B-CPP-500-LYN-5-2-rtype-erwann.laplante
+** Pokemon Primal
 ** File description:
 ** Engine
 */
@@ -18,21 +17,12 @@ void Engine::start()
 {
     _entityFactory = EntityFactory();
     _systems.push_back(std::make_shared<MvtSystem>());
+    _systems.push_back(std::make_shared<PlayerMovementSystem>());
 }
 
 std::string Engine::restart(bool &startGame, int &lastEntityId) 
 {
     return "restart";
-}
-
-int Engine::addPlayer()
-{
-    int id = gameObjects->createEntity(_entityFactory.createEntity("Player"));
-    if (gameObjects->hasEntity(id)) {
-      
-        gameObjects->getEntityById(id)->getComponent<Position>().y = 60 * id;
-    }
-    return id;
 }
 
 void Engine::clean()
@@ -44,9 +34,12 @@ void Engine::clean()
     gameObjects->entitiesDamaged.clear();
 }
 
-void Engine::update(float deltaTime)
+std::string Engine::update(float deltaTime)
 {
+    std::string output = "";
+
     for (auto &system : _systems) {
-        system->update(gameObjects, deltaTime);
+        output += system->update(gameObjects, deltaTime);
     }
+    return output;
 }

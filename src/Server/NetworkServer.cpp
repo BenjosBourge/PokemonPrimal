@@ -48,7 +48,10 @@ void NetworkServer::host(int port)
 
 /* Receiving Packets */
 
-void NetworkServer::receivePacket() {
+std::string NetworkServer::receivePacket()
+{
+    std::string inputs = "";
+
     if (_selector.wait(sf::milliseconds(1))) {
         if (_selector.isReady(_listener)) {
             std::size_t n = 4;
@@ -67,6 +70,7 @@ void NetworkServer::receivePacket() {
                 _clients[n]._port = _clients[n]._tcpSocket.getRemotePort();
                 _clients[n]._isConnected = true;
                 _selector.add(_clients[n]._tcpSocket);
+                inputs += "NC_" + std::to_string(n) + ":";
             }
         }
 
@@ -83,14 +87,18 @@ void NetworkServer::receivePacket() {
                     std::string data;
                     receivedData >> data;
                     std::cout << "Received data from client " << i << ": " << data << std::endl;
+                    inputs += parseData(data, i);
                 } else if (status == sf::Socket::Status::Disconnected) {
                     std::cout << "Client " << i << " Disconnected : " << _clients[i]._ip << std::endl;
                     _clients[i]._isConnected = false;
                     _selector.remove(_clients[i]._tcpSocket);
+                    _clients[i]._tcpSocket.disconnect();
+                    inputs += "RC_" + std::to_string(i) + ":";
                 }
             }
         }
     }
+    return inputs;
 }
 
 

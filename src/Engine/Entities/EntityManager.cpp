@@ -1,6 +1,5 @@
 /*
-** EPITECH PROJECT, 2023
-** B-CPP-500-LYN-5-2-rtype-erwann.laplante
+** Pokemon Primal
 ** File description:
 ** EntityManager
 */
@@ -55,4 +54,22 @@ void EntityManager::destroyEntityById(int id)
     }
     entitiesToDestroy.push_back(_entities[id]);
     _entities.erase(id);
+}
+
+void EntityManager::addConnectedEntity(std::string name, int id)
+{
+    _connectedEntities[name] = id;
+}
+
+std::shared_ptr<Entity> EntityManager::getConnectedEntity(std::string name)
+{
+    if (_connectedEntities.find(name) == _connectedEntities.end()) {
+        std::cout << "Entity " << name << " not found" << std::endl;
+
+        for (auto& entity : _connectedEntities) {
+            std::cout << "Entity " << entity.first << " with ID: " << entity.second << std::endl;
+        }
+        return nullptr;
+    }
+    return getEntityById(_connectedEntities[name]);
 }
