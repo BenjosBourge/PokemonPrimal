@@ -34,12 +34,28 @@ void Engine::clean()
     gameObjects->entitiesDamaged.clear();
 }
 
-std::string Engine::update(float deltaTime)
+std::vector<NetworkEvent> Engine::update(float deltaTime)
 {
-    std::string output = "";
+    std::vector<NetworkEvent> output;
 
     for (auto &system : _systems) {
-        output += system->update(gameObjects, deltaTime);
+        std::vector<NetworkEvent> events = system->update(gameObjects, deltaTime);
+        if (events.empty())
+            continue;
+        output.insert(output.end(), events.begin(), events.end());
     }
+
+    /* Check if events are SECURE_BROADCAST, if yes, change client ID */
+    for (auto &event : output) {
+        if (event.communicationType == COM_SECURE_BROADCAST) {
+            std::string tag = gameObjects->getConnectedEntityTag(event.entityId);
+            event.clientId = tag[tag.size() - 1] - '0'; //get the n in Pn
+            std::cout << "Client ID: " << event.clientId << std::endl;
+            std::cout << "Entity ID: " << event.entityId << std::endl;
+            std::cout << "Tag: " << tag << std::endl;
+            std::cout << "Event type: " << event.eventType << std::endl;
+        }
+    }
+
     return output;
 }

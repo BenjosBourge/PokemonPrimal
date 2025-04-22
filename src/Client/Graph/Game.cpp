@@ -32,7 +32,8 @@ void Game::run()
         }
 
         inputHandling();
-        _client.receivePacket();
+        std::string inputs = _client.receivePacket();
+        parseClientInput(inputs);
 
         window.clear();
         window.display();

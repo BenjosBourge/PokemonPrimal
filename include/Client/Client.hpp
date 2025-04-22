@@ -8,7 +8,6 @@
 #ifndef MAIN_HPP_
 #define MAIN_HPP_
 
-#include <Error/Error.hpp>
 #include <Graph/Game.hpp>
 #include <iostream>
 

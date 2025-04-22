@@ -15,5 +15,5 @@ public:
     PlayerMovementSystem();
     ~PlayerMovementSystem();
 
-    std::string update(std::shared_ptr<EntityManager>&, float deltaTime);
+    std::vector<NetworkEvent> update(std::shared_ptr<EntityManager>&, float deltaTime);
 };

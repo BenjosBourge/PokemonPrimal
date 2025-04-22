@@ -73,3 +73,12 @@ std::shared_ptr<Entity> EntityManager::getConnectedEntity(std::string name)
     }
     return getEntityById(_connectedEntities[name]);
 }
+
+std::string EntityManager::getConnectedEntityTag(int id)
+{
+    for (auto& entity : _connectedEntities) {
+        if (entity.second == id)
+            return entity.first;
+    }
+    return "";
+}

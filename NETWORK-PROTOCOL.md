@@ -13,9 +13,11 @@ Each client listens on the port 54000 for the UDP protocol.
 ## Client → Server
 
 ### Movement
-Direction_State
+**Up, Do, Le, Ri**
 
-Direction:
+Format: **Cmd**_State
+
+Cmd:
 - Up: Up
 - Do: Down
 - Ri: Right
@@ -28,10 +30,8 @@ State:
 ## Server → Client
 
 ### Players Position
-**02** byte(0x00..0x03) : int : int ...
+**Pp**
 
-First byte: Player ID (0 being self)
+Format: **Cmd**_Id_X_Y
 
-X position
-
-Y position
+When getting self position, always in TCP.

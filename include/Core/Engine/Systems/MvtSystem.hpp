@@ -15,7 +15,7 @@ public:
     MvtSystem();
     ~MvtSystem();
 
-    std::string update(std::shared_ptr<EntityManager>&, float deltaTime);
+    std::vector<NetworkEvent> update(std::shared_ptr<EntityManager>&, float deltaTime);
 
 protected:
 private:

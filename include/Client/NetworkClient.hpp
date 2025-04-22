@@ -17,7 +17,7 @@ public:
 
     void connect(std::string ip, unsigned int port);
     void sendPacket(std::string data);
-    void receivePacket();
+    std::string receivePacket();
 
     bool _isConnected;
     sf::TcpSocket _tcpSocket;

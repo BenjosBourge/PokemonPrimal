@@ -45,5 +45,6 @@ public:
     std::unordered_map<std::string, int> _connectedEntities;
     void addConnectedEntity(std::string name, int id);
     std::shared_ptr<Entity> getConnectedEntity(std::string name);
+    std::string getConnectedEntityTag(int id);
 };
 #endif

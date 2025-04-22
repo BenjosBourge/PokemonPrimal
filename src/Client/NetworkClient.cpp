@@ -50,11 +50,11 @@ void NetworkClient::sendPacket(std::string data)
         std::cout << "Not connected to the server" << std::endl;
 }
 
-void NetworkClient::receivePacket() {
-    if (!_isConnected) {
-        //std::cerr << "Error: Not connected" << std::endl;
-        return;
-    }
+std::string NetworkClient::receivePacket() {
+    if (!_isConnected)
+        return {};
+
+    std::string inputs = "";
 
     if (_selector.wait(sf::milliseconds(1))) {
         if (_selector.isReady(_tcpSocket)) {
@@ -70,6 +70,7 @@ void NetworkClient::receivePacket() {
                 std::string data;
                 receivedData >> data;
                 std::cout << "Received TCP: " << data << std::endl;
+                inputs += data + ":";
             } else if (status == sf::Socket::Status::Disconnected) {
                 std::cout << "Server Disconnected" << std::endl;
                 _isConnected = false;
@@ -85,7 +86,9 @@ void NetworkClient::receivePacket() {
                 std::string data;
                 receivedData >> data;
                 std::cout << "Received UDP: " << data << std::endl;
+                inputs += data + ":";
             }
         }
     }
+    return inputs;
 }

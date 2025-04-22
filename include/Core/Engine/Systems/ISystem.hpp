@@ -10,6 +10,7 @@
 #include <Engine/Entities/EntityManager.hpp>
 
 #include <SFML/Graphics.hpp>
+#include <Engine/Event.hpp>
 #include <chrono>
 
 class ISystem {
@@ -17,7 +18,7 @@ public:
     ISystem() = default;
     ~ISystem() = default;
 
-    virtual std::string update(std::shared_ptr<EntityManager>&, float deltaTime) = 0;
+    virtual std::vector<NetworkEvent> update(std::shared_ptr<EntityManager>&, float deltaTime) = 0;
 };
 
 #endif /* !ISYSTEM_HPP_ */

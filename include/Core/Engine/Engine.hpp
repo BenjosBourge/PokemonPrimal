@@ -17,6 +17,8 @@
 #include <Engine/Systems/MvtSystem.hpp>
 #include <Engine/Systems/PlayerMovementSystem.hpp>
 
+#include <Engine/Event.hpp>
+
 class Engine {
 private:
     std::vector<std::shared_ptr<ISystem>> _systems;
@@ -27,7 +29,7 @@ public:
     Engine();
     ~Engine();
 
-    std::string update(float deltaTime);
+    std::vector<NetworkEvent> update(float deltaTime);
     void clean();
     void start();
     std::string restart(bool &,  int &);

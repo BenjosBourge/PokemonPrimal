@@ -38,6 +38,9 @@ public:
     void run();
     void inputHandling();
 
+    void parseClientInput(const std::string &data);
+    void processToken(const std::string &token);
+
 private:
     sf::RenderWindow window;
     std::string assetsPath;

@@ -27,14 +27,8 @@ int start_engine() {
         std::string inputs = server.receivePacket();
 
         engine->parseServerInput(inputs);
-        std::string datas = engine->update(deltaTime);
-
-        if (inputs != "") {
-            std::cout << "Inputs : " << inputs << std::endl;
-        }
-        if (datas != "") {
-            std::cout << "Datas : " << datas << std::endl;
-        }
+        std::vector<NetworkEvent> events = engine->update(deltaTime);
+        server.processEngineInput(events);
     }
     return 0;
 }

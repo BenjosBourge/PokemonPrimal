@@ -10,9 +10,9 @@ MvtSystem::MvtSystem() { }
 
 MvtSystem::~MvtSystem() { }
 
-std::string MvtSystem::update(std::shared_ptr<EntityManager>& entityManager, float deltaTime)
+std::vector<NetworkEvent> MvtSystem::update(std::shared_ptr<EntityManager>& entityManager, float deltaTime)
 {
-    std::string output = "";
+    std::vector<NetworkEvent> events;
 
     for (auto& [_, entity] : entityManager->getEntities()) {
         if (!entity->hasComponent<Position>())
@@ -27,11 +27,14 @@ std::string MvtSystem::update(std::shared_ptr<EntityManager>& entityManager, flo
             continue;
 
         position.x += position.direction.x;
-        position.y += position.direction.y;
-        output += std::to_string(entity->id) + " " +
-                  std::to_string(position.x) + " " +
-                  std::to_string(position.y) + ":";
+        if (position.direction.x == 0)
+            position.y += position.direction.y;
+        position.timerMove = 0.4f;
+        std::string eventType = "Pp_" + std::to_string(entity->id) +"_" +
+                          std::to_string(position.x) + "_" +
+                          std::to_string(position.y) + ":";
+        events.emplace_back(entity->id, eventType, COM_SECURE_BROADCAST);
     }
-    return output;
+    return events;
 }
 
