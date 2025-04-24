@@ -1,6 +1,5 @@
 /*
-** EPITECH PROJECT, 2023
-** B-CPP-500-LYN-5-2-rtype-erwann.laplante
+** Pokemon Primal
 ** File description:
 ** Engine
 */

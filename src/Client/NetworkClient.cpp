@@ -21,21 +21,27 @@ void NetworkClient::connect(std::string ip, unsigned int port)
 {
     _ip = sf::IpAddress::resolve(ip).value();
     _port = port;
-    if (_udpSocket.bind(54000) != sf::Socket::Status::Done) {
-        std::cout << "Cannot bind UDP socket" << std::endl;
-        return;
+
+    int availablePort = port;
+    while (availablePort < 65535) {
+        if (_tcpSocket.connect(_ip, availablePort) == sf::Socket::Status::Done)
+            break;
+        availablePort++;
     }
-    _udpSocket.setBlocking(false);
-    sf::Socket::Status status = _tcpSocket.connect(_ip, port);
     _tcpSocket.setBlocking(false);
-    if (status != sf::Socket::Status::Done) {
-        std::cout << "Cannot connect to the server" << std::endl;
-        return;
-    } else
-        std::cout << "Connected to the server" << std::endl;
     _isConnected = true;
     _selector.add(_tcpSocket);
+
+    int portUdp = availablePort + 1;
+    while (portUdp < 65535) {
+        if (_udpSocket.bind(portUdp) == sf::Socket::Status::Done)
+            break;
+        portUdp++;
+    }
+    _udpSocket.setBlocking(false);
     _selector.add(_udpSocket);
+
+    std::cout << "Connected to server." << std::endl;
 }
 
 void NetworkClient::sendPacket(std::string data)

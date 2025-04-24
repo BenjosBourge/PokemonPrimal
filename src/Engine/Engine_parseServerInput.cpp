@@ -18,6 +18,7 @@ void Engine::processToken(const std::string &token)
     while (std::getline(ss, tmp, '_'))
         args.push_back(tmp);
 
+    // creating new player
     if (command == "NC" && args.size() == 1) {
         int newPlayerId = gameObjects->createEntity(_entityFactory.createEntity("Player"));
         gameObjects->addConnectedEntity("P" + args[0], newPlayerId);

@@ -1,8 +1,7 @@
 /*
-** EPITECH PROJECT, 2023
-** B-OOP-400-LYN-4-1-rtype-erwann.laplante
+** Pokemon Primal
 ** File description:
-** Server.hpp
+** NetworkServer
 */
 
 #pragma once
