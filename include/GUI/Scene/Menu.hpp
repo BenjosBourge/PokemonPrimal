@@ -10,8 +10,8 @@
 
 #pragma once
 
-#include <Graph/Scene/IScene.hpp>
-#include <Graph/HUD/HUDMenu.hpp>
+#include <GUI/Scene/IScene.hpp>
+#include <GUI/HUD/HUDMenu.hpp>
 
 #include <iostream>
 
@@ -22,7 +22,7 @@ class Menu : public IScene {
         void draw(sf::RenderWindow &window);
 
     private:
-        std::shared_ptr<HUDMenu> hudMenu;
+        std::shared_ptr<HUDMenu> _hudMenu;
     
 
         

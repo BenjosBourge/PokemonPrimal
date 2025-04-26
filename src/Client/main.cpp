@@ -5,16 +5,18 @@
 ** main
 */
 
-#include <Graph/Game.hpp>
+#include <GUI/Game.hpp>
 #include <string>
+#include <filesystem>
 
 int main(int argc, char** argv)
 {
     //not currently used
-    std::string assetsPath = "./assets/";
-    Game game(assetsPath);
-    game.run();
+    std::string executablePath = std::filesystem::canonical(argv[0]).parent_path().string();
+    std::cout << "Executable path: " << executablePath << std::endl;
+    Game game(executablePath);
 
+    game.run();
     return 0;
 }
 

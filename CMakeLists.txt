@@ -7,9 +7,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 file(GLOB_RECURSE SRC
     src/Engine/*.cpp
-    src/Graph/*.cpp
+    src/GUI/*.cpp
 )
-
 
 file ( GLOB CLIENT src/Client/*.cpp )
 
@@ -38,8 +37,4 @@ target_include_directories(${PROJECT_NAME}_Server
 
 include(build-SFML.cmake)
 
-add_custom_command(
-        TARGET ${PROJECT_NAME}_Client POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_BINARY_DIR}/assets"
-        COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/assets" "${CMAKE_BINARY_DIR}/assets"
-)
+

@@ -4,13 +4,19 @@
 ** Game
 */
 
-#include <Graph/Game.hpp>
+#include <GUI/Game.hpp>
 
 Game::Game(std::string assetsPath)
 {
-    this->assetsPath = assetsPath;
-    currentState = GameState::stateMenu;
-    scenes[GameState::stateMenu] = std::make_shared<Menu>();
+    this->_assetsPath = assetsPath + "/src/GUI/fonts/font.ttf";
+    //Use the global vairable to open the asset
+    if (!globalFont.openFromFile(_assetsPath))
+        std::cout << "error while creating font" << std::endl;
+
+    //change this to change scene
+    _currentState = GameState::stateMenu;
+    //add a scene to the map
+    _scenes[GameState::stateMenu] = std::make_shared<Menu>();
 }
 
 Game::~Game()
@@ -19,7 +25,6 @@ Game::~Game()
 
 void Game::run()
 {
-
     sf::VideoMode mode = sf::VideoMode::getDesktopMode();
     sf::RenderWindow window(mode, "Pokemon Primal");
     // Start the game loop
@@ -37,7 +42,7 @@ void Game::run()
         window.clear();
         // Draw the current scene
         // Update the window
-        scenes[currentState]->draw(window);
+        _scenes[_currentState]->draw(window);
         window.display();
     }
 }

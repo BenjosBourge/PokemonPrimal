@@ -78,7 +78,7 @@ This directory contains all the public headers organized by module. It defines t
 #### 🧠 Engine.hpp
 - Central header that ties together engine subsystems.
 
-### 🎮 Graph/
+### 🎮 GUI/
 - **`Game.hpp`**: High-level game loop and rendering logic.
 
 ### 🌐 Server/
@@ -106,9 +106,9 @@ Contains the actual implementations corresponding to the headers in `include/`.
 #### ⚙️ Systems/
 - **`MvtSystem.cpp`**: Implements movement system logic.
 
-### 🎮 Graph/
+### 🎮 GUI/
 - **`Game.cpp`**: Implements the game loop and graphical interface.
-- **`CMakeLists.txt`**: Build configuration for the Graph module.
+- **`CMakeLists.txt`**: Build configuration for the GUI module.
 
 ### 🌐 Server/
 - **`main.cpp`**: Entry point for the server application.

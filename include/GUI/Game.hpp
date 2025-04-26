@@ -7,18 +7,22 @@
 #ifndef GAME_HPP_
 #define GAME_HPP_
 
+#pragma once
+
+#include <map>
+#include <memory>
+#include <iostream>
+#include <string>
+#include <optional>
+
 #include <SFML/Network.hpp>
 #include <SFML/Network/Packet.hpp>
 #include <SFML/Network/TcpSocket.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
-#include <Graph/Scene/Menu.hpp>
-
-#include <map>
-#include <memory>
-#include <iostream>
-#include <string>
+#include <GUI/Scene/Menu.hpp>
+#include <GUI/global.hpp>
 
 enum class GameState {
     stateMenu,
@@ -32,10 +36,10 @@ class Game {
         void run();
 
     private:
-    std::string assetsPath;
+    std::string _assetsPath;
 
-    GameState currentState;
-    std::map<GameState, std::shared_ptr<IScene>> scenes;
+    GameState _currentState;
+    std::map<GameState, std::shared_ptr<IScene>> _scenes;
 
 };
 

@@ -8,13 +8,15 @@
 #define ICOMPONENTS_HPP_
 
 #pragma once
+
 #include <memory>
 #include <SFML/Graphics.hpp>
+#include <GUI/global.hpp>
 
 class IComponent {
     public:
         IComponent() = default;
-        virtual ~IComponent() = default;
+        ~IComponent() = default;
         virtual void draw(sf::RenderWindow &window) = 0;
     protected:
     private:
