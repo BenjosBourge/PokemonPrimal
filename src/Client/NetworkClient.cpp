@@ -22,26 +22,25 @@ void NetworkClient::connect(std::string ip, unsigned int port)
     _ip = sf::IpAddress::resolve(ip).value();
     _port = port;
 
-    int availablePort = port;
-    _tcpSocket.setBlocking(false);
-    while (availablePort < 55000) {
-        if (_tcpSocket.connect(_ip, availablePort) == sf::Socket::Status::Done)
-            break;
-        availablePort++;
-    }
-    if (availablePort == 55000) {
+    if (_tcpSocket.connect(_ip, 53000) == sf::Socket::Status::Done)
+        std::cout << "Connected to server on port: " << _port << std::endl;
+    else {
         std::cout << "Error: Cannot connect to server" << std::endl;
         return;
     }
+
     _isConnected = true;
     _selector.add(_tcpSocket);
 
-    int portUdp = availablePort + 1;
+    std::cout << "Connected to server on port: " << 53000 << std::endl;
+
+    int portUdp = 53000 + 1;
     while (portUdp < 65535) {
         if (_udpSocket.bind(portUdp) == sf::Socket::Status::Done)
             break;
         portUdp++;
     }
+    std::cout << "UDP port: " << portUdp << std::endl;
     _udpSocket.setBlocking(false);
     _selector.add(_udpSocket);
 
