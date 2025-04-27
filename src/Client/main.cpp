@@ -5,6 +5,7 @@
 ** main
 */
 
+#include <filesystem>
 #include <Graph/Game.hpp>
 #include <SFML/Network.hpp>
 #include <NetworkClient.hpp>
@@ -14,11 +15,11 @@
 int main(int argc, char** argv)
 {
     //not currently used
-    std::string assetsPath = "./assets/";
-    Game game(assetsPath);
+    std::string executablePath = std::filesystem::canonical(argv[0]).parent_path().string();
+    std::cout << "Executable path: " << executablePath << std::endl;
+    Game game(executablePath);
 
     game.run();
-
     return 0;
 }
 

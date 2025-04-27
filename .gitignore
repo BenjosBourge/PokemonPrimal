@@ -3,3 +3,12 @@ build/
 .o
 cmake-build-release
 .idea
+*.o
+_deps
+Makefile
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+
+PokemonPrimal_Client
+PokemonPrimal_Server

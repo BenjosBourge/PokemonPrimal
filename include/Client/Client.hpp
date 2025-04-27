@@ -7,6 +7,7 @@
 #ifndef MAIN_HPP_
 #define MAIN_HPP_
 
+#include <GUI/Game.hpp>
 #include <Graph/Game.hpp>
 #include <iostream>
 
