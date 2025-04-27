@@ -5,16 +5,18 @@
 ** main
 */
 
-#include <Graph/Game.hpp>
+#include <filesystem>
+#include <Game.hpp>
+#include <SFML/Network.hpp>
+#include <NetworkClient.hpp>
 #include <string>
+#include <iostream>
 
 int main(int argc, char** argv)
 {
-    //not currently used
-    std::string assetsPath = "./assets/";
-    Game game(assetsPath);
-    game.run();
+    Game game;
 
+    game.run();
     return 0;
 }
 

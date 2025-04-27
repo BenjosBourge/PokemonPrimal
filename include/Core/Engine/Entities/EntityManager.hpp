@@ -1,13 +1,11 @@
 /*
-** EPITECH PROJECT, 2023
-** B-CPP-500-LYN-5-2-rtype-erwann.laplante
+** Pokemon Primal
 ** File description:
 ** EntityManager
 */
 
 #ifndef ENTITYMANAGER_HPP_
 #define ENTITYMANAGER_HPP_
-#include <Engine/Components/Position.hpp>
 #include <Engine/Entities/Entity.hpp>
 #include <algorithm>
 #include <iostream>
@@ -41,5 +39,11 @@ public:
 
     std::vector<std::shared_ptr<Entity>> entitiesToDestroy;
     std::vector<std::shared_ptr<Entity>> entitiesDamaged;
+
+    /* Each entity and their online tag */
+    std::unordered_map<std::string, int> _connectedEntities;
+    void addConnectedEntity(std::string name, int id);
+    std::shared_ptr<Entity> getConnectedEntity(std::string name);
+    std::string getConnectedEntityTag(int id);
 };
 #endif

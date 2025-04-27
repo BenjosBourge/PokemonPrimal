@@ -1,6 +1,5 @@
 /*
-** EPITECH PROJECT, 2023
-** B-CPP-500-LYN-5-2-rTypeEntity-erwann.laplante
+** Pokemon Primal
 ** File description:
 ** EntityFactory
 */
@@ -21,9 +20,9 @@ Entity& EntityFactory::createEntity(std::string name)
 {
     auto* entity = new Entity();
 
-    if (name == "PowerUpRocketShoot") {
-        entity->createComponent<Position>(600, 100, 0, 1);
-    
+    if (name == "Player") {
+        entity->createComponent<Position>(0, 0);
+        entity->createComponent<Input>();
     } else {
     std::cout << "Entity " << name << " not found" << std::endl;
     }   

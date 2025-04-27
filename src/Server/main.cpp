@@ -6,9 +6,9 @@
 */
 
 #include <Engine/Engine.hpp>
-#include <Server/Server.hpp>
+#include <Server.hpp>
 #include <SFML/System/Clock.hpp>
-
+#include <SFML/Network.hpp>
 
 int start_engine() {
     sf::Clock clock;
@@ -18,10 +18,17 @@ int start_engine() {
     std::unique_ptr<Engine> engine = std::make_unique<Engine>();
     engine->start();
 
+    NetworkServer server;
+    server.host(53000);
+
     while (isRunning) {
         float deltaTime = clock.restart().asSeconds();
 
-        engine->update(deltaTime);
+        std::string inputs = server.receivePacket();
+
+        engine->parseServerInput(inputs);
+        std::vector<NetworkEvent> events = engine->update(deltaTime);
+        server.processEngineInput(events);
     }
     return 0;
 }

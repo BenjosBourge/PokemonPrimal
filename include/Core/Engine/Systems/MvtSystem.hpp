@@ -1,6 +1,5 @@
 /*
-** EPITECH PROJECT, 2023
-** B-CPP-500-LYN-5-2-rtype-erwann.laplante
+** Pokemon Primal
 ** File description:
 ** MvtSystem
 */
@@ -8,13 +7,14 @@
 #ifndef MVTSYSTEM_HPP_
 #define MVTSYSTEM_HPP_
 #include <Engine/Systems/ISystem.hpp>
+#include <Engine/Components/Position.hpp>
 
 class MvtSystem : virtual public ISystem {
 public:
     MvtSystem();
     ~MvtSystem();
 
-    void update(std::shared_ptr<EntityManager>&, float deltaTime);
+    std::vector<NetworkEvent> update(std::shared_ptr<EntityManager>&, float deltaTime);
 
 protected:
 private:
