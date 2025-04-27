@@ -9,11 +9,14 @@
 #include <memory>
 #include <iostream>
 
+class Game;
+
 class IScene {
 public:
     IScene() = default;
     ~IScene() = default;
-    virtual void draw(sf::RenderWindow &window) = 0;
+    virtual void draw(Game &game) = 0;
+    virtual void update(float deltaTime) = 0;
 protected:
 private:
     

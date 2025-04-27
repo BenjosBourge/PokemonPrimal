@@ -5,6 +5,7 @@
 */
 
 #include <Scene/Menu.hpp>
+#include <Game.hpp>
 
 Menu::Menu()
 {
@@ -12,8 +13,13 @@ Menu::Menu()
     _hudMenu = std::make_shared<HUDMenu>();
 }
 
-void Menu::draw(sf::RenderWindow &window)
+void Menu::draw(Game &game)
 {
     // Draw the menu
-    _hudMenu->draw(window);                          
+    _hudMenu->draw(*game.getWindow());
+}
+
+void Menu::update(float deltaTime)
+{
+    // Update the menu
 }

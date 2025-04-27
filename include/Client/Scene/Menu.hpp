@@ -16,7 +16,8 @@ class Menu : public IScene {
     public:
         Menu();
         ~Menu() = default;
-        void draw(sf::RenderWindow &window);
+        void draw(Game &game);
+        void update(float deltaTime);
 
     private:
         std::shared_ptr<HUDMenu> _hudMenu;
