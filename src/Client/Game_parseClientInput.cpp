@@ -6,7 +6,7 @@
 */
 
 #include <SFML/Graphics.hpp>
-#include <Graph/Game.hpp>
+#include <Game.hpp>
 
 void Game::processToken(const std::string &token)
 {

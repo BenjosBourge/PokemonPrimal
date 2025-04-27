@@ -4,6 +4,6 @@
 ** global
 */
 
-#include <GUI/global.hpp>
+#include <Graph/GUI/global.hpp>
 
 sf::Font globalFont;

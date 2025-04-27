@@ -11,7 +11,7 @@
 
 #include <memory>
 #include <SFML/Graphics.hpp>
-#include <GUI/global.hpp>
+#include <Graph/GUI/global.hpp>
 
 class IComponent {
     public:

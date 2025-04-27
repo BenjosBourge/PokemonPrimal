@@ -6,7 +6,7 @@
 */
 
 #include <filesystem>
-#include <Graph/Game.hpp>
+#include <Game.hpp>
 #include <SFML/Network.hpp>
 #include <NetworkClient.hpp>
 #include <string>
@@ -14,10 +14,7 @@
 
 int main(int argc, char** argv)
 {
-    //not currently used
-    std::string executablePath = std::filesystem::canonical(argv[0]).parent_path().string();
-    std::cout << "Executable path: " << executablePath << std::endl;
-    Game game(executablePath);
+    Game game;
 
     game.run();
     return 0;

@@ -12,26 +12,20 @@
 #include <SFML/Network/Packet.hpp>
 #include <SFML/Network/TcpSocket.hpp>
 #include <SFML/Audio.hpp>
+#include <Scene/IScene.hpp>
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <NetworkClient.hpp>
 
 
 enum class GameState {
-    //? state who need keyboard events
-    StartMenu,
-    Playing,
-    LobbyCreation,
-
-    //? state who don't need keyboard events
-    SpectateState,
-    WinState,
-    LoseState
+    STATE_DEFAULT,
+    STATE_MENU
 };
 
 class Game {
 public:
-    Game(std::string assetsPath);
+    Game();
     ~Game();
 
     void run();
@@ -49,6 +43,11 @@ private:
     bool _downPressed;
     bool _leftPressed;
     bool _rightPressed;
+
+    std::string _assetsPath;
+
+    GameState _currentState;
+    std::map<GameState, std::shared_ptr<IScene>> _scenes;
 };
 
 #endif /* !GAME_HPP_ */

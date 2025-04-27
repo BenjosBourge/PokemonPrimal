@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include <GUI/HUD/HUDComponents/IComponent.hpp>
+#include <Graph/GUI/HUD/HUDComponents/IComponent.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <iostream>

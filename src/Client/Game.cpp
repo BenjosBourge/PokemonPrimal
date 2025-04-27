@@ -5,12 +5,19 @@
 ** Game
 */
 
-#include <SFML/Graphics.hpp>
-#include <Graph/Game.hpp>
+#include <Game.hpp>
+#include <Graph/GUI/global.hpp>
+#include <Scene/Menu.hpp>
 
-Game::Game(std::string assetsPath) {
-    this->assetsPath = assetsPath;
-    this->window.setFramerateLimit(60);
+Game::Game()
+{
+    if (!globalFont.openFromFile("assets/fonts/font.ttf"))
+        std::cout << "error while creating font" << std::endl;
+
+    //change this to change scene
+    _currentState = GameState::STATE_MENU;
+    //add a scene to the map
+    _scenes[GameState::STATE_MENU] = std::make_shared<Menu>();
 }
 
 Game::~Game()

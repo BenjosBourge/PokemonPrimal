@@ -5,13 +5,10 @@
 */
 
 
-#ifndef MENU_HPP_
-#define MENU_HPP_
-
 #pragma once
 
-#include <GUI/Scene/IScene.hpp>
-#include <GUI/HUD/HUDMenu.hpp>
+#include <Scene/IScene.hpp>
+#include <Graph/GUI/HUD/HUDMenu.hpp>
 
 #include <iostream>
 
@@ -23,9 +20,4 @@ class Menu : public IScene {
 
     private:
         std::shared_ptr<HUDMenu> _hudMenu;
-    
-
-        
 };
-
-#endif /* !MENU_HPP_ */

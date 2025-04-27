@@ -23,12 +23,16 @@ void NetworkClient::connect(std::string ip, unsigned int port)
     _port = port;
 
     int availablePort = port;
-    while (availablePort < 65535) {
+    _tcpSocket.setBlocking(false);
+    while (availablePort < 55000) {
         if (_tcpSocket.connect(_ip, availablePort) == sf::Socket::Status::Done)
             break;
         availablePort++;
     }
-    _tcpSocket.setBlocking(false);
+    if (availablePort == 55000) {
+        std::cout << "Error: Cannot connect to server" << std::endl;
+        return;
+    }
     _isConnected = true;
     _selector.add(_tcpSocket);
 

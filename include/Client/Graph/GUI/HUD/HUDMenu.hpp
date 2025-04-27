@@ -9,8 +9,8 @@
 
 #pragma once
 
-#include <GUI/HUD/IHUD.hpp>
-#include <GUI/HUD/HUDComponents/Button.hpp>
+#include <Graph/GUI/HUD/IHUD.hpp>
+#include <Graph/GUI/HUD/HUDComponents/Button.hpp>
 
 class HUDMenu : public IHUD {
     public:

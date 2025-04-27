@@ -4,7 +4,7 @@
 ** Menu
 */
 
-#include <GUI/Scene/Menu.hpp>
+#include <Scene/Menu.hpp>
 
 Menu::Menu()
 {

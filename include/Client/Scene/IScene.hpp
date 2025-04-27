@@ -4,9 +4,6 @@
 ** IScene
 */
 
-#ifndef ISCENE_HPP_
-#define ISCENE_HPP_
-
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <memory>
@@ -21,5 +18,3 @@ protected:
 private:
     
 };
-
-#endif /* !ISCENE_HPP_ */
