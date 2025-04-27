@@ -5,9 +5,12 @@
 ** main
 */
 
-#include <GUI/Game.hpp>
-#include <string>
 #include <filesystem>
+#include <Graph/Game.hpp>
+#include <SFML/Network.hpp>
+#include <NetworkClient.hpp>
+#include <string>
+#include <iostream>
 
 int main(int argc, char** argv)
 {

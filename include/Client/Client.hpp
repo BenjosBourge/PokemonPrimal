@@ -1,15 +1,14 @@
 /*
-** EPITECH PROJECT, 2023
-** B-CPP-500-LYN-5-2-rtype-erwann.laplante
+** Pokemon Primal
 ** File description:
-** main
+** Client
 */
 
 #ifndef MAIN_HPP_
 #define MAIN_HPP_
 
-#include <Error/Error.hpp>
 #include <GUI/Game.hpp>
+#include <Graph/Game.hpp>
 #include <iostream>
 
 #endif /* !MAIN_HPP_ */
