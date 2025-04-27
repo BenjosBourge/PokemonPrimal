@@ -4,9 +4,6 @@
 ** IComponents
 */
 
-#ifndef ICOMPONENTS_HPP_
-#define ICOMPONENTS_HPP_
-
 #pragma once
 
 #include <memory>
@@ -21,5 +18,3 @@ class IComponent {
     protected:
     private:
 };
-
-#endif /* !ICOMPONENTS_HPP_ */

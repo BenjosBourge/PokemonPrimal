@@ -4,9 +4,6 @@
 ** IHUD
 */
 
-#ifndef IHUD_HPP_
-#define IHUD_HPP_
-
 #pragma once
 
 #include <array>
@@ -26,6 +23,3 @@ class IHUD {
 
     private:
 };
-
-
-#endif /* !IHUD_HPP_ */

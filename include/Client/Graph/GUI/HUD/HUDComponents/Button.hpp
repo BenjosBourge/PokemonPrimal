@@ -4,9 +4,6 @@
 ** Button
 */
 
-#ifndef BUTTON_HPP_
-#define BUTTON_HPP_
-
 #pragma once
 
 #include <Graph/GUI/HUD/HUDComponents/IComponent.hpp>
@@ -39,5 +36,3 @@ class Button : public IComponent {
         sf::Text _text = sf::Text(globalFont, "Some Text", 20);
         sf::RectangleShape _shape;
 };
-
-#endif /* !BUTTON_HPP_ */
