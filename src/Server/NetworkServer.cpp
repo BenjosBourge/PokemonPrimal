@@ -235,6 +235,12 @@ void NetworkServer::processEngineInput(std::vector<NetworkEvent> &events)
                     sendUdpPacket(event.eventType, i);
                 }
             }
+        } else if (event.communicationType == COM_TCP_BROADCAST) {
+            for (int i = 0; i < 4; ++i) {
+                if (!_clients[i]._isConnected)
+                    continue;
+                addToTcpBuffer(event.eventType, i);
+            }
         }
     }
 

@@ -6,8 +6,9 @@
 
 #include <Engine/Engine.hpp>
 
-void Engine::processToken(const std::string &token)
+std::vector<NetworkEvent> Engine::processToken(const std::string &token)
 {
+    std::vector<NetworkEvent> events;
     std::string command = token.substr(0, token.find('_'));
     std::vector<std::string> args;
 
@@ -20,9 +21,10 @@ void Engine::processToken(const std::string &token)
 
     // creating new player
     if (command == "NC" && args.size() == 1) {
-        int newPlayerId = gameObjects->createEntity(_entityFactory.createEntity("Player"));
-        gameObjects->addConnectedEntity("P" + args[0], newPlayerId);
-        std::cout << "New connected Entity: " << args[0] << " with ID: " << newPlayerId << std::endl;
+        int newPlayerEntityId = gameObjects->createEntity(_entityFactory.createEntity("Player"));
+        gameObjects->addConnectedEntity("P" + args[0], newPlayerEntityId);
+        std::cout << "New connected Entity: P" << args[0] << " with Entity ID: " << newPlayerEntityId << std::endl;
+        events.push_back(NetworkEvent(newPlayerEntityId, "Pc_" + args[0], COM_TCP_BROADCAST));
     }
 
     // inputs
@@ -32,7 +34,7 @@ void Engine::processToken(const std::string &token)
         auto entity = gameObjects->getConnectedEntity(playerId);
         if (!entity) {
             std::cout << "Entity not found" << std::endl;
-            return;
+            return events;
         }
         entity->getComponent<Input>()._upPressed = args[0] == "P" ? true : false;
     }
@@ -42,7 +44,7 @@ void Engine::processToken(const std::string &token)
         auto entity = gameObjects->getConnectedEntity(playerId);
         if (!entity) {
             std::cout << "Entity not found" << std::endl;
-            return;
+            return events;
         }
         entity->getComponent<Input>()._downPressed = args[0] == "P" ? true : false;
     }
@@ -52,7 +54,7 @@ void Engine::processToken(const std::string &token)
         auto entity = gameObjects->getConnectedEntity(playerId);
         if (!entity) {
             std::cout << "Entity not found" << std::endl;
-            return;
+            return events;
         }
         entity->getComponent<Input>()._rightPressed = args[0] == "P" ? true : false;
     }
@@ -62,17 +64,24 @@ void Engine::processToken(const std::string &token)
         auto entity = gameObjects->getConnectedEntity(playerId);
         if (!entity) {
             std::cout << "Entity not found" << std::endl;
-            return;
+            return events;
         }
         entity->getComponent<Input>()._leftPressed = args[0] == "P" ? true : false;
     }
+    return events;
 }
 
-void Engine::parseServerInput(const std::string &input)
+std::vector<NetworkEvent> Engine::parseServerInput(const std::string &input)
 {
+    std::vector<NetworkEvent> events;
     std::stringstream ss(input);
     std::string tmp;
 
-    while (std::getline(ss, tmp, ':'))
-        processToken(tmp);
+    while (std::getline(ss, tmp, ':')) {
+        std::vector<NetworkEvent> tmpEvents = processToken(tmp);
+        if (tmpEvents.empty())
+            continue;
+        events.insert(events.end(), tmpEvents.begin(), tmpEvents.end());
+    }
+    return events;
 }

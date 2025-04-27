@@ -12,6 +12,7 @@ enum CommunicationType {
     COM_TCP,
     COM_BROADCAST,
     COM_SECURE_BROADCAST,
+    COM_TCP_BROADCAST
 };
 
 /*

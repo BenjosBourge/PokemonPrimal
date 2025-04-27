@@ -17,8 +17,8 @@ public:
     virtual sf::IntRect getRect(Game &game);
     void draw(Game &game);
 
-    int _x;
-    int _y;
+    int _spriteX;
+    int _spriteY;
 
     int _rectX;
     int _rectY;
@@ -26,5 +26,7 @@ public:
     int _width;
     int _height;
     std::string _texturePath;
+
+    bool _flipped;
 };
 

@@ -29,6 +29,11 @@ State:
 
 ## Server → Client
 
+### Player Created
+**Pc**
+
+Format: **Cmd**_Id
+
 ### Players Position
 **Pp**
 

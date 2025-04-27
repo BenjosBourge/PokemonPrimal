@@ -1,8 +1,7 @@
 /*
-** EPITECH PROJECT, 2023
-** B-CPP-500-LYN-5-2-rtype-erwann.laplante
+** Pokemon Primal
 ** File description:
-** main
+** NetworkCLient
 */
 
 #include <NetworkClient.hpp>
@@ -32,7 +31,7 @@ void NetworkClient::connect(std::string ip, unsigned int port)
     _isConnected = true;
     _selector.add(_tcpSocket);
 
-    std::cout << "Connected to server on port: " << 53000 << std::endl;
+    std::cout << "Connected to server with the port: " << _tcpSocket.getLocalPort() << std::endl;
 
     int portUdp = 53000 + 1;
     while (portUdp < 65535) {

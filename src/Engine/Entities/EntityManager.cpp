@@ -58,6 +58,7 @@ void EntityManager::destroyEntityById(int id)
 
 void EntityManager::addConnectedEntity(std::string name, int id)
 {
+    _entities[id]->tag = name;
     _connectedEntities[name] = id;
 }
 
