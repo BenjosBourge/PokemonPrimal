@@ -52,9 +52,9 @@ void Game::run()
         {
             if (event->is<sf::Event::Closed>())
                 window.close();
+            inputHandling(event);  
         }
 
-        inputHandling();
         std::string inputs = _client.receivePacket();
         parseClientInput(inputs);
 
@@ -66,46 +66,23 @@ void Game::run()
     }
 }
 
-void Game::inputHandling()
-{
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z)) {
-        if (!_upPressed)
-            _client.sendPacket("Up_P");
-        _upPressed = true;
-    } else {
-        if (_upPressed)
-            _client.sendPacket("Up_R");
-        _upPressed = false;
+void Game::inputHandling(const std::optional<sf::Event>& event)
+{   
+    if (event->is<sf::Event::KeyPressed>()) {
+        //find element in the map to execute the function link to the key
+        auto it = keyMappings.find(event->getIf<sf::Event::KeyPressed>()->code);
+         
+        if (it != keyMappings.end() && !it->second.isPressed) {
+            it->second.action();
+            it->second.isPressed = true;
+        }
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
-        if (!_downPressed)
-            _client.sendPacket("Do_P");
-        _downPressed = true;
-    } else {
-        if (_downPressed)
-            _client.sendPacket("Do_R");
-        _downPressed = false;
-    }
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) {
-        if (!_leftPressed)
-            _client.sendPacket("Le_P");
-        _leftPressed = true;
-    } else {
-        if (_leftPressed)
-            _client.sendPacket("Le_R");
-        _leftPressed = false;
-    }
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
-        if (!_rightPressed)
-            _client.sendPacket("Ri_P");
-        _rightPressed = true;
-    } else {
-        if (_rightPressed)
-            _client.sendPacket("Ri_R");
-        _rightPressed = false;
+    if (event->is<sf::Event::KeyReleased>()) {
+        auto it = keyMappings.find(event->getIf<sf::Event::KeyReleased>()->code);
+    
+        if (it != keyMappings.end() && it->second.isPressed)
+            it->second.isPressed = false;
     }
 }
 
