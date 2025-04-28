@@ -8,11 +8,12 @@
 
 Overworld::Overworld()
 {
-
+    _spriteMap.load("assets/tilesmap.png", {16, 16}, _bitMap);
 }
 
 void Overworld::draw(Game &game)
 {
+    game.getWindow()->draw(_spriteMap);
     for (auto &character : _characters) {
         character.second->draw(game);
     }
@@ -39,3 +40,4 @@ std::shared_ptr<Character> Overworld::getCharacter(std::string tag)
         return _characters[tag];
     return nullptr;
 }
+
