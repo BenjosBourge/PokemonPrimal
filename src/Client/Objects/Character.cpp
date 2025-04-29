@@ -55,13 +55,18 @@ void Character::update(float deltaTime)
         _oy = _y;
         _spriteX = _ox * TILE_SIZE;
         _spriteY = _oy * TILE_SIZE;
-        setAnimationState(AnimationState::IDLE);
+        if (!_inMotion)
+            setAnimationState(AnimationState::IDLE);
     } else {
         int nx = (_x * TILE_SIZE - _ox * TILE_SIZE) * _currentTimeAnimation / _timeTakenAnimation;
         int ny = (_y * TILE_SIZE - _oy * TILE_SIZE) * _currentTimeAnimation / _timeTakenAnimation;
         _spriteX = _ox * TILE_SIZE + nx;
         _spriteY = _oy * TILE_SIZE + ny;
     }
+
+    if (_ox == _x && _oy == _y)
+        if (!_inMotion)
+            setAnimationState(AnimationState::IDLE);
 }
 
 void Character::setDirection(Direction direction)
@@ -122,4 +127,5 @@ void Character::moveTo(int x, int y)
     setAnimationState(AnimationState::WALKING);
 
     _currentTimeAnimation = 0;
+    _inMotion = true;
 }

@@ -15,5 +15,7 @@ public:
     Player();
     Player(CharacterTexture texture);
     ~Player();
+
+    void update(float deltaTime) override;
 };
 

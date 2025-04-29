@@ -33,7 +33,7 @@ public:
     Character(CharacterTexture texture);
     ~Character();
 
-    void update(float deltaTime);
+    virtual void update(float deltaTime);
 
     void setDirection(Direction direction);
     void setAnimationState(AnimationState state);
@@ -41,7 +41,9 @@ public:
 
     void moveTo(int x, int y);
 
-private:
+    void setMotion(bool inMotion) { _inMotion = inMotion; }
+
+protected:
     int _x = 0;
     int _y = 0;
     Direction _direction;
@@ -52,5 +54,7 @@ private:
 
     int _ox;
     int _oy;
+
+    bool _inMotion;
 };
 
