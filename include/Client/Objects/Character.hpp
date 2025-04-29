@@ -33,6 +33,8 @@ public:
     Character(CharacterTexture texture);
     ~Character();
 
+    void update(float deltaTime);
+
     void setDirection(Direction direction);
     void setAnimationState(AnimationState state);
     void resetYOffset();
@@ -44,5 +46,11 @@ private:
     int _y = 0;
     Direction _direction;
     AnimationState _animationState;
+
+    float _timeTakenAnimation;
+    float _currentTimeAnimation;
+
+    int _ox;
+    int _oy;
 };
 

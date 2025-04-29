@@ -18,6 +18,8 @@ Character::Character()
     _rectY = 24;
     _spriteX = 0;
     _spriteY = 0;
+    _currentTimeAnimation = 0;
+    _timeTakenAnimation = 0.4f;
 }
 
 Character::Character(CharacterTexture texture)
@@ -35,11 +37,30 @@ Character::Character(CharacterTexture texture)
     _rectY = 24;
     _spriteX = 0;
     _spriteY = 0;
+    _currentTimeAnimation = 0;
+    _timeTakenAnimation = 0.4f;
 }
 
 Character::~Character()
 {
 
+}
+
+void Character::update(float deltaTime)
+{
+    _currentTimeAnimation += deltaTime;
+    if (_currentTimeAnimation >= _timeTakenAnimation) {
+        _currentTimeAnimation = 0;
+        _ox = _x;
+        _oy = _y;
+        _spriteX = _ox * 24;
+        _spriteY = _oy * 24;
+    } else {
+        int nx = (_x * 24 - _ox * 24) * _currentTimeAnimation / _timeTakenAnimation;
+        int ny = (_y * 24 - _oy * 24) * _currentTimeAnimation / _timeTakenAnimation;
+        _spriteX = _ox * 24 + nx;
+        _spriteY = _oy * 24 + ny;
+    }
 }
 
 void Character::setDirection(Direction direction)
@@ -82,8 +103,11 @@ void Character::resetYOffset()
 
 void Character::moveTo(int x, int y)
 {
+    _ox = _x;
+    _oy = _y;
+
     _x = x;
     _y = y;
-    _spriteX = x * 24;
-    _spriteY = y * 24;
+
+    _currentTimeAnimation = 0;
 }
