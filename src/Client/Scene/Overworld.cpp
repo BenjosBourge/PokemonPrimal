@@ -20,7 +20,9 @@ void Overworld::draw(Game &game)
 
 void Overworld::update(float deltaTime)
 {
-
+    for (auto &character : _characters) {
+        character.second->update(deltaTime);
+    }
 }
 
 void Overworld::addCharacter(std::string tag)

@@ -19,7 +19,7 @@
 #include <optional>
 #include <utility>
 
-
+#define TILE_SIZE 48
 
 enum class GameState {
     STATE_DEFAULT,
