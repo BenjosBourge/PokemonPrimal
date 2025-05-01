@@ -7,15 +7,20 @@
 #ifndef GAME_HPP_
 #define GAME_HPP_
 
+#include <Scene/IScene.hpp>
+#include <global.hpp>
+#include <Scene/Menu.hpp>
+#include <Scene/Overworld.hpp>
+#include <Scene/MapEditor.hpp>
+
 #include <SFML/Network.hpp>
 #include <SFML/Network/Packet.hpp>
 #include <SFML/Network/TcpSocket.hpp>
 #include <SFML/Audio.hpp>
-#include <Scene/IScene.hpp>
 #include <SFML/Graphics.hpp>
-#include <string>
 #include <NetworkClient.hpp>
 
+#include <string>
 #include <optional>
 #include <utility>
 
@@ -25,6 +30,7 @@ enum class GameState {
     STATE_DEFAULT,
     STATE_MENU,
     STATE_OVERWORLD,
+    STATE_MAPEDIT,
 };
 
 class Game {
@@ -39,7 +45,6 @@ public:
     void parseClientInput(const std::string &data);
     void processToken(const std::string &token);
 
-    sf::Texture &getTexture(const std::string &texturePath);
     sf::RenderWindow *getWindow() { return _window; }
     float getDeltaTime() const { return _deltaTime; }
 
@@ -56,7 +61,6 @@ private:
 
     GameState _currentState;
     std::map<GameState, std::shared_ptr<IScene>> _scenes;
-    std::map<std::string, sf::Texture> _textures;
 
     enum KeyActionType {
         PRESSED,

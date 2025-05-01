@@ -16,7 +16,7 @@ class Menu : public IScene {
     public:
         Menu();
         ~Menu() = default;
-        void draw(Game &game);
+    void draw(sf::RenderWindow *window) override;
         void update(float deltaTime);
 
     private:

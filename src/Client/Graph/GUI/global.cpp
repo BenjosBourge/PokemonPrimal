@@ -4,6 +4,7 @@
 ** global
 */
 
-#include <Graph/GUI/global.hpp>
+#include <global.hpp>
 
 sf::Font globalFont;
+TextureManager globalTextures;

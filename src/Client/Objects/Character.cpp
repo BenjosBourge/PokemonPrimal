@@ -48,6 +48,8 @@ Character::~Character()
 
 void Character::update(float deltaTime)
 {
+    AnimatedSprite::update(deltaTime);
+
     _currentTimeAnimation += deltaTime;
     if (_currentTimeAnimation >= _timeTakenAnimation) {
         _currentTimeAnimation = 0;

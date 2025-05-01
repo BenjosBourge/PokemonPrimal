@@ -33,14 +33,19 @@ Sprite::Sprite(const std::string &texturePath, int x, int y, int width, int heig
     _rectY = rectY;
 }
 
-sf::IntRect Sprite::getRect(Game &game)
+sf::IntRect Sprite::getRect()
 {
     return sf::IntRect({0, 0}, {_rectX, _rectY});
 }
 
-void Sprite::draw(Game &game)
+void Sprite::update(float deltaTime)
 {
-    sf::Sprite sprite(game.getTexture(_texturePath));
+
+}
+
+void Sprite::draw(sf::RenderWindow *window, int cameraX, int cameraY)
+{
+    sf::Sprite sprite(globalTextures.getTexture(_texturePath));
 
     sprite.setPosition({(float)_spriteX, (float)_spriteY});
     if (_flipped)
@@ -49,8 +54,8 @@ void Sprite::draw(Game &game)
         sprite.setScale({(float)_width, (float)_height});
     sf::Vector2f origin = {(float)_rectX / 2, (float)_rectY / 2};
     sprite.setOrigin(origin);
-    sprite.setTextureRect(getRect(game));
+    sprite.setTextureRect(getRect());
 
-    game.getWindow()->draw(sprite);
+    window->draw(sprite);
 }
 

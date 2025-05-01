@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 #include <Game.hpp>
 #include <Scene/Overworld.hpp>
+#include <Objects/Character.hpp>
 
 void Game::processToken(const std::string &token)
 {
