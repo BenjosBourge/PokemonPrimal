@@ -5,6 +5,7 @@
 */
 
 #include <Scene/Overworld.hpp>
+#include <Objects/Character.hpp>
 
 Overworld::Overworld()
 {
@@ -39,7 +40,7 @@ void Overworld::update(float deltaTime)
 void Overworld::addCharacter(std::string tag)
 {
     if (_characters.find(tag) == _characters.end()) {
-        std::shared_ptr<Character> character = std::make_shared<Player>(CharacterTexture::PLAYER);
+        std::shared_ptr<Character> character = std::make_shared<Character>(CharacterTexture::PLAYER);
         _characters[tag] = character;
 
         std::cout << "Character " << tag << " added to the overworld." << std::endl;

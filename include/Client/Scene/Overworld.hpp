@@ -7,11 +7,8 @@
 #pragma once
 
 #include <Scene/IScene.hpp>
-#include <Graph/AnimatedSprite.hpp>
-#include <Graph/Sprite.hpp>
-#include <Objects/Player.hpp>
-#include <Objects/Character.hpp>
 #include <Objects/Map.hpp>
+#include <Game.hpp>
 
 #include <iostream>
 #include <memory>
@@ -19,6 +16,7 @@
 #include <unordered_map>
 #include <cmath>
 
+class Character;
 
 class Overworld : public IScene {
     public:

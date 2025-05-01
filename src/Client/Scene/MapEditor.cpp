@@ -26,6 +26,7 @@ MapEditor::MapEditor()
 
 MapEditor::~MapEditor()
 {
+
 }
 
 void MapEditor::draw(Game &game)

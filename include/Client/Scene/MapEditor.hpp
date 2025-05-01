@@ -8,6 +8,7 @@
 
 #include <Scene/IScene.hpp>
 #include <Objects/Map.hpp>
+#include <Game.hpp>
 
 #include <iostream>
 #include <memory>
@@ -19,7 +20,7 @@
 class MapEditor : public IScene {
     public:
         MapEditor();
-        ~MapEditor() = default;
+        ~MapEditor();
 
         void draw(Game &game) override;
         void update(float deltaTime) override;

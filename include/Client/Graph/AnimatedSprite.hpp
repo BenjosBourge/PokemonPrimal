@@ -6,7 +6,6 @@
 
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <Game.hpp>
 #include <Graph/Sprite.hpp>
 
 class AnimatedSprite : public Sprite {
