@@ -71,7 +71,8 @@ void Game::inputHandling(const std::optional<sf::Event>& event)
         auto it = keyMappings.find(event->getIf<sf::Event::KeyPressed>()->code);
          
         if (it != keyMappings.end() && !it->second.isPressed) {
-            it->second.action();
+            if (it->second.type == PRESSED || it->second.type == PRESSED_RELEASED)
+                it->second.actionPressed();
             it->second.isPressed = true;
         }
     }
@@ -79,8 +80,11 @@ void Game::inputHandling(const std::optional<sf::Event>& event)
     if (event->is<sf::Event::KeyReleased>()) {
         auto it = keyMappings.find(event->getIf<sf::Event::KeyReleased>()->code);
     
-        if (it != keyMappings.end() && it->second.isPressed)
+        if (it != keyMappings.end() && it->second.isPressed) {
+            if (it->second.type == RELEASED || it->second.type == PRESSED_RELEASED)
+                it->second.actionReleased();
             it->second.isPressed = false;
+        }
     }
 }
 

@@ -20,6 +20,7 @@ class Position : virtual public IComponent {
 public:
     int x;
     int y;
+    bool inMotion;
     mapPosition map;
 
     float speed = 1;
@@ -30,6 +31,7 @@ public:
     Position() {
         x = 0;
         y = 0;
+        inMotion = false;
         map = MAP_DEMO_1;
     }
     Position(int x, int y, mapPosition map = MAP_DEMO_1, float speed = 1)

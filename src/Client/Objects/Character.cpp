@@ -18,6 +18,8 @@ Character::Character()
     _rectY = 24;
     _spriteX = 0;
     _spriteY = 0;
+    _currentTimeAnimation = 0;
+    _timeTakenAnimation = 0.4f;
 }
 
 Character::Character(CharacterTexture texture)
@@ -35,11 +37,36 @@ Character::Character(CharacterTexture texture)
     _rectY = 24;
     _spriteX = 0;
     _spriteY = 0;
+    _currentTimeAnimation = 0;
+    _timeTakenAnimation = 0.4f;
 }
 
 Character::~Character()
 {
 
+}
+
+void Character::update(float deltaTime)
+{
+    _currentTimeAnimation += deltaTime;
+    if (_currentTimeAnimation >= _timeTakenAnimation) {
+        _currentTimeAnimation = 0;
+        _ox = _x;
+        _oy = _y;
+        _spriteX = _ox * TILE_SIZE;
+        _spriteY = _oy * TILE_SIZE;
+        if (!_inMotion)
+            setAnimationState(AnimationState::IDLE);
+    } else {
+        int nx = (_x * TILE_SIZE - _ox * TILE_SIZE) * _currentTimeAnimation / _timeTakenAnimation;
+        int ny = (_y * TILE_SIZE - _oy * TILE_SIZE) * _currentTimeAnimation / _timeTakenAnimation;
+        _spriteX = _ox * TILE_SIZE + nx;
+        _spriteY = _oy * TILE_SIZE + ny;
+    }
+
+    if (_ox == _x && _oy == _y)
+        if (!_inMotion)
+            setAnimationState(AnimationState::IDLE);
 }
 
 void Character::setDirection(Direction direction)
@@ -82,8 +109,23 @@ void Character::resetYOffset()
 
 void Character::moveTo(int x, int y)
 {
+    _ox = _x;
+    _oy = _y;
+
     _x = x;
     _y = y;
-    _spriteX = x * 24;
-    _spriteY = y * 24;
+
+    if (_x > _ox)
+        setDirection(Direction::RIGHT);
+    else if (_x < _ox)
+        setDirection(Direction::LEFT);
+    else if (_y < _oy)
+        setDirection(Direction::DOWN);
+    else if (_y > _oy)
+        setDirection(Direction::UP);
+
+    setAnimationState(AnimationState::WALKING);
+
+    _currentTimeAnimation = 0;
+    _inMotion = true;
 }

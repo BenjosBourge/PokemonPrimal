@@ -24,7 +24,7 @@
 #include <optional>
 #include <utility>
 
-
+#define TILE_SIZE 48
 
 enum class GameState {
     STATE_DEFAULT,
@@ -64,17 +64,24 @@ private:
     std::map<GameState, std::shared_ptr<IScene>> _scenes;
     std::map<std::string, sf::Texture> _textures;
 
+    enum KeyActionType {
+        PRESSED,
+        RELEASED,
+        PRESSED_RELEASED
+    };
 
     struct KeyAction {
-        std::function<void()> action;
+        std::function<void()> actionPressed;
+        std::function<void()> actionReleased;
         bool isPressed;
+        KeyActionType type;
     };
     
     std::map<sf::Keyboard::Key, KeyAction> keyMappings = {
-        {sf::Keyboard::Key::Z, { [&]() { _client.sendPacket("Up_P"); }, false }},
-        {sf::Keyboard::Key::S, { [&]() { _client.sendPacket("Do_P"); }, false }},
-        {sf::Keyboard::Key::D, { [&]() { _client.sendPacket("Ri_P"); }, false }},
-        {sf::Keyboard::Key::Q, { [&]() { _client.sendPacket("Le_P"); }, false }},
+        {sf::Keyboard::Key::Z, { [&]() { _client.sendPacket("Up_P"); }, [&]() { _client.sendPacket("Up_R"); },  false, PRESSED_RELEASED}},
+        {sf::Keyboard::Key::S, { [&]() { _client.sendPacket("Do_P"); }, [&]() { _client.sendPacket("Do_R"); }, false, PRESSED_RELEASED}},
+        {sf::Keyboard::Key::D, { [&]() { _client.sendPacket("Ri_P"); }, [&]() { _client.sendPacket("Ri_R"); }, false, PRESSED_RELEASED}},
+        {sf::Keyboard::Key::Q, { [&]() { _client.sendPacket("Le_P"); }, [&]() { _client.sendPacket("Le_R"); }, false, PRESSED_RELEASED}},
     };   
 };
 
