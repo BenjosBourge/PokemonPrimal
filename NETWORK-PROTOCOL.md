@@ -27,6 +27,8 @@ State:
 - P: Pressed
 - R: Released
 
+
+
 ## Server → Client
 
 ### Player Created
@@ -40,3 +42,10 @@ Format: **Cmd**_Id
 Format: **Cmd**_Id_X_Y
 
 When getting self position, always in TCP.
+
+### Players Inputs Released
+**Pir**
+
+Format: **Cmd**_Id
+
+To know when a character stop moving.

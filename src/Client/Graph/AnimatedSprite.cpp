@@ -29,9 +29,11 @@ AnimatedSprite::~AnimatedSprite()
 void AnimatedSprite::setLoop(int frameNb, float timePerFrame)
 {
     _frameNb = frameNb;
-    _currentFrame = 0;
     _timePerFrame = timePerFrame;
-    _currentTime = 0;
+
+    _currentFrame %= _frameNb;
+    if (_currentTime > _timePerFrame)
+        _currentTime = 0;
 }
 
 sf::IntRect AnimatedSprite::getRect(Game &game)

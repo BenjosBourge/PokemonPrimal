@@ -20,3 +20,8 @@ Player::~Player()
 {
 
 }
+
+void Player::update(float deltaTime)
+{
+    Character::update(deltaTime);
+}

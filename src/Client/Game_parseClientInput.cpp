@@ -43,6 +43,20 @@ void Game::processToken(const std::string &token)
             }
         }
     }
+
+    if (command == "Pir" && args.size() == 1) {
+        auto &scene = _scenes[GameState::STATE_OVERWORLD];
+        if (scene) {
+            std::shared_ptr<Overworld> overworldScene = std::dynamic_pointer_cast<Overworld>(scene);
+            std::shared_ptr<Character> player = overworldScene->getCharacter("Player" + args[0]);
+
+            if (player) {
+                player->setMotion(false);
+            } else {
+                std::cerr << "Player " << args[0] << " not found" << std::endl;
+            }
+        }
+    }
 }
 
 void Game::parseClientInput(const std::string &input)
