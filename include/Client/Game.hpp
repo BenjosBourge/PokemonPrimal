@@ -8,7 +8,7 @@
 #define GAME_HPP_
 
 #include <Scene/IScene.hpp>
-#include <Graph/GUI/global.hpp>
+#include <global.hpp>
 #include <Scene/Menu.hpp>
 #include <Scene/Overworld.hpp>
 #include <Scene/MapEditor.hpp>
@@ -45,7 +45,6 @@ public:
     void parseClientInput(const std::string &data);
     void processToken(const std::string &token);
 
-    sf::Texture &getTexture(const std::string &texturePath);
     sf::RenderWindow *getWindow() { return _window; }
     float getDeltaTime() const { return _deltaTime; }
 
@@ -62,7 +61,6 @@ private:
 
     GameState _currentState;
     std::map<GameState, std::shared_ptr<IScene>> _scenes;
-    std::map<std::string, sf::Texture> _textures;
 
     enum KeyActionType {
         PRESSED,

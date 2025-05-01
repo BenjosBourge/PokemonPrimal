@@ -13,13 +13,12 @@ Menu::Menu()
     _hudMenu = std::make_shared<HUDMenu>();
 }
 
-void Menu::draw(Game &game)
+void Menu::draw(sf::RenderWindow *window)
 {
-    // Draw the menu
-    _hudMenu->draw(*game.getWindow());
+    _hudMenu->draw(*window);
 }
 
 void Menu::update(float deltaTime)
 {
-    // Update the menu
+
 }

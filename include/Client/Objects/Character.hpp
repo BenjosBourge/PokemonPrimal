@@ -7,8 +7,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-#include <Game.hpp>
-#include <Graph/AnimatedSprite.hpp>  // not <Graph/AnimatedSprite.hpp>
+#include <Graph/AnimatedSprite.hpp>
 
 
 enum CharacterTexture {
@@ -34,7 +33,7 @@ public:
     Character(CharacterTexture texture);
     ~Character();
 
-    virtual void update(float deltaTime);
+    void update(float deltaTime) override;
 
     void setDirection(Direction direction);
     void setAnimationState(AnimationState state);

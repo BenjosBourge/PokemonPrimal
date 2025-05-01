@@ -29,9 +29,9 @@ MapEditor::~MapEditor()
 
 }
 
-void MapEditor::draw(Game &game)
+void MapEditor::draw(sf::RenderWindow *window)
 {
-    game.getWindow()->draw(_spriteMap);
+    window->draw(_spriteMap);
 }
 
 void MapEditor::update(float deltaTime)

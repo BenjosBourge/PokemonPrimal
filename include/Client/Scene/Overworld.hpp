@@ -19,20 +19,20 @@
 class Character;
 
 class Overworld : public IScene {
-    public:
-        Overworld();
-        ~Overworld() = default;
+public:
+    Overworld();
+    ~Overworld() = default;
 
-        void draw(Game &game) override;
-        void update(float deltaTime) override;
+    void draw(sf::RenderWindow *window) override;
+    void update(float deltaTime) override;
 
-        void addCharacter(std::string tag);
-        std::shared_ptr<Character> getCharacter(std::string tag);
+    void addCharacter(std::string tag);
+    std::shared_ptr<Character> getCharacter(std::string tag);
 
-    private:
-        std::unordered_map<std::string, std::shared_ptr<Character>> _characters;
+private:
+    std::unordered_map<std::string, std::shared_ptr<Character>> _characters;
 
-        sf::VertexArray _vertices;
-        sf::Texture _tileset;
-        Map _spriteMap;
+    sf::VertexArray _vertices;
+    sf::Texture _tileset;
+    Map _spriteMap;
 };

@@ -8,7 +8,7 @@
 
 #include <memory>
 #include <SFML/Graphics.hpp>
-#include <Graph/GUI/global.hpp>
+#include <global.hpp>
 
 class IComponent {
     public:

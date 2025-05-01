@@ -22,7 +22,7 @@ class MapEditor : public IScene {
         MapEditor();
         ~MapEditor();
 
-        void draw(Game &game) override;
+        void draw(sf::RenderWindow *window) override;
         void update(float deltaTime) override;
     private:
         sf::VertexArray _vertices;

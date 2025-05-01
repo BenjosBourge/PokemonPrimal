@@ -7,6 +7,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <Game.hpp>
+#include <global.hpp>
 
 class Sprite {
 public:
@@ -14,8 +15,9 @@ public:
     Sprite(const std::string &texturePath, int x, int y, int width, int height, int rectX, int rectY);
     ~Sprite();
 
-    virtual sf::IntRect getRect(Game &game);
-    void draw(Game &game);
+    virtual sf::IntRect getRect();
+    virtual void update(float deltaTime);
+    void draw(sf::RenderWindow *window, int cameraX, int cameraY);
 
     int _spriteX;
     int _spriteY;

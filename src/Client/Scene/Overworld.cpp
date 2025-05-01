@@ -24,19 +24,18 @@ Overworld::Overworld()
     _spriteMap.load("assets/tilesmap.png", {16, 16}, _bitMap);
 }
 
-void Overworld::draw(Game &game)
+void Overworld::draw(sf::RenderWindow *window)
 {
-    game.getWindow()->draw(_spriteMap);
-    for (auto &character : _characters) {
-        character.second->draw(game);
-    }
+    window->draw(_spriteMap);
+
+    for (auto &character : _characters)
+        character.second->draw(window, _cameraX, _cameraY);
 }
 
 void Overworld::update(float deltaTime)
 {
-    for (auto &character : _characters) {
+    for (auto &character : _characters)
         character.second->update(deltaTime);
-    }
 }
 
 void Overworld::addCharacter(std::string tag)

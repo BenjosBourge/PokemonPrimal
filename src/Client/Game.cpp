@@ -17,14 +17,14 @@ Game::Game()
     _scenes[GameState::STATE_MAPEDIT] = std::make_shared<MapEditor>();
     
     //change this to change scene
-    _currentState = GameState::STATE_MAPEDIT;
+    _currentState = GameState::STATE_OVERWORLD;//GameState::STATE_MAPEDIT;
     _cameraX = 0;
     _cameraY = 0;
 
     sf::Texture texture;
     if (!texture.loadFromFile("assets/player.png"))
         std::cout << "error while loading texture" << std::endl;
-    _textures["player"] = texture;
+    globalTextures._textures["player"] = texture;
 }
 
 Game::~Game()
@@ -59,7 +59,7 @@ void Game::run()
         _scenes[_currentState]->update(_deltaTime);
 
         window.clear(sf::Color::Black);
-        _scenes[_currentState]->draw(*this);
+        _scenes[_currentState]->draw(&window);
         window.display();
     }
 }
@@ -86,13 +86,4 @@ void Game::inputHandling(const std::optional<sf::Event>& event)
             it->second.isPressed = false;
         }
     }
-}
-
-sf::Texture &Game::getTexture(const std::string &texturePath)
-{
-    if (_textures.find(texturePath) == _textures.end()) {
-        std::cout << "No texture found for " << texturePath << std::endl;
-        return _textures["player"];
-    }
-    return _textures[texturePath];
 }
