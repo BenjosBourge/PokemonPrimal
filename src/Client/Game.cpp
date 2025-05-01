@@ -5,21 +5,19 @@
 */
 
 #include <Game.hpp>
-#include <Graph/GUI/global.hpp>
-#include <Scene/Menu.hpp>
-#include <Scene/Overworld.hpp>
 
 Game::Game()
 {
     if (!globalFont.openFromFile("assets/fonts/font.ttf"))
         std::cout << "error while creating font" << std::endl;
 
-    //change this to change scene
-    _currentState = GameState::STATE_OVERWORLD;
     //add a scene to the map
     _scenes[GameState::STATE_MENU] = std::make_shared<Menu>();
     _scenes[GameState::STATE_OVERWORLD] = std::make_shared<Overworld>();
-
+    _scenes[GameState::STATE_MAPEDIT] = std::make_shared<MapEditor>();
+    
+    //change this to change scene
+    _currentState = GameState::STATE_MAPEDIT;
     _cameraX = 0;
     _cameraY = 0;
 
@@ -36,7 +34,7 @@ Game::~Game()
 
 void Game::run()
 {
-    sf::RenderWindow window(sf::VideoMode({800, 600}), "Pokemon Primal");
+    sf::RenderWindow window(sf::VideoMode({1920, 1080}), "Pokemon Primal");
     window.setFramerateLimit(60);
     _window = &window;
     _client.connect("127.0.0.1", 53000);

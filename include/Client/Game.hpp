@@ -7,15 +7,20 @@
 #ifndef GAME_HPP_
 #define GAME_HPP_
 
+#include <Scene/IScene.hpp>
+#include <Graph/GUI/global.hpp>
+#include <Scene/Menu.hpp>
+#include <Scene/Overworld.hpp>
+#include <Scene/MapEditor.hpp>
+
 #include <SFML/Network.hpp>
 #include <SFML/Network/Packet.hpp>
 #include <SFML/Network/TcpSocket.hpp>
 #include <SFML/Audio.hpp>
-#include <Scene/IScene.hpp>
 #include <SFML/Graphics.hpp>
-#include <string>
 #include <NetworkClient.hpp>
 
+#include <string>
 #include <optional>
 #include <utility>
 
@@ -25,6 +30,7 @@ enum class GameState {
     STATE_DEFAULT,
     STATE_MENU,
     STATE_OVERWORLD,
+    STATE_MAPEDIT,
 };
 
 class Game {

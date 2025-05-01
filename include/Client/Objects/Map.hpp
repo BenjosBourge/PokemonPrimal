@@ -10,7 +10,8 @@ class Map : public sf::Drawable, public sf::Transformable {
         
     private:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-        
+        void setTriangle(sf::Vertex* tri, int i, sf::Vector2f pos, sf::Vector2f tex);
+
         sf::VertexArray _vertices;
         sf::Texture _tileset;
 };

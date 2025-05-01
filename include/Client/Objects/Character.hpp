@@ -8,7 +8,8 @@
 #include <SFML/Graphics.hpp>
 
 #include <Game.hpp>
-#include <Graph/AnimatedSprite.hpp>
+#include <Graph/AnimatedSprite.hpp>  // not <Graph/AnimatedSprite.hpp>
+
 
 enum CharacterTexture {
     PLAYER

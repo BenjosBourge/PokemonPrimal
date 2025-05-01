@@ -17,29 +17,24 @@
 #include <memory>
 #include <array>
 #include <unordered_map>
+#include <cmath>
+
 
 class Overworld : public IScene {
-public:
-    Overworld();
-    ~Overworld() = default;
+    public:
+        Overworld();
+        ~Overworld() = default;
 
-    void draw(Game &game) override;
-    void update(float deltaTime) override;
+        void draw(Game &game) override;
+        void update(float deltaTime) override;
 
-    void addCharacter(std::string tag);
-    std::shared_ptr<Character> getCharacter(std::string tag);
+        void addCharacter(std::string tag);
+        std::shared_ptr<Character> getCharacter(std::string tag);
 
-private:
-    std::unordered_map<std::string, std::shared_ptr<Character>> _characters;
+    private:
+        std::unordered_map<std::string, std::shared_ptr<Character>> _characters;
 
-    sf::VertexArray _vertices;
-    sf::Texture _tileset;
-
-    Map _spriteMap;
-    std::vector<std::vector<int>> _bitMap = {
-        {0, 1, 2},
-        {1, 2, 0},
-        {2, 0, 1},
-        {0, 1, 2}
-    };
+        sf::VertexArray _vertices;
+        sf::Texture _tileset;
+        Map _spriteMap;
 };
