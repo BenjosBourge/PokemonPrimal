@@ -5,7 +5,6 @@
 */
 
 #include <Scene/Menu.hpp>
-#include <Game.hpp>
 
 Menu::Menu()
 {

@@ -17,7 +17,7 @@ Game::Game()
     _scenes[GameState::STATE_MAPEDIT] = std::make_shared<MapEditor>();
     
     //change this to change scene
-    _currentState = GameState::STATE_OVERWORLD;//GameState::STATE_MAPEDIT;
+    _currentState = GameState::STATE_MAPEDIT;
     _cameraX = 0;
     _cameraY = 0;
 
@@ -51,6 +51,7 @@ void Game::run()
             if (event->is<sf::Event::Closed>())
                 window.close();
             inputHandling(event);  
+            _scenes[_currentState]->handleEvent(event);
         }
 
         std::string inputs = _client.receivePacket();

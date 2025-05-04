@@ -15,13 +15,17 @@ void Map::setTriangle(sf::Vertex* tri, int i, sf::Vector2f pos, sf::Vector2f tex
 
 bool Map::load(const std::string& tilesetPath, sf::Vector2u tileSize, const std::vector<std::vector<int>>& tiles)
 {
+    
     if (!_tileset.loadFromFile(tilesetPath)) {
         std::cerr << "Failed to load tileset!" << std::endl;
         return false;
     }
-
+    
     unsigned int width = tiles[0].size();
     unsigned int height = tiles.size();
+
+    _mapSize = {width, height};
+    _tileSize = tileSize;
 
     _vertices.setPrimitiveType(sf::PrimitiveType::Triangles);
     _vertices.resize(width * height * 6); // 6 vertices per tile (2 triangles)

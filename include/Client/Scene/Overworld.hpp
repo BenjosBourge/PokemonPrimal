@@ -8,7 +8,6 @@
 
 #include <Scene/IScene.hpp>
 #include <Objects/Map.hpp>
-#include <Game.hpp>
 
 #include <iostream>
 #include <memory>
@@ -25,6 +24,8 @@ public:
 
     void draw(sf::RenderWindow *window) override;
     void update(float deltaTime) override;
+
+    void handleEvent(const std::optional<sf::Event> &event){};
 
     void addCharacter(std::string tag);
     std::shared_ptr<Character> getCharacter(std::string tag);
