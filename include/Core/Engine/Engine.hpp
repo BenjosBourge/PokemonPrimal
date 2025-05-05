@@ -34,7 +34,7 @@ public:
     std::string restart(bool &,  int &);
 
     std::vector<NetworkEvent> parseServerInput(const std::string &data);
-    std::vector<NetworkEvent> processToken(const std::string &token);
+    std::vector<NetworkEvent> processToken(std::string token);
 };
 
 #endif /* !ENGINE_HPP_ */

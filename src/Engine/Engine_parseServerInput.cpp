@@ -6,9 +6,17 @@
 
 #include <Engine/Engine.hpp>
 
-std::vector<NetworkEvent> Engine::processToken(const std::string &token)
+std::vector<NetworkEvent> Engine::processToken(std::string token)
 {
+    if (token.empty())
+        return {};
+    if (token.find('_') == std::string::npos)
+        return {};
     std::vector<NetworkEvent> events;
+
+    std::string client = token.substr(0, token.find('_'));
+    token = token.substr(token.find('_') + 1);
+
     std::string command = token.substr(0, token.find('_'));
     std::vector<std::string> args;
 
@@ -22,46 +30,46 @@ std::vector<NetworkEvent> Engine::processToken(const std::string &token)
     // creating new player
     if (command == "NC" && args.size() == 1) {
         int newPlayerEntityId = gameObjects->createEntity(_entityFactory.createEntity("Player"));
-        gameObjects->addConnectedEntity("P" + args[0], newPlayerEntityId);
-        std::cout << "New connected Entity: P" << args[0] << " with Entity ID: " << newPlayerEntityId << std::endl;
-        events.push_back(NetworkEvent(newPlayerEntityId, "Pc_" + args[0], COM_TCP_BROADCAST));
+        gameObjects->addConnectedEntity(client, newPlayerEntityId);
+        std::cout << "New connected Entity: " << client << " with Entity ID: " << newPlayerEntityId << std::endl;
+        events.push_back(NetworkEvent(newPlayerEntityId, "Pc_" + client.substr(1), COM_TCP_BROADCAST));
+        return events;
+    }
+
+    // removing player
+    if (command == "RC" && args.size() == 1) {
+        std::string playerId = args[0];
+
+        return events;
     }
 
     // inputs
-    if (command == "Up" && args.size() == 2) {
-        std::string playerId = args[1];
-
-        auto entity = gameObjects->getConnectedEntity(playerId);
+    if (command == "Up" && args.size() == 1) {
+        auto entity = gameObjects->getConnectedEntity(client);
         if (!entity) {
             std::cout << "Entity not found" << std::endl;
             return events;
         }
         entity->getComponent<Input>()._upPressed = args[0] == "P" ? true : false;
     }
-    if (command == "Do" && args.size() == 2) {
-        std::string playerId = args[1];
-
-        auto entity = gameObjects->getConnectedEntity(playerId);
+    if (command == "Do" && args.size() == 1) {
+        auto entity = gameObjects->getConnectedEntity(client);
         if (!entity) {
             std::cout << "Entity not found" << std::endl;
             return events;
         }
         entity->getComponent<Input>()._downPressed = args[0] == "P" ? true : false;
     }
-    if (command == "Ri" && args.size() == 2) {
-        std::string playerId = args[1];
-
-        auto entity = gameObjects->getConnectedEntity(playerId);
+    if (command == "Ri" && args.size() == 1) {
+        auto entity = gameObjects->getConnectedEntity(client);
         if (!entity) {
             std::cout << "Entity not found" << std::endl;
             return events;
         }
         entity->getComponent<Input>()._rightPressed = args[0] == "P" ? true : false;
     }
-    if (command == "Le" && args.size() == 2) {
-        std::string playerId = args[1];
-
-        auto entity = gameObjects->getConnectedEntity(playerId);
+    if (command == "Le" && args.size() == 1) {
+        auto entity = gameObjects->getConnectedEntity(client);
         if (!entity) {
             std::cout << "Entity not found" << std::endl;
             return events;
