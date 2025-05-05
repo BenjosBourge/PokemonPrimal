@@ -26,18 +26,21 @@ void Game::processToken(const std::string &token)
         auto &scene = _scenes[GameState::STATE_OVERWORLD];
         if (scene) {
             std::shared_ptr<Overworld> overworldScene = std::dynamic_pointer_cast<Overworld>(scene);
-            overworldScene->addCharacter("Player"+args[0]);
+            overworldScene->addCharacter(args[0]);
         }
     }
 
-    if (command == "Pp" && args.size() == 3) {
+    if (command == "Pp" && args.size() == 4) {
         auto &scene = _scenes[GameState::STATE_OVERWORLD];
         if (scene) {
             std::shared_ptr<Overworld> overworldScene = std::dynamic_pointer_cast<Overworld>(scene);
-            std::shared_ptr<Character> player = overworldScene->getCharacter("Player" + args[0]);
+            std::shared_ptr<Character> player = overworldScene->getCharacter(args[0]);
 
             if (player) {
-                player->moveTo(std::stoi(args[1]), std::stoi(args[2]));
+                if (args[1] == "0")
+                    player->moveTo(std::stoi(args[2]), std::stoi(args[3]));
+                else
+                    player->setPosition(std::stoi(args[2]), std::stoi(args[3]));
             } else {
                 std::cerr << "Player " << args[0] << " not found" << std::endl;
             }
@@ -48,7 +51,7 @@ void Game::processToken(const std::string &token)
         auto &scene = _scenes[GameState::STATE_OVERWORLD];
         if (scene) {
             std::shared_ptr<Overworld> overworldScene = std::dynamic_pointer_cast<Overworld>(scene);
-            std::shared_ptr<Character> player = overworldScene->getCharacter("Player" + args[0]);
+            std::shared_ptr<Character> player = overworldScene->getCharacter(args[0]);
 
             if (player) {
                 player->setMotion(false);

@@ -131,3 +131,27 @@ void Character::moveTo(int x, int y)
     _currentTimeAnimation = 0;
     _inMotion = true;
 }
+
+void Character::setPosition(int x, int y)
+{
+    _ox = x;
+    _oy = y;
+    _x = x;
+    _y = y;
+    _spriteX = _ox * TILE_SIZE;
+    _spriteY = _oy * TILE_SIZE;
+
+    if (_x > _ox)
+        setDirection(Direction::RIGHT);
+    else if (_x < _ox)
+        setDirection(Direction::LEFT);
+    else if (_y < _oy)
+        setDirection(Direction::DOWN);
+    else if (_y > _oy)
+        setDirection(Direction::UP);
+
+    setAnimationState(AnimationState::IDLE);
+
+    _currentTimeAnimation = 0;
+    _inMotion = false;
+}

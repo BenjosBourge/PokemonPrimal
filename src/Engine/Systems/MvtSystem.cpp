@@ -27,8 +27,8 @@ std::vector<NetworkEvent> MvtSystem::update(std::shared_ptr<EntityManager>& enti
             if (position.inMotion) {
                 position.inMotion = false;
 
-                std::string eventType = "Pir_" + std::to_string(entity->tag[entity->tag.size() - 1] - '0') + ":";
-                events.emplace_back(entity->id, eventType, COM_TCP_BROADCAST);
+                std::string eventType = "Pir_" + entity->tag + ":";
+                events.emplace_back(-1, eventType, COM_TCP_BROADCAST);
             }
             continue;
         }
@@ -39,10 +39,14 @@ std::vector<NetworkEvent> MvtSystem::update(std::shared_ptr<EntityManager>& enti
         position.timerMove = 0.4f;
 
         // send message to clients for object position
-        std::string eventType = "Pp_" + std::to_string(entity->tag[entity->tag.size() - 1] - '0') + "_" +
+        std::string eventType = "Pp_" + entity->tag + "_0_" +
                           std::to_string(position.x) + "_" +
                           std::to_string(position.y) + ":";
-        events.emplace_back(entity->id, eventType, COM_SECURE_BROADCAST);
+        std::cout << "movement entity tag" << entity->tag << std::endl;
+        if (entity->tag[0] == 'P')
+            events.emplace_back(entity->tag[entity->tag.size() - 1] - '0', eventType, COM_TCP_BROADCAST);
+        else
+            events.emplace_back(-1, eventType, COM_BROADCAST);
         position.inMotion = true;
     }
     return events;

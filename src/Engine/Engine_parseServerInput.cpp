@@ -15,6 +15,7 @@ std::vector<NetworkEvent> Engine::processToken(std::string token)
     std::vector<NetworkEvent> events;
 
     std::string client = token.substr(0, token.find('_'));
+    int clientId = client[1] - '0'; //get the n in Pn
     token = token.substr(token.find('_') + 1);
 
     std::string command = token.substr(0, token.find('_'));
@@ -28,18 +29,29 @@ std::vector<NetworkEvent> Engine::processToken(std::string token)
         args.push_back(tmp);
 
     // creating new player
-    if (command == "NC" && args.size() == 1) {
+    if (command == "NC") {
         int newPlayerEntityId = gameObjects->createEntity(_entityFactory.createEntity("Player"));
         gameObjects->addConnectedEntity(client, newPlayerEntityId);
         std::cout << "New connected Entity: " << client << " with Entity ID: " << newPlayerEntityId << std::endl;
-        events.push_back(NetworkEvent(newPlayerEntityId, "Pc_" + client.substr(1), COM_TCP_BROADCAST));
+        events.push_back(NetworkEvent(clientId, "Pc_" + client, COM_TCP_BROADCAST));
+
+        for (auto &entity : gameObjects->_connectedEntities) {
+            if (entity.first == client)
+                continue;
+            events.push_back(NetworkEvent(clientId, "Pc_" + entity.first, COM_TCP));
+            std::shared_ptr<Entity> newEntity = gameObjects->getConnectedEntity(entity.first);
+            std::string eventType = "Pp_" + entity.first + "_1_" +
+                                    std::to_string(newEntity->getComponent<Position>().x) + "_" +
+                                    std::to_string(newEntity->getComponent<Position>().y) + ":";
+            events.push_back(NetworkEvent(clientId, eventType, COM_TCP));
+            events.push_back(NetworkEvent(clientId, "Pir_" + entity.first, COM_TCP));
+        }
         return events;
     }
 
     // removing player
-    if (command == "RC" && args.size() == 1) {
-        std::string playerId = args[0];
-
+    if (command == "RC") {
+        int entityId = gameObjects->getConnectedEntity(client)->id;
         return events;
     }
 

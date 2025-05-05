@@ -26,12 +26,11 @@ class NetworkEvent {
 public:
     NetworkEvent() {}
     ~NetworkEvent() {}
-    NetworkEvent(int entityId, const std::string &eventType, CommunicationType communicationType)
+    NetworkEvent(int clientId, const std::string &eventType, CommunicationType communicationType)
     {
-        this->entityId = entityId;
         this->eventType = eventType;
         this->communicationType = communicationType;
-        clientId = -1;
+        this->clientId = clientId;
     }
 
     int entityId;

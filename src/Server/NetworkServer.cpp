@@ -218,9 +218,9 @@ void NetworkServer::processEngineInput(std::vector<NetworkEvent> &events)
         std::string data = event.eventType;
 
         if (event.communicationType == COM_UDP) {
-            sendUdpPacket(event.eventType, event.entityId);
+            sendUdpPacket(event.eventType, event.clientId);
         } else if (event.communicationType == COM_TCP) {
-            addToTcpBuffer(event.eventType, event.entityId);
+            addToTcpBuffer(event.eventType, event.clientId);
         } else if (event.communicationType == COM_BROADCAST) {
             sendUdpPacketToAllClients(event.eventType);
         } else if (event.communicationType == COM_SECURE_BROADCAST) {
@@ -229,11 +229,10 @@ void NetworkServer::processEngineInput(std::vector<NetworkEvent> &events)
             for (int i = 0; i < 4; ++i) {
                 if (!_clients[i]._isConnected)
                     continue;
-                if (_clients[i]._ip == _clients[event.clientId]._ip) {
+                if (i == event.clientId)
                     addToTcpBuffer(event.eventType, i);
-                } else {
+                else
                     sendUdpPacket(event.eventType, i);
-                }
             }
         } else if (event.communicationType == COM_TCP_BROADCAST) {
             for (int i = 0; i < 4; ++i) {

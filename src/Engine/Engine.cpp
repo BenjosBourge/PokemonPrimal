@@ -45,13 +45,5 @@ std::vector<NetworkEvent> Engine::update(float deltaTime)
         output.insert(output.end(), events.begin(), events.end());
     }
 
-    /* Check if events are SECURE_BROADCAST, if yes, change client ID */
-    for (auto &event : output) {
-        if (event.communicationType == COM_SECURE_BROADCAST) {
-            std::string tag = gameObjects->getConnectedEntityTag(event.entityId);
-            event.clientId = tag[tag.size() - 1] - '0'; //get the n in Pn
-        }
-    }
-
     return output;
 }
