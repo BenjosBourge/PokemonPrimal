@@ -36,12 +36,20 @@ State:
 
 Format: **Cmd**_Id
 
+
+### Player Disconnected
+**Pd**
+
+Format: **Cmd**_Id
+
+
 ### Players Position
 **Pp**
 
 Format: **Cmd**_Id_X_Y
 
 When getting self position, always in TCP.
+
 
 ### Players Inputs Released
 **Pir**

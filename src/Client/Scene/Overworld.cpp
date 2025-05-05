@@ -48,6 +48,14 @@ void Overworld::addCharacter(std::string tag)
     }
 }
 
+void Overworld::removeCharacter(std::string tag)
+{
+    if (_characters.find(tag) != _characters.end()) {
+        _characters.erase(tag);
+        std::cout << "Character " << tag << " removed from the overworld." << std::endl;
+    }
+}
+
 std::shared_ptr<Character> Overworld::getCharacter(std::string tag)
 {
     if (_characters.find(tag) != _characters.end())

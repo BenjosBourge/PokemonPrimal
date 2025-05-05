@@ -27,6 +27,7 @@ public:
     void update(float deltaTime) override;
 
     void addCharacter(std::string tag);
+    void removeCharacter(std::string tag);
     std::shared_ptr<Character> getCharacter(std::string tag);
 
 private:

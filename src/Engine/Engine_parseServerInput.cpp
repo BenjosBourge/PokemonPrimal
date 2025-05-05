@@ -52,6 +52,10 @@ std::vector<NetworkEvent> Engine::processToken(std::string token)
     // removing player
     if (command == "RC") {
         int entityId = gameObjects->getConnectedEntity(client)->id;
+
+        gameObjects->removeConnectedEntity(client);
+        std::cout << "Disconnected Entity: " << client << " with Entity ID: " << entityId << std::endl;
+        events.push_back(NetworkEvent(clientId, "Pd_" + client, COM_TCP_BROADCAST));
         return events;
     }
 

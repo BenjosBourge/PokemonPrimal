@@ -30,6 +30,14 @@ void Game::processToken(const std::string &token)
         }
     }
 
+    if (command == "Pd" && args.size() == 1) {
+        auto &scene = _scenes[GameState::STATE_OVERWORLD];
+        if (scene) {
+            std::shared_ptr<Overworld> overworldScene = std::dynamic_pointer_cast<Overworld>(scene);
+            overworldScene->removeCharacter(args[0]);
+        }
+    }
+
     if (command == "Pp" && args.size() == 4) {
         auto &scene = _scenes[GameState::STATE_OVERWORLD];
         if (scene) {
