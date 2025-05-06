@@ -131,11 +131,31 @@ void NetworkServer::clearTcpBuffer(int clientId)
     _clients[clientId]._tcpBuffer.clear();
 }
 
+void NetworkServer::clearUdpBuffer(int clientId)
+{
+    if (clientId < 0 || clientId >= 4) {
+        std::cerr << "Invalid client ID" << std::endl;
+        return;
+    }
+    if (!_clients[clientId]._isConnected) {
+        std::cerr << "Client " << clientId << " is not connected" << std::endl;
+        return;
+    }
+    _clients[clientId]._udpBuffer.clear();
+}
+
 void NetworkServer::clearAllTcpBuffers()
 {
     for (int i = 0; i < 4; ++i)
         if (_clients[i]._isConnected)
             clearTcpBuffer(i);
+}
+
+void NetworkServer::clearAllUdpBuffers()
+{
+    for (int i = 0; i < 4; ++i)
+        if (_clients[i]._isConnected)
+            clearUdpBuffer(i);
 }
 
 void NetworkServer::flushTcpBuffer(int clientId)
@@ -154,11 +174,34 @@ void NetworkServer::flushTcpBuffer(int clientId)
     _clients[clientId]._tcpBuffer.clear();
 }
 
+void NetworkServer::flushUdpBuffer(int clientId)
+{
+    if (clientId < 0 || clientId >= 4) {
+        std::cerr << "Invalid client ID" << std::endl;
+        return;
+    }
+    if (!_clients[clientId]._isConnected) {
+        std::cerr << "Client " << clientId << " is not connected" << std::endl;
+        return;
+    }
+    if (_clients[clientId]._udpBuffer.empty())
+        return;
+    sendUdpPacket(_clients[clientId]._udpBuffer, clientId);
+    _clients[clientId]._udpBuffer.clear();
+}
+
 void NetworkServer::flushAllTcpBuffers()
 {
     for (int i = 0; i < 4; ++i)
         if (_clients[i]._isConnected)
             flushTcpBuffer(i);
+}
+
+void NetworkServer::flushAllUdpBuffers()
+{
+    for (int i = 0; i < 4; ++i)
+        if (_clients[i]._isConnected)
+            flushUdpBuffer(i);
 }
 
 void NetworkServer::addToTcpBuffer(const std::string &data, int clientId)
@@ -172,6 +215,19 @@ void NetworkServer::addToTcpBuffer(const std::string &data, int clientId)
         return;
     }
     _clients[clientId]._tcpBuffer += data + ":";
+}
+
+void NetworkServer::addToUdpBuffer(const std::string &data, int clientId)
+{
+    if (clientId < 0 || clientId >= 4) {
+        std::cerr << "Invalid client ID" << std::endl;
+        return;
+    }
+    if (!_clients[clientId]._isConnected) {
+        std::cerr << "Client " << clientId << " is not connected" << std::endl;
+        return;
+    }
+    _clients[clientId]._udpBuffer += data + ":";
 }
 
 void NetworkServer::sendTcpPacket(const std::string &data, int clientId)
@@ -207,24 +263,27 @@ void NetworkServer::sendUdpPacket(const std::string &data, int clientId)
     packet << data;
     if (_udpSocket.send(packet, _clients[clientId]._ip, _clients[clientId]._udpPort) != sf::Socket::Status::Done) {
         std::cerr << "Failed to send UDP packet" << std::endl;
-    } else {
-        std::cout << "Sent UDP packet to client " << clientId << " on port " << _clients[clientId]._udpPort << ": " << data << std::endl;
     }
 }
 
 void NetworkServer::processEngineInput(std::vector<NetworkEvent> &events)
 {
     clearAllTcpBuffers();
+    clearAllUdpBuffers();
 
     for (auto &event : events) {
         std::string data = event.eventType;
 
         if (event.communicationType == COM_UDP) {
-            sendUdpPacket(event.eventType, event.clientId);
+            addToUdpBuffer(event.eventType, event.clientId);
         } else if (event.communicationType == COM_TCP) {
             addToTcpBuffer(event.eventType, event.clientId);
         } else if (event.communicationType == COM_BROADCAST) {
-            sendUdpPacketToAllClients(event.eventType);
+            for (int i = 0; i < 4; ++i) {
+                if (!_clients[i]._isConnected)
+                    continue;
+                addToUdpBuffer(event.eventType, i);
+            }
         } else if (event.communicationType == COM_SECURE_BROADCAST) {
             if (event.clientId == -1)
                 continue;
@@ -234,7 +293,7 @@ void NetworkServer::processEngineInput(std::vector<NetworkEvent> &events)
                 if (i == event.clientId)
                     addToTcpBuffer(event.eventType, i);
                 else
-                    sendUdpPacket(event.eventType, i);
+                    addToUdpBuffer(event.eventType, i);
             }
         } else if (event.communicationType == COM_TCP_BROADCAST) {
             for (int i = 0; i < 4; ++i) {
@@ -252,5 +311,6 @@ void NetworkServer::processEngineInput(std::vector<NetworkEvent> &events)
         }
     }
 
+    flushAllUdpBuffers();
     flushAllTcpBuffers();
 }

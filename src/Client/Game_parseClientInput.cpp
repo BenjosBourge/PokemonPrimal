@@ -21,7 +21,7 @@ void Game::processToken(const std::string &token)
     while (std::getline(ss, tmp, '_'))
         args.push_back(tmp);
 
-    std::cout << "Command: " << command << " Args: " << args.size() << std::endl;
+    //std::cout << "Command: " << command << " Args: " << args.size() << std::endl;
     if (command == "Pc" && args.size() == 1) {
         auto &scene = _scenes[GameState::STATE_OVERWORLD];
         if (scene) {

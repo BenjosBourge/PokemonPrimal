@@ -19,6 +19,7 @@ public:
     unsigned short _port;
     bool _isConnected;
     std::string _tcpBuffer;
+    std::string _udpBuffer;
     int _udpPort;
 };
 
@@ -32,11 +33,18 @@ public:
 
     void sendTcpPacketToAllClients(const std::string &data);
     void sendUdpPacketToAllClients(const std::string &data);
+
     void clearTcpBuffer(int clientId);
     void clearAllTcpBuffers();
     void flushTcpBuffer(int clientId);
     void flushAllTcpBuffers();
     void addToTcpBuffer(const std::string &data, int clientId);
+
+    void clearUdpBuffer(int clientId);
+    void clearAllUdpBuffers();
+    void flushUdpBuffer(int clientId);
+    void flushAllUdpBuffers();
+    void addToUdpBuffer(const std::string &data, int clientId);
 
     void sendTcpPacket(const std::string &data, int clientId);
     void sendUdpPacket(const std::string &data, int clientId);
