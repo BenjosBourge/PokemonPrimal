@@ -13,6 +13,7 @@
 ClientConnection::ClientConnection() : _ip(sf::IpAddress::Any)
 {
     _isConnected = false;
+    _udpPort = 54000;
 }
 
 ClientConnection::~ClientConnection()
@@ -42,7 +43,6 @@ void NetworkServer::host(int port)
         return;
     }
     _udpSocket.setBlocking(false);
-    //_selector.add(_udpSocket);
 }
 
 
@@ -205,8 +205,10 @@ void NetworkServer::sendUdpPacket(const std::string &data, int clientId)
 
     sf::Packet packet;
     packet << data;
-    if (_udpSocket.send(packet, _clients[clientId]._ip, 54000) != sf::Socket::Status::Done) {
+    if (_udpSocket.send(packet, _clients[clientId]._ip, _clients[clientId]._udpPort) != sf::Socket::Status::Done) {
         std::cerr << "Failed to send UDP packet" << std::endl;
+    } else {
+        std::cout << "Sent UDP packet to client " << clientId << " on port " << _clients[clientId]._udpPort << ": " << data << std::endl;
     }
 }
 
@@ -239,6 +241,13 @@ void NetworkServer::processEngineInput(std::vector<NetworkEvent> &events)
                 if (!_clients[i]._isConnected)
                     continue;
                 addToTcpBuffer(event.eventType, i);
+            }
+        } else if (event.communicationType == COM_SET_UDP) {
+            if (_clients[event.clientId]._isConnected) {
+                _clients[event.clientId]._udpPort = std::stoi(event.eventType);
+                std::cout << "Client " << event.clientId << " UDP port set to " << _clients[event.clientId]._udpPort << std::endl;
+            } else {
+                std::cerr << "Client " << event.clientId << " is not connected" << std::endl;
             }
         }
     }

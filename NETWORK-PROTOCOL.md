@@ -12,6 +12,11 @@ Each client listens on the port 54000 for the UDP protocol.
 
 ## Client → Server
 
+### UDP Port
+**UDP**
+
+Format: **Cmd**_Port
+
 ### Movement
 **Up, Do, Le, Ri**
 

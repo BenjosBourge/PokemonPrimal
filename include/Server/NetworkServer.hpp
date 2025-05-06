@@ -19,6 +19,7 @@ public:
     unsigned short _port;
     bool _isConnected;
     std::string _tcpBuffer;
+    int _udpPort;
 };
 
 class NetworkServer {

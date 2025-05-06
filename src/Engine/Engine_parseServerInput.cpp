@@ -28,6 +28,19 @@ std::vector<NetworkEvent> Engine::processToken(std::string token)
     while (std::getline(ss, tmp, '_'))
         args.push_back(tmp);
 
+    if (command == "UDP" && args.size() == 1) {
+        try {
+            int udpPort = std::stoi(args[0]);
+
+            events.emplace_back(clientId, std::to_string(udpPort), COM_SET_UDP);
+            std::cout << "UDP port network event: " << udpPort << std::endl;
+        }
+        catch (const std::invalid_argument &e) {
+            std::cerr << "Invalid UDP port: " << args[0] << std::endl;
+        }
+        return events;
+    }
+
     // creating new player
     if (command == "NC") {
         int newPlayerEntityId = gameObjects->createEntity(_entityFactory.createEntity("Player"));
