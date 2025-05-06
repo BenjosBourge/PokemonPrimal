@@ -12,9 +12,11 @@
 
 #include <Engine/Components/Position.hpp>
 #include <Engine/Components/Input.hpp>
+#include <Engine/Components/NPC.hpp>
 
 #include <Engine/Systems/MvtSystem.hpp>
 #include <Engine/Systems/PlayerMovementSystem.hpp>
+#include <Engine/Systems/NPCMovementSystem.hpp>
 
 #include <Engine/Event.hpp>
 
@@ -24,6 +26,8 @@ private:
 public:
     std::shared_ptr<EntityManager> gameObjects;
     EntityFactory _entityFactory;
+
+    std::shared_ptr<Entity> createEntity(std::string name);
 
     Engine();
     ~Engine();

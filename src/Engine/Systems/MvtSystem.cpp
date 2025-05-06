@@ -42,11 +42,10 @@ std::vector<NetworkEvent> MvtSystem::update(std::shared_ptr<EntityManager>& enti
         std::string eventType = "Pp_" + entity->tag + "_0_" +
                           std::to_string(position.x) + "_" +
                           std::to_string(position.y) + ":";
-        std::cout << "movement entity tag" << entity->tag << std::endl;
         if (entity->tag[0] == 'P')
             events.emplace_back(entity->tag[entity->tag.size() - 1] - '0', eventType, COM_TCP_BROADCAST);
         else
-            events.emplace_back(-1, eventType, COM_BROADCAST);
+            events.emplace_back(-1, eventType, COM_TCP_BROADCAST);
         position.inMotion = true;
     }
     return events;
