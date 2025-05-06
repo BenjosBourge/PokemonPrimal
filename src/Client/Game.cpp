@@ -70,7 +70,7 @@ void Game::inputHandling(const std::optional<sf::Event>& event)
     if (event->is<sf::Event::KeyPressed>()) {
         //find element in the map to execute the function link to the key
         auto it = keyMappings.find(event->getIf<sf::Event::KeyPressed>()->code);
-         
+
         if (it != keyMappings.end() && !it->second.isPressed) {
             if (it->second.type == PRESSED || it->second.type == PRESSED_RELEASED)
                 it->second.actionPressed();
