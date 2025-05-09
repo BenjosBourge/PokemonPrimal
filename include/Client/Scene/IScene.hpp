@@ -8,6 +8,7 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <iostream>
+#include <optional>
 
 class Game;
 
@@ -17,6 +18,8 @@ public:
     ~IScene() = default;
     virtual void draw(sf::RenderWindow *window) = 0;
     virtual void update(float deltaTime) = 0;
+    virtual void handleEvent(const std::optional<sf::Event> &event) = 0;
+
 protected:
     int _cameraX;
     int _cameraY;

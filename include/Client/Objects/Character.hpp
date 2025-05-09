@@ -6,9 +6,7 @@
 
 #pragma once
 #include <SFML/Graphics.hpp>
-
 #include <Graph/AnimatedSprite.hpp>
-
 
 enum CharacterTexture {
     PLAYER

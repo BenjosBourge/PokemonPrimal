@@ -6,8 +6,6 @@
 
 #pragma once
 #include <SFML/Graphics.hpp>
-
-#include <Game.hpp>
 #include <Objects/Character.hpp>
 
 class Player : public Character {

@@ -9,6 +9,8 @@
 
 Overworld::Overworld()
 {
+    int value = 0;
+
     /*const int totalElements = 12288;
     const int elementsPerRow = 192;
     const int numRows = std::ceil(totalElements / static_cast<float>(elementsPerRow));
@@ -27,7 +29,6 @@ Overworld::Overworld()
 void Overworld::draw(sf::RenderWindow *window)
 {
     //window->draw(_spriteMap);
-
     for (auto &character : _characters)
         character.second->draw(window, _cameraX, _cameraY);
 }

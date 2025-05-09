@@ -6,7 +6,6 @@
 
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <Game.hpp>
 #include <global.hpp>
 
 class Sprite {

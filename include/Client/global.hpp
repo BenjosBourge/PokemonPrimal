@@ -6,6 +6,8 @@
 #include <string>
 #include <iostream>
 
+#define TILE_SIZE 48
+
 extern sf::Font globalFont;
 
 class TextureManager {
