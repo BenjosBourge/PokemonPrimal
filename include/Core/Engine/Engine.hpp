@@ -12,9 +12,11 @@
 
 #include <Engine/Components/Position.hpp>
 #include <Engine/Components/Input.hpp>
+#include <Engine/Components/NPC.hpp>
 
 #include <Engine/Systems/MvtSystem.hpp>
 #include <Engine/Systems/PlayerMovementSystem.hpp>
+#include <Engine/Systems/NPCMovementSystem.hpp>
 
 #include <Engine/Event.hpp>
 
@@ -25,6 +27,8 @@ public:
     std::shared_ptr<EntityManager> gameObjects;
     EntityFactory _entityFactory;
 
+    std::shared_ptr<Entity> createEntity(std::string name);
+
     Engine();
     ~Engine();
 
@@ -34,7 +38,7 @@ public:
     std::string restart(bool &,  int &);
 
     std::vector<NetworkEvent> parseServerInput(const std::string &data);
-    std::vector<NetworkEvent> processToken(const std::string &token);
+    std::vector<NetworkEvent> processToken(std::string token);
 };
 
 #endif /* !ENGINE_HPP_ */

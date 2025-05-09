@@ -38,6 +38,7 @@ public:
     void resetYOffset();
 
     void moveTo(int x, int y);
+    void setPosition(int x, int y);
 
     void setMotion(bool inMotion) { _inMotion = inMotion; }
 

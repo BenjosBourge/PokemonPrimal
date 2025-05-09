@@ -18,6 +18,7 @@ void Engine::start()
     _entityFactory = EntityFactory();
     _systems.push_back(std::make_shared<MvtSystem>());
     _systems.push_back(std::make_shared<PlayerMovementSystem>());
+    _systems.push_back(std::make_shared<NPCMovementSystem>());
 }
 
 std::string Engine::restart(bool &startGame, int &lastEntityId) 
@@ -45,13 +46,13 @@ std::vector<NetworkEvent> Engine::update(float deltaTime)
         output.insert(output.end(), events.begin(), events.end());
     }
 
-    /* Check if events are SECURE_BROADCAST, if yes, change client ID */
-    for (auto &event : output) {
-        if (event.communicationType == COM_SECURE_BROADCAST) {
-            std::string tag = gameObjects->getConnectedEntityTag(event.entityId);
-            event.clientId = tag[tag.size() - 1] - '0'; //get the n in Pn
-        }
-    }
-
     return output;
+}
+
+std::shared_ptr<Entity> Engine::createEntity(std::string name)
+{
+    int id = gameObjects->createEntity(_entityFactory.createEntity(name));
+    std::shared_ptr<Entity> newEntity = gameObjects->getEntityById(id);
+
+    return newEntity;
 }

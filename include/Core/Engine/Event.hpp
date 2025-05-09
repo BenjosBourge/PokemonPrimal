@@ -12,7 +12,8 @@ enum CommunicationType {
     COM_TCP,
     COM_BROADCAST,
     COM_SECURE_BROADCAST,
-    COM_TCP_BROADCAST
+    COM_TCP_BROADCAST,
+    COM_SET_UDP
 };
 
 /*
@@ -26,12 +27,11 @@ class NetworkEvent {
 public:
     NetworkEvent() {}
     ~NetworkEvent() {}
-    NetworkEvent(int entityId, const std::string &eventType, CommunicationType communicationType)
+    NetworkEvent(int clientId, const std::string &eventType, CommunicationType communicationType)
     {
-        this->entityId = entityId;
         this->eventType = eventType;
         this->communicationType = communicationType;
-        clientId = -1;
+        this->clientId = clientId;
     }
 
     int entityId;

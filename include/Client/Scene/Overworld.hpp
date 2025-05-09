@@ -28,6 +28,7 @@ public:
     void handleEvent(const std::optional<sf::Event> &event){};
 
     void addCharacter(std::string tag);
+    void removeCharacter(std::string tag);
     std::shared_ptr<Character> getCharacter(std::string tag);
 
 private:

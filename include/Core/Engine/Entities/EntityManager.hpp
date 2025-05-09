@@ -43,6 +43,7 @@ public:
     /* Each entity and their online tag */
     std::unordered_map<std::string, int> _connectedEntities;
     void addConnectedEntity(std::string name, int id);
+    void removeConnectedEntity(std::string name);
     std::shared_ptr<Entity> getConnectedEntity(std::string name);
     std::string getConnectedEntityTag(int id);
 };
