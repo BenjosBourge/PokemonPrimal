@@ -8,6 +8,7 @@
 #define MVTSYSTEM_HPP_
 #include <Engine/Systems/ISystem.hpp>
 #include <Engine/Components/Position.hpp>
+#include <Maps/MapManager.hpp>
 
 class MvtSystem : virtual public ISystem {
 public:
@@ -18,6 +19,7 @@ public:
 
 protected:
 private:
+    MapManager mapManager;
 };
 
 #endif /* !MVTSYSTEM_HPP_ */

@@ -17,7 +17,7 @@ Game::Game()
     _scenes[GameState::STATE_MAPEDIT] = std::make_shared<MapEditor>();
     
     //change this to change scene
-    _currentState = GameState::STATE_MAPEDIT;
+    _currentState = GameState::STATE_OVERWORLD;
     _cameraX = 0;
     _cameraY = 0;
 

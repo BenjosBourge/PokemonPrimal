@@ -5,7 +5,8 @@ project(${PROJECT_NAME})
 
 set(CMAKE_CXX_STANDARD 17)
 
-file( GLOB SRC src/Engine/Entities/*.cpp src/Engine/Systems/*.cpp src/Engine/*.cpp src/Engine/Components/*.cpp)
+file( GLOB SRC src/Engine/Entities/*.cpp src/Engine/Systems/*.cpp src/Engine/*.cpp src/Engine/Components/*.cpp
+            src/Engine/Maps/*.cpp)
 
 file ( GLOB CLIENT src/Client/*.cpp src/Client/Graph/*.cpp src/Client/Graph/GUI/*.cpp src/Client/Graph/GUI/*.cpp
             src/Client/Scene/*.cpp src/Client/Objects/*.cpp)
