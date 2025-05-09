@@ -1,8 +1,7 @@
 /*
-** EPITECH PROJECT, 2023
-** B-CPP-500-LYN-5-2-rtype-erwann.laplante
+** Pokemon Primal
 ** File description:
-** Game
+** AnimatedSprite
 */
 
 #include <Graph/AnimatedSprite.hpp>
@@ -30,16 +29,17 @@ AnimatedSprite::~AnimatedSprite()
 void AnimatedSprite::setLoop(int frameNb, float timePerFrame)
 {
     _frameNb = frameNb;
-    _currentFrame = 0;
     _timePerFrame = timePerFrame;
-    _currentTime = 0;
+
+    _currentFrame %= _frameNb;
+    if (_currentTime > _timePerFrame)
+        _currentTime = 0;
 }
 
-sf::IntRect AnimatedSprite::getRect(Game &game)
+sf::IntRect AnimatedSprite::getRect()
 {
-    sf::IntRect rect = Sprite::getRect(game);
+    sf::IntRect rect = Sprite::getRect();
 
-    _currentTime += game.getDeltaTime();
     if (_currentTime >= _timePerFrame) {
         _currentFrame++;
         _currentTime = 0;
@@ -54,4 +54,7 @@ sf::IntRect AnimatedSprite::getRect(Game &game)
     return rect;
 }
 
-
+void AnimatedSprite::update(float deltaTime)
+{
+    _currentTime += deltaTime;
+}

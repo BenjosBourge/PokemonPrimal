@@ -1,8 +1,7 @@
 /*
-** EPITECH PROJECT, 2023
-** B-CPP-500-LYN-5-2-rtype-erwann.laplante
+** Pokemon Primal
 ** File description:
-** main
+** NetworkCLient
 */
 
 #include <NetworkClient.hpp>
@@ -32,9 +31,7 @@ void NetworkClient::connect(std::string ip, unsigned int port)
     _isConnected = true;
     _selector.add(_tcpSocket);
 
-    std::cout << "Connected to server on port: " << 53000 << std::endl;
-
-    int portUdp = 53000 + 1;
+    int portUdp = 54000;
     while (portUdp < 65535) {
         if (_udpSocket.bind(portUdp) == sf::Socket::Status::Done)
             break;
@@ -45,6 +42,8 @@ void NetworkClient::connect(std::string ip, unsigned int port)
     _selector.add(_udpSocket);
 
     std::cout << "Connected to server." << std::endl;
+
+    sendPacket("UDP_" + std::to_string(portUdp));
 }
 
 void NetworkClient::sendPacket(std::string data)

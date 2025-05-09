@@ -58,7 +58,17 @@ void EntityManager::destroyEntityById(int id)
 
 void EntityManager::addConnectedEntity(std::string name, int id)
 {
+    _entities[id]->tag = name;
     _connectedEntities[name] = id;
+}
+
+void EntityManager::removeConnectedEntity(std::string name)
+{
+    if (_connectedEntities.find(name) == _connectedEntities.end()) {
+        std::cout << "Entity " << name << " not found" << std::endl;
+        return;
+    }
+    _connectedEntities.erase(name);
 }
 
 std::shared_ptr<Entity> EntityManager::getConnectedEntity(std::string name)

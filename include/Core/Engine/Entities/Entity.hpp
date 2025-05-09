@@ -25,6 +25,7 @@ private:
 
 public:
     int id;
+    std::string tag;
     EntityDeathReason deathReason = EntityDeathReason::Killed;
     Entity();
     ~Entity();

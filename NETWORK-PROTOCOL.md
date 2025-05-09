@@ -12,6 +12,11 @@ Each client listens on the port 54000 for the UDP protocol.
 
 ## Client → Server
 
+### UDP Port
+**UDP**
+
+Format: **Cmd**_Port
+
 ### Movement
 **Up, Do, Le, Ri**
 
@@ -27,7 +32,21 @@ State:
 - P: Pressed
 - R: Released
 
+
+
 ## Server → Client
+
+### Player Created
+**Pc**
+
+Format: **Cmd**_Id
+
+
+### Player Disconnected
+**Pd**
+
+Format: **Cmd**_Id
+
 
 ### Players Position
 **Pp**
@@ -35,3 +54,11 @@ State:
 Format: **Cmd**_Id_X_Y
 
 When getting self position, always in TCP.
+
+
+### Players Inputs Released
+**Pir**
+
+Format: **Cmd**_Id
+
+To know when a character stop moving.

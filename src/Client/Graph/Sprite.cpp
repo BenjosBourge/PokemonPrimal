@@ -1,19 +1,21 @@
 /*
-** EPITECH PROJECT, 2023
-** B-CPP-500-LYN-5-2-rtype-erwann.laplante
+** Pokemon Primal
 ** File description:
-** Game
+** Sprite
 */
 
 #include <Graph/Sprite.hpp>
 
 Sprite::Sprite()
 {
-    _x = 0;
-    _y = 0;
+    _spriteX = 0;
+    _spriteY = 0;
     _width = 0;
     _height = 0;
     _texturePath = "";
+    _flipped = false;
+    _rectX = 32;
+    _rectY = 32;
 }
 
 Sprite::~Sprite()
@@ -22,8 +24,8 @@ Sprite::~Sprite()
 
 Sprite::Sprite(const std::string &texturePath, int x, int y, int width, int height, int rectX, int rectY)
 {
-    _x = x;
-    _y = y;
+    _spriteX = x;
+    _spriteY = y;
     _width = width;
     _height = height;
     _texturePath = texturePath;
@@ -31,20 +33,29 @@ Sprite::Sprite(const std::string &texturePath, int x, int y, int width, int heig
     _rectY = rectY;
 }
 
-sf::IntRect Sprite::getRect(Game &game)
+sf::IntRect Sprite::getRect()
 {
     return sf::IntRect({0, 0}, {_rectX, _rectY});
 }
 
-void Sprite::draw(Game &game)
+void Sprite::update(float deltaTime)
 {
-    sf::Sprite sprite(game.getTexture(_texturePath));
 
-    sprite.setPosition({(float)_x, (float)_y});
-    sprite.setScale({(float)_width, (float)_height});
-    sprite.setOrigin({(float)_width / 2, (float)_height / 2});
-    sprite.setTextureRect(getRect(game));
+}
 
-    game.getWindow()->draw(sprite);
+void Sprite::draw(sf::RenderWindow *window, int cameraX, int cameraY)
+{
+    sf::Sprite sprite(globalTextures.getTexture(_texturePath));
+
+    sprite.setPosition({(float)_spriteX, (float)_spriteY});
+    if (_flipped)
+        sprite.setScale({-(float)_width, (float)_height});
+    else
+        sprite.setScale({(float)_width, (float)_height});
+    sf::Vector2f origin = {(float)_rectX / 2, (float)_rectY / 2};
+    sprite.setOrigin(origin);
+    sprite.setTextureRect(getRect());
+
+    window->draw(sprite);
 }
 

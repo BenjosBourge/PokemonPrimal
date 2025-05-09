@@ -9,18 +9,14 @@
 #include <Engine/Components/IComponent.hpp>
 #include <iostream>
 #include <SFML/System/Vector2.hpp>
-
-enum mapPosition {
-    MAP_DEMO_1,
-    MAP_DEMO_2,
-    MAP_DEMO_3
-};
+#include <Maps/BitMap.hpp>
 
 class Position : virtual public IComponent {
 public:
     int x;
     int y;
-    mapPosition map;
+    bool inMotion;
+    MapId map;
 
     float speed = 1;
     float timerMove = 0;
@@ -30,9 +26,10 @@ public:
     Position() {
         x = 0;
         y = 0;
+        inMotion = false;
         map = MAP_DEMO_1;
     }
-    Position(int x, int y, mapPosition map = MAP_DEMO_1, float speed = 1)
+    Position(int x, int y, MapId map = MAP_DEMO_1, float speed = 1)
         : x(x), y(y), map(map), speed(speed) {}
 
     ~Position() = default;

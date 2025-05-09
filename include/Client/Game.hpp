@@ -7,24 +7,29 @@
 #ifndef GAME_HPP_
 #define GAME_HPP_
 
+#include <Scene/IScene.hpp>
+#include <global.hpp>
+#include <Scene/Menu.hpp>
+#include <Scene/Overworld.hpp>
+#include <Scene/MapEditor.hpp>
+
 #include <SFML/Network.hpp>
 #include <SFML/Network/Packet.hpp>
 #include <SFML/Network/TcpSocket.hpp>
 #include <SFML/Audio.hpp>
-#include <Scene/IScene.hpp>
 #include <SFML/Graphics.hpp>
-#include <string>
 #include <NetworkClient.hpp>
 
+#include <string>
 #include <optional>
 #include <utility>
-
 
 
 enum class GameState {
     STATE_DEFAULT,
     STATE_MENU,
     STATE_OVERWORLD,
+    STATE_MAPEDIT,
 };
 
 class Game {
@@ -39,7 +44,6 @@ public:
     void parseClientInput(const std::string &data);
     void processToken(const std::string &token);
 
-    sf::Texture &getTexture(const std::string &texturePath);
     sf::RenderWindow *getWindow() { return _window; }
     float getDeltaTime() const { return _deltaTime; }
 
@@ -56,19 +60,25 @@ private:
 
     GameState _currentState;
     std::map<GameState, std::shared_ptr<IScene>> _scenes;
-    std::map<std::string, sf::Texture> _textures;
 
+    enum KeyActionType {
+        PRESSED,
+        RELEASED,
+        PRESSED_RELEASED
+    };
 
     struct KeyAction {
-        std::function<void()> action;
+        std::function<void()> actionPressed;
+        std::function<void()> actionReleased;
         bool isPressed;
+        KeyActionType type;
     };
     
     std::map<sf::Keyboard::Key, KeyAction> keyMappings = {
-        {sf::Keyboard::Key::Z, { [&]() { _client.sendPacket("Up_P"); }, false }},
-        {sf::Keyboard::Key::S, { [&]() { _client.sendPacket("Do_P"); }, false }},
-        {sf::Keyboard::Key::D, { [&]() { _client.sendPacket("Ri_P"); }, false }},
-        {sf::Keyboard::Key::Q, { [&]() { _client.sendPacket("Le_P"); }, false }},
+        {sf::Keyboard::Key::Z, { [&]() { _client.sendPacket("Up_P"); }, [&]() { _client.sendPacket("Up_R"); },  false, PRESSED_RELEASED}},
+        {sf::Keyboard::Key::S, { [&]() { _client.sendPacket("Do_P"); }, [&]() { _client.sendPacket("Do_R"); }, false, PRESSED_RELEASED}},
+        {sf::Keyboard::Key::D, { [&]() { _client.sendPacket("Ri_P"); }, [&]() { _client.sendPacket("Ri_R"); }, false, PRESSED_RELEASED}},
+        {sf::Keyboard::Key::Q, { [&]() { _client.sendPacket("Le_P"); }, [&]() { _client.sendPacket("Le_R"); }, false, PRESSED_RELEASED}},
     };   
 };
 

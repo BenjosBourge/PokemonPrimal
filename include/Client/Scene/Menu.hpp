@@ -8,16 +8,17 @@
 #pragma once
 
 #include <Scene/IScene.hpp>
-#include <Graph/GUI/HUD/HUDMenu.hpp>
+#include <Graph/GUI/HUDMenu.hpp>
 
-#include <iostream>
 
 class Menu : public IScene {
     public:
         Menu();
         ~Menu() = default;
-        void draw(Game &game);
+        void draw(sf::RenderWindow *window) override;
         void update(float deltaTime);
+        void handleEvent(const std::optional<sf::Event> &event) {};
+
 
     private:
         std::shared_ptr<HUDMenu> _hudMenu;
