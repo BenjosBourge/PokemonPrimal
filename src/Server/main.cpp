@@ -25,7 +25,7 @@ std::shared_ptr<Entity> createNPC(std::unique_ptr<Engine> &engine, int x, int y,
 
 void setup(std::unique_ptr<Engine> &engine)
 {
-    for (int i = 0; i < 100; i ++) {
+    for (int i = 0; i < 3; i ++) {
         std::shared_ptr<Entity> npc = createNPC(engine, 3, 3, "NPC" + std::to_string(i));
         auto &npcComponent = npc->getComponent<NPC>();
         npcComponent.pattern = std::make_shared<LinePattern>(LinePattern({3, 3 + i}, {8, 3 + i}));

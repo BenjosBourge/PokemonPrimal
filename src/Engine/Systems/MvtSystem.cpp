@@ -37,7 +37,7 @@ std::vector<NetworkEvent> MvtSystem::update(std::shared_ptr<EntityManager>& enti
         int nx = position.x + position.direction.x;
         int ny = position.y;
         if (position.direction.x == 0)
-            ny = position.y += position.direction.y;
+            ny = position.y + position.direction.y;
 
         if (nx < 0 || nx >= mapManager._maps[position.map]._map[0].size() ||
             ny < 0 || ny >= mapManager._maps[position.map]._map.size()) {
