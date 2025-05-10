@@ -105,6 +105,14 @@ std::vector<NetworkEvent> Engine::processToken(std::string token)
         }
         entity->getComponent<Input>()._leftPressed = args[0] == "P" ? true : false;
     }
+    if (command == "Sp" && args.size() == 1) {
+        auto entity = gameObjects->getConnectedEntity(client);
+        if (!entity) {
+            std::cout << "Entity not found" << std::endl;
+            return events;
+        }
+        entity->getComponent<Input>()._spacePressed = args[0] == "P" ? true : false;
+    }
     return events;
 }
 

@@ -7,7 +7,8 @@
 #pragma once
 
 #include <Scene/IScene.hpp>
-#include <Objects/Trainer.hpp>
+#include <Objects/TrainerSprite.hpp>
+#include <Graph/GUI/HUDBattle.hpp>
 
 #include <iostream>
 #include <memory>
@@ -26,5 +27,6 @@ public:
 
     void handleEvent(const std::optional<sf::Event> &event){};
 private:
-    std::vector<std::shared_ptr<Trainer>> trainers;
+    std::vector<std::shared_ptr<TrainerSprite>> _trainers;
+    std::shared_ptr<HUDBattle> _hudBattle;
 };

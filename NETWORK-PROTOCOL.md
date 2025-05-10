@@ -18,7 +18,7 @@ Each client listens on the port 54000 for the UDP protocol.
 Format: **Cmd**_Port
 
 ### Movement
-**Up, Do, Le, Ri**
+**Up, Do, Le, Ri, Sp**
 
 Format: **Cmd**_State
 
@@ -27,6 +27,7 @@ Cmd:
 - Do: Down
 - Ri: Right
 - Le: Left
+- Sp: Space
 
 State:
 - P: Pressed
@@ -36,13 +37,13 @@ State:
 
 ## Server → Client
 
-### Player Created
+### PlayerCharacter Created
 **Pc**
 
 Format: **Cmd**_Id
 
 
-### Player Disconnected
+### PlayerCharacter Disconnected
 **Pd**
 
 Format: **Cmd**_Id
@@ -62,3 +63,13 @@ When getting self position, always in TCP.
 Format: **Cmd**_Id
 
 To know when a character stop moving.
+
+
+### Change State
+**Cs**
+
+Format: **Cmd**_IdState
+
+IdState:
+- 0: Overworld
+- 1: Battle

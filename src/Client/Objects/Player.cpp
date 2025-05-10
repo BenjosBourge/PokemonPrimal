@@ -4,24 +4,24 @@
 ** Character
 */
 
-#include <Objects/Player.hpp>
+#include <Objects/PlayerCharacter.hpp>
 
-Player::Player() : Character()
+PlayerCharacter::PlayerCharacter() : Character()
 {
 
 }
 
-Player::Player(CharacterTexture texture) : Character(texture)
+PlayerCharacter::PlayerCharacter(CharacterTexture texture) : Character(texture)
 {
 
 }
 
-Player::~Player()
+PlayerCharacter::~PlayerCharacter()
 {
 
 }
 
-void Player::update(float deltaTime)
+void PlayerCharacter::update(float deltaTime)
 {
     Character::update(deltaTime);
 }

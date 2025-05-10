@@ -4,9 +4,9 @@
 ** Character
 */
 
-#include <Objects/Trainer.hpp>
+#include <Objects/TrainerSprite.hpp>
 
-Trainer::Trainer()
+TrainerSprite::TrainerSprite()
 {
     _spriteX = 0;
     _spriteY = 0;
@@ -22,12 +22,12 @@ Trainer::Trainer()
     }
 }
 
-Trainer::~Trainer()
+TrainerSprite::~TrainerSprite()
 {
     // Destructor implementation
 }
 
-void Trainer::update(float deltaTime)
+void TrainerSprite::update(float deltaTime)
 {
     // Update logic for Trainer
 }

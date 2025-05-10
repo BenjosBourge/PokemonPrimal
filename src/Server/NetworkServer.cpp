@@ -15,7 +15,7 @@ ClientConnection::ClientConnection() : _ip(sf::IpAddress::Any)
     _isConnected = false;
     _udpPort = 54000;
 
-    _state = ClientState::CLIENT_BATTLE;
+    _state = ClientState::CLIENT_OVERWORLD;
 }
 
 ClientConnection::~ClientConnection()
@@ -320,6 +320,9 @@ void NetworkServer::processEngineInput(std::vector<NetworkEvent> &events)
             } else {
                 std::cerr << "Client " << event.clientId << " is not connected" << std::endl;
             }
+        } else if (event.communicationType == COM_SET_STATE) {
+            if (_clients[event.clientId]._isConnected)
+                _clients[event.clientId]._state = event.state;
         }
     }
 

@@ -18,7 +18,7 @@ Game::Game()
     _scenes[GameState::STATE_BATTLE] = std::make_shared<Battle>();
     
     //change this to change scene
-    _currentState = GameState::STATE_BATTLE;
+    _currentState = GameState::STATE_OVERWORLD;
     _cameraX = 0;
     _cameraY = 0;
 

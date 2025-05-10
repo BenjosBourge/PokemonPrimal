@@ -21,7 +21,7 @@ void Game::processToken(const std::string &token)
     while (std::getline(ss, tmp, '_'))
         args.push_back(tmp);
 
-    //std::cout << "Command: " << command << " Args: " << args.size() << std::endl;
+    std::cout << "Command: " << command << " Args: " << args.size() << std::endl;
     if (command == "Pc" && args.size() == 1) {
         auto &scene = _scenes[GameState::STATE_OVERWORLD];
         if (scene) {
@@ -67,6 +67,14 @@ void Game::processToken(const std::string &token)
                 std::cerr << "Player " << args[0] << " not found" << std::endl;
             }
         }
+    }
+
+    if (command == "Cs" && args.size() == 1) {
+        int id = std::stoi(args[0]);
+        if (id == 0)
+            _currentState = GameState::STATE_OVERWORLD;
+        else if (id == 1)
+            _currentState = GameState::STATE_BATTLE;
     }
 }
 

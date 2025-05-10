@@ -19,7 +19,8 @@ enum CommunicationType {
     COM_BROADCAST,
     COM_SECURE_BROADCAST,
     COM_TCP_BROADCAST,
-    COM_SET_UDP
+    COM_SET_UDP,
+    COM_SET_STATE
 };
 
 /*

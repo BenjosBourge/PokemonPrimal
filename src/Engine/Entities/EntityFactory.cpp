@@ -23,6 +23,7 @@ Entity& EntityFactory::createEntity(std::string name)
     if (name == "Player") {
         entity->createComponent<Position>(1, 1);
         entity->createComponent<Input>();
+        entity->createComponent<Player>();
     } else if (name == "NPC") {
         entity->createComponent<Position>(1, 1);
         entity->createComponent<NPC>();

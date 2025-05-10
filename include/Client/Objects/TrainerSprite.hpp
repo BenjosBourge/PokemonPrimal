@@ -10,10 +10,10 @@
 
 #include <Pokemon/Pokemon.hpp>
 
-class Trainer : public Sprite {
+class TrainerSprite : public Sprite {
 public:
-    Trainer();
-    ~Trainer();
+    TrainerSprite();
+    ~TrainerSprite();
 
     void update(float deltaTime) override;
     Pokemon _pokemons[6];
