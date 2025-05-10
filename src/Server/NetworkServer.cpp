@@ -14,6 +14,8 @@ ClientConnection::ClientConnection() : _ip(sf::IpAddress::Any)
 {
     _isConnected = false;
     _udpPort = 54000;
+
+    _state = ClientState::CLIENT_BATTLE;
 }
 
 ClientConnection::~ClientConnection()
@@ -275,12 +277,18 @@ void NetworkServer::processEngineInput(std::vector<NetworkEvent> &events)
         std::string data = event.eventType;
 
         if (event.communicationType == COM_UDP) {
+            if (event.state != _clients[event.clientId]._state)
+                continue;
             addToUdpBuffer(event.eventType, event.clientId);
         } else if (event.communicationType == COM_TCP) {
+            if (event.state != _clients[event.clientId]._state)
+                continue;
             addToTcpBuffer(event.eventType, event.clientId);
         } else if (event.communicationType == COM_BROADCAST) {
             for (int i = 0; i < 4; ++i) {
                 if (!_clients[i]._isConnected)
+                    continue;
+                if (event.state != _clients[i]._state)
                     continue;
                 addToUdpBuffer(event.eventType, i);
             }
@@ -290,6 +298,8 @@ void NetworkServer::processEngineInput(std::vector<NetworkEvent> &events)
             for (int i = 0; i < 4; ++i) {
                 if (!_clients[i]._isConnected)
                     continue;
+                if (event.state != _clients[i]._state)
+                    continue;
                 if (i == event.clientId)
                     addToTcpBuffer(event.eventType, i);
                 else
@@ -298,6 +308,8 @@ void NetworkServer::processEngineInput(std::vector<NetworkEvent> &events)
         } else if (event.communicationType == COM_TCP_BROADCAST) {
             for (int i = 0; i < 4; ++i) {
                 if (!_clients[i]._isConnected)
+                    continue;
+                if (event.state != _clients[i]._state)
                     continue;
                 addToTcpBuffer(event.eventType, i);
             }

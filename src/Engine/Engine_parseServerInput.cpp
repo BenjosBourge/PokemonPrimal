@@ -32,7 +32,7 @@ std::vector<NetworkEvent> Engine::processToken(std::string token)
         try {
             int udpPort = std::stoi(args[0]);
 
-            events.emplace_back(clientId, std::to_string(udpPort), COM_SET_UDP);
+            events.emplace_back(clientId, std::to_string(udpPort), COM_SET_UDP, CLIENT_OVERWORLD);
             std::cout << "UDP port network event: " << udpPort << std::endl;
         }
         catch (const std::invalid_argument &e) {
@@ -46,18 +46,18 @@ std::vector<NetworkEvent> Engine::processToken(std::string token)
         int newPlayerEntityId = gameObjects->createEntity(_entityFactory.createEntity("Player"));
         gameObjects->addConnectedEntity(client, newPlayerEntityId);
         std::cout << "New connected Entity: " << client << " with Entity ID: " << newPlayerEntityId << std::endl;
-        events.push_back(NetworkEvent(clientId, "Pc_" + client, COM_TCP_BROADCAST));
+        events.push_back(NetworkEvent(clientId, "Pc_" + client, COM_TCP_BROADCAST, CLIENT_OVERWORLD));
 
         for (auto &entity : gameObjects->_connectedEntities) {
             if (entity.first == client)
                 continue;
-            events.push_back(NetworkEvent(clientId, "Pc_" + entity.first, COM_TCP));
+            events.push_back(NetworkEvent(clientId, "Pc_" + entity.first, COM_TCP, CLIENT_OVERWORLD));
             std::shared_ptr<Entity> newEntity = gameObjects->getConnectedEntity(entity.first);
             std::string eventType = "Pp_" + entity.first + "_1_" +
                                     std::to_string(newEntity->getComponent<Position>().x) + "_" +
                                     std::to_string(newEntity->getComponent<Position>().y) + ":";
-            events.push_back(NetworkEvent(clientId, eventType, COM_TCP));
-            events.push_back(NetworkEvent(clientId, "Pir_" + entity.first, COM_TCP));
+            events.push_back(NetworkEvent(clientId, eventType, COM_TCP, CLIENT_OVERWORLD));
+            events.push_back(NetworkEvent(clientId, "Pir_" + entity.first, COM_TCP, CLIENT_OVERWORLD));
         }
         return events;
     }
@@ -68,7 +68,7 @@ std::vector<NetworkEvent> Engine::processToken(std::string token)
 
         gameObjects->removeConnectedEntity(client);
         std::cout << "Disconnected Entity: " << client << " with Entity ID: " << entityId << std::endl;
-        events.push_back(NetworkEvent(clientId, "Pd_" + client, COM_TCP_BROADCAST));
+        events.push_back(NetworkEvent(clientId, "Pd_" + client, COM_TCP_BROADCAST, CLIENT_OVERWORLD));
         return events;
     }
 

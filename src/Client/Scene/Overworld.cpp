@@ -1,7 +1,7 @@
 /*
 ** Pokemon Primal
 ** File description:
-** Menu
+** Overworld
 */
 
 #include <Scene/Overworld.hpp>

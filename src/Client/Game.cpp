@@ -15,16 +15,26 @@ Game::Game()
     _scenes[GameState::STATE_MENU] = std::make_shared<Menu>();
     _scenes[GameState::STATE_OVERWORLD] = std::make_shared<Overworld>();
     _scenes[GameState::STATE_MAPEDIT] = std::make_shared<MapEditor>();
+    _scenes[GameState::STATE_BATTLE] = std::make_shared<Battle>();
     
     //change this to change scene
-    _currentState = GameState::STATE_OVERWORLD;
+    _currentState = GameState::STATE_BATTLE;
     _cameraX = 0;
     _cameraY = 0;
 
     sf::Texture texture;
     if (!texture.loadFromFile("assets/player.png"))
         std::cout << "error while loading texture" << std::endl;
+
     globalTextures._textures["player"] = texture;
+
+    if (!texture.loadFromFile("assets/bulbasaur.png"))
+        std::cout << "error while loading texture" << std::endl;
+    globalTextures._textures["pokemon"] = texture;
+
+    if (!texture.loadFromFile("assets/bulbasaur_back.png"))
+        std::cout << "error while loading texture" << std::endl;
+    globalTextures._textures["pokemon_back"] = texture;
 }
 
 Game::~Game()

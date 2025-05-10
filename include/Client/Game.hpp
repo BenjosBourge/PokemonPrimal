@@ -12,6 +12,7 @@
 #include <Scene/Menu.hpp>
 #include <Scene/Overworld.hpp>
 #include <Scene/MapEditor.hpp>
+#include <Scene/Battle.hpp>
 
 #include <SFML/Network.hpp>
 #include <SFML/Network/Packet.hpp>
@@ -30,6 +31,7 @@ enum class GameState {
     STATE_MENU,
     STATE_OVERWORLD,
     STATE_MAPEDIT,
+    STATE_BATTLE
 };
 
 class Game {
