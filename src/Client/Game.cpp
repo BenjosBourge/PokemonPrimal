@@ -43,15 +43,14 @@ void Game::run()
 
     while (window.isOpen())
     {
-        sf::Time deltaTime = clock.restart();
-        _deltaTime = deltaTime.asSeconds();
+        _deltaTime = clock.restart().asSeconds();
 
         while (const std::optional event = window.pollEvent())
         {
             if (event->is<sf::Event::Closed>())
                 window.close();
             inputHandling(event);  
-            _scenes[_currentState]->handleEvent(event);
+            _scenes[_currentState]->handleEvent(event, _deltaTime);
         }
 
         std::string inputs = _client.receivePacket();
