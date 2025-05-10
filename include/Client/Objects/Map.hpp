@@ -7,7 +7,7 @@ class Map : public sf::Drawable, public sf::Transformable {
     public:
         Map();
         bool load(const std::string &tilesetPath, sf::Vector2u tileSize, const std::vector<std::vector<int>> &tiles);
-        
+        bool reload(const std::vector<std::vector<int>> &tiles);
         sf::Vector2u _tileSize;
         sf::Vector2u _mapSize;
         

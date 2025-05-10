@@ -9,6 +9,8 @@
 #include <Graph/GUI/IHUD.hpp>
 #include <Graph/GUI/HUDComponents/TextBox.hpp>
 #include <Graph/GUI/HUDComponents/Button.hpp>
+#include <Graph/GUI/HUDComponents/RectBox.hpp>
+
 #include <Objects/Map.hpp>
 #include <string>
 #include <cmath>
@@ -29,11 +31,6 @@ class HUDMapEditor : public IHUD {
         for (auto &component : _components) {
             component->draw(window);
         }
-        // // Update the mouse selector position
-        // sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-        // _mouseSelector.setPosition(mousePos);
-        // //window.draw(_mouseSelector);
-        // // Draw the mouse selector
     };
 
     void setGrid(const Map& map) {
@@ -47,10 +44,12 @@ class HUDMapEditor : public IHUD {
                     static_cast<float>(col * map._tileSize.x),
                     static_cast<float>(row * map._tileSize.y)
                 };
-                std::shared_ptr<TextBox> textBox = std::make_shared<TextBox>(
-                    position, charSize, std::to_string(value)
+                std::shared_ptr<RectBox> rect = std::make_shared<RectBox>(
+                    position,
+                    sf::Vector2f{16.0, 16.0},
+                    sf::Color{0, 0, 0, 0}
                 );
-                _components.push_back(textBox);
+                _components.push_back(rect);
                 value++;
             }
         }
@@ -70,4 +69,5 @@ class HUDMapEditor : public IHUD {
         );
         std::vector<std::shared_ptr<IComponent>> _components;
 
+        
 };
