@@ -59,15 +59,40 @@ void MapEditor::draw(sf::RenderWindow *window)
 
 void MapEditor::update(float deltaTime)
 {
-    if(_viewSelector == 1) {
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) {
-            _emptyBitMap[_currentTile / _spriteMap._mapSize.x][_currentTile % _spriteMap._mapSize.x] = _savedTile;
-            _editMap.reload(_emptyBitMap);
-        }
-    }
+    updateCamera(deltaTime);
+    updateCursor(deltaTime);
 } 
 
 void MapEditor::handleEvent(const std::optional<sf::Event> &event, float deltaTime) {
+
+    if(const auto* key = event->getIf<sf::Event::KeyPressed>()) {
+        // write the tile into the edit map
+        if (key->code == sf::Keyboard::Key::Enter && _viewSelector == VIEW_EDIT) {
+            _emptyBitMap[_currentTile / _spriteMap._mapSize.x][_currentTile % _spriteMap._mapSize.x] = _savedTile;
+            _editMap.reload(_emptyBitMap);
+        }
+        // change the view to the loaded spritesheet
+        if (key->code == sf::Keyboard::Key::Num1) {
+            std::cout << "Num1" << std::endl;
+            _viewSelector = VIEW_SPRITESHEET;
+        }
+        // change the view to the edit map
+        if (key->code == sf::Keyboard::Key::Num2) {
+            _viewSelector = VIEW_EDIT;
+        }
+        // reset the camera to the default position
+        if (key->code == sf::Keyboard::Key::Space) {
+            _cameraView.setCenter({960, 540}); 
+            _cameraView.setSize({1920, 1080});
+            _cursor.setPosition({0, 0});
+        }
+        // save the current tile
+        if (key->code == sf::Keyboard::Key::C) {
+            std::cout << "Tile { " << _currentTile << " } is saved" << std::endl;
+            _savedTile = _currentTile;
+        }
+    }
+    
     if (const auto* mouseWheelScrolled = event->getIf<sf::Event::MouseWheelScrolled>())
     {
         if (mouseWheelScrolled->delta > 0)
@@ -75,29 +100,6 @@ void MapEditor::handleEvent(const std::optional<sf::Event> &event, float deltaTi
         else
             _cameraView.zoom(1.1f);  // Zoom out
     }
-
-    //reset parameters
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
-        _cameraView.setCenter({960, 540}); 
-        _cameraView.setSize({1920, 1080});
-        _cursor.setPosition({0, 0});
-    }
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::N)) {
-        std::cout << "View 0 : Sprite Map" << std::endl;
-        _viewSelector = 0;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::B)) {
-        std::cout << "View 1 : Edit Map" << std::endl;
-        _viewSelector = 1;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::C)) {
-        std::cout << "Tile { " << _currentTile << " } is saved" << std::endl;
-        _savedTile = _currentTile;
-    }
-
-    moveCamera(deltaTime);
-    moveCursor(deltaTime);
 }
 
 std::vector<std::vector<int>> MapEditor::createBitMap(int totalElements, int elementsPerRow)
@@ -139,7 +141,7 @@ std::vector<std::vector<int>> MapEditor::createEmptyBitMap(int totalElements, in
 }
 
 
-void MapEditor::moveCamera(float deltaTime)
+void MapEditor::updateCamera(float deltaTime)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
         _cameraView.move({0, -_cameraSpeed * deltaTime});
@@ -158,21 +160,19 @@ void MapEditor::moveCamera(float deltaTime)
     }
 }
 
-void MapEditor::moveCursor(float deltaTime)
+void MapEditor::updateCursor(float deltaTime)
 {
     //mouse mvt
     unsigned int tileX = static_cast<unsigned int>(_worldPos.x) / _spriteMap._tileSize.x;
     unsigned int tileY = static_cast<unsigned int>(_worldPos.y) / _spriteMap._tileSize.y;
 
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
         if (tileX < _spriteMap._mapSize.x && tileY < _spriteMap._mapSize.y) {
             _cursor.setPosition(sf::Vector2f(
                 static_cast<float>(tileX * _spriteMap._tileSize.x),
                 static_cast<float>(tileY * _spriteMap._tileSize.y)
             ));
         }
-    }
-
     //keyboard mvt
     _moveCooldown -= deltaTime;
     if (_moveCooldown <= 0.f) {

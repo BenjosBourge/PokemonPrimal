@@ -29,8 +29,8 @@ class MapEditor : public IScene {
         void handleEvent(const std::optional<sf::Event> &event, float deltaTime);
 
     private:
-        void moveCamera(float deltaTime);
-        void moveCursor(float deltaTime);
+        void updateCamera(float deltaTime);
+        void updateCursor(float deltaTime);
         sf::VertexArray _vertices;
         sf::Texture _tileset;
 
@@ -54,5 +54,10 @@ class MapEditor : public IScene {
         int _currentTile = 0;
         int _savedTile = 0;
         int _viewSelector = 0;
+
+        enum {
+            VIEW_SPRITESHEET = 0,
+            VIEW_EDIT = 1,
+        };
 
 };
