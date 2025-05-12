@@ -17,7 +17,7 @@ void Menu::draw(sf::RenderWindow *window)
     _hudMenu->draw(*window);
 }
 
-void Menu::update(float deltaTime)
+void Menu::update(float deltaTime, sf::RenderWindow *window, NetworkClient &client)
 {
 
 }

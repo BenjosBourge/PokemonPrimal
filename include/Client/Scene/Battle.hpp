@@ -23,7 +23,7 @@ public:
     ~Battle() = default;
 
     void draw(sf::RenderWindow *window) override;
-    void update(float deltaTime) override;
+    void update(float deltaTime, sf::RenderWindow *window, NetworkClient &client) override;
 
     void handleEvent(const std::optional<sf::Event> &event){};
 private:

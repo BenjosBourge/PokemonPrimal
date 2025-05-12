@@ -29,12 +29,12 @@ void Battle::draw(sf::RenderWindow *window)
         trainer->draw(window, _cameraX, _cameraY);
     }
 
-    std::cout << "Drawing Battle Scene" << std::endl;
     _hudBattle->draw(*window);
 }
 
-void Battle::update(float deltaTime)
+void Battle::update(float deltaTime, sf::RenderWindow *window, NetworkClient &client)
 {
+    _hudBattle->buttonClicked(window, client);
     for (auto &trainer : _trainers) {
         trainer->update(deltaTime);
     }

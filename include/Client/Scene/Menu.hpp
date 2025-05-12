@@ -16,7 +16,7 @@ class Menu : public IScene {
         Menu();
         ~Menu() = default;
         void draw(sf::RenderWindow *window) override;
-        void update(float deltaTime);
+        void update(float deltaTime, sf::RenderWindow *window, NetworkClient &client);
         void handleEvent(const std::optional<sf::Event> &event) {};
 
 

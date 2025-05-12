@@ -67,7 +67,7 @@ void Game::run()
         std::string inputs = _client.receivePacket();
         parseClientInput(inputs);
 
-        _scenes[_currentState]->update(_deltaTime);
+        _scenes[_currentState]->update(_deltaTime, _window, _client);
 
         window.clear(sf::Color::Black);
         _scenes[_currentState]->draw(&window);

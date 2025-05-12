@@ -13,24 +13,17 @@
 #include <string>
 #include <cmath>
 
+class NetworkClient;
+
 class HUDBattle : public IHUD {
 public:
-    HUDBattle()
-    {
-        _components.push_back(std::make_shared<Button>(sf::Vector2f(700, 500), sf::Vector2f(220, 120), "Attack 01"));
-        _components.push_back(std::make_shared<Button>(sf::Vector2f(940, 500), sf::Vector2f(220, 120), "Attack 02"));
-        _components.push_back(std::make_shared<Button>(sf::Vector2f(700, 660), sf::Vector2f(220, 120), "Attack 03"));
-        _components.push_back(std::make_shared<Button>(sf::Vector2f(940, 660), sf::Vector2f(220, 120), "Attack 04"));
-    };
+    HUDBattle();
     ~HUDBattle() = default;
 
 
-    void draw(sf::RenderWindow &window) override
-    {
-        for (auto &component : _components) {
-            component->draw(window);
-        }
-    };
+    void draw(sf::RenderWindow &window) override;
+    void buttonClicked(sf::RenderWindow *window, NetworkClient &networkClient);
+
 protected:
 
 private:

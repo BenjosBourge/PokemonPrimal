@@ -23,7 +23,7 @@ class MapEditor : public IScene {
         ~MapEditor();
 
         void draw(sf::RenderWindow *window) override;
-        void update(float deltaTime) override;
+        void update(float deltaTime, sf::RenderWindow *window, NetworkClient &client) override;
         std::vector<std::vector<int>> createBitMap(int totalElements, int elementsPerRow);
 
         void handleEvent(const std::optional<sf::Event> &event);
