@@ -113,6 +113,22 @@ std::vector<NetworkEvent> Engine::processToken(std::string token)
         }
         entity->getComponent<Input>()._spacePressed = args[0] == "P" ? true : false;
     }
+    if (command == "Btn" && args.size() == 1) {
+        auto entity = gameObjects->getConnectedEntity(client);
+        if (!entity) {
+            std::cout << "Entity not found" << std::endl;
+            return events;
+        }
+        if (args[0] == "At1")
+            entity->getComponent<Trainer>()._attackSelected = 0;
+        else if (args[0] == "At2")
+            entity->getComponent<Trainer>()._attackSelected = 1;
+        else if (args[0] == "At3")
+            entity->getComponent<Trainer>()._attackSelected = 2;
+        else if (args[0] == "At4")
+            entity->getComponent<Trainer>()._attackSelected = 3;
+    }
+
     return events;
 }
 

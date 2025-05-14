@@ -12,13 +12,14 @@
 
 class Trainer : virtual public IComponent {
 public:
-    Pokemon _pokemons[6];
-
     Trainer() {
         for (int i = 0; i < 6; i++) {
             _pokemons[i] = Pokemon();
         }
+        _attackSelected = -1;
     }
-
     ~Trainer() = default;
+
+    Pokemon _pokemons[6];
+    int _attackSelected;
 };

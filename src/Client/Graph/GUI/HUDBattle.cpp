@@ -9,22 +9,22 @@
 
 void buttonAttack1(NetworkClient &networkClient)
 {
-    std::cout << "Attack 1 clicked!" << std::endl;
+    networkClient.sendPacket("Btn_At1");
 }
 
 void buttonAttack2(NetworkClient &networkClient)
 {
-    std::cout << "Attack 2 clicked!" << std::endl;
+    networkClient.sendPacket("Btn_At2");
 }
 
 void buttonAttack3(NetworkClient &networkClient)
 {
-    std::cout << "Attack 3 clicked!" << std::endl;
+    networkClient.sendPacket("Btn_At3");
 }
 
 void buttonAttack4(NetworkClient &networkClient)
 {
-    std::cout << "Attack 4 clicked!" << std::endl;
+    networkClient.sendPacket("Btn_At4");
 }
 
 

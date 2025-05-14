@@ -33,6 +33,10 @@ State:
 - P: Pressed
 - R: Released
 
+### Button CLicked
+**Btn**
+Format: **Cmd**_Id
+
 
 
 ## Server → Client

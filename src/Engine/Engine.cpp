@@ -16,9 +16,21 @@ Engine::~Engine() { }
 void Engine::start()
 {
     _entityFactory = EntityFactory();
-    _systems.push_back(std::make_shared<MvtSystem>());
-    _systems.push_back(std::make_shared<PlayerMovementSystem>());
-    _systems.push_back(std::make_shared<NPCMovementSystem>());
+
+    std::vector<std::pair<std::string, std::shared_ptr<ISystem>>> pairs;
+
+    pairs.push_back({"MvtSystem", std::make_shared<MvtSystem>()});
+    pairs.push_back({"PlayerMovementSystem", std::make_shared<PlayerMovementSystem>()});
+    pairs.push_back({"NPCMovementSystem", std::make_shared<NPCMovementSystem>()});
+    pairs.push_back({"CombatSystem", std::make_shared<CombatSystem>()});
+
+    std::unordered_map<std::string, std::shared_ptr<ISystem>> systems;
+    for (auto &pair : pairs) {
+        systems[pair.first] = pair.second;
+        _systems.push_back(pair.second);
+    }
+    for (auto &system : _systems)
+        system->_systems = systems;
 }
 
 std::string Engine::restart(bool &startGame, int &lastEntityId) 

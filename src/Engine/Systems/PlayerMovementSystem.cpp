@@ -5,6 +5,7 @@
 */
 
 #include "Engine/Systems/PlayerMovementSystem.hpp"
+#include <Engine/Systems/CombatSystem.hpp>
 
 PlayerMovementSystem::PlayerMovementSystem() { }
 
@@ -40,7 +41,10 @@ std::vector<NetworkEvent> PlayerMovementSystem::update(std::shared_ptr<EntityMan
 
         if (input._spacePressed) {
             std::cout << "Launch a Battle" << std::endl;
-            player._playerState != CLIENT_BATTLE;
+            player._playerState = CLIENT_BATTLE;
+
+            std::shared_ptr<CombatSystem> combatSystem = std::dynamic_pointer_cast<CombatSystem>(_systems["CombatSystem"]);
+
             output.emplace_back(entity->tag[entity->tag.size() - 1] - '0', "", COM_SET_STATE, CLIENT_BATTLE);
             output.emplace_back(entity->tag[entity->tag.size() - 1] - '0', "Cs_1:", COM_TCP, CLIENT_BATTLE);
         }
