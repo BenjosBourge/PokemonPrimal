@@ -31,6 +31,13 @@ class MapEditor : public IScene {
     private:
         void updateCamera(float deltaTime);
         void updateCursor(float deltaTime);
+
+        void handleKeyPress(sf::Keyboard::Key code, float deltaTime);
+        void writeTileIfValid();
+        void resetCamera();
+        void saveCurrentTile();
+
+        void printBitMap(const std::vector<std::vector<int>>& bitMap);
         sf::VertexArray _vertices;
         sf::Texture _tileset;
 
@@ -46,7 +53,7 @@ class MapEditor : public IScene {
         float _zoomLevel = 1.0f;
 
         sf::RectangleShape _cursor;
-        float _moveCooldown = 0.10f;
+        float _moveCooldown = 0.05f;
         const float _moveInterval = 0.10f;
         sf::Vector2i _mousePixel;
         sf::Vector2f _worldPos;
