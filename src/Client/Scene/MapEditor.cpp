@@ -59,36 +59,30 @@ void MapEditor::draw(sf::RenderWindow *window)
 
 void MapEditor::update(float deltaTime)
 {
-    updateCursor(deltaTime);
-
-     //update current tile
-    _currentTile = static_cast<int>(_cursor.getPosition().y / _spriteMap._tileSize.y) * _spriteMap._mapSize.x + 
-                   static_cast<int>(_cursor.getPosition().x / _spriteMap._tileSize.x);
+    // //update current tile
+    // _currentTile = static_cast<int>(_cursor.getPosition().y / _spriteMap._tileSize.y) * _spriteMap._mapSize.x + 
+    //                static_cast<int>(_cursor.getPosition().x / _spriteMap._tileSize.x);
 } 
 
 void MapEditor::handleEvent(const std::optional<sf::Event>& event, float deltaTime) {
     if (!event) return;
 
-    if (const auto* key = event->getIf<sf::Event::KeyPressed>()) {
+    if (const auto* key = event->getIf<sf::Event::KeyPressed>())
         handleKeyPress(key->code, deltaTime);
-    }
 
-    if (const auto* mouseWheelScrolled = event->getIf<sf::Event::MouseWheelScrolled>()) {
+    if (const auto* mouseWheelScrolled = event->getIf<sf::Event::MouseWheelScrolled>())
         _cameraView.zoom(mouseWheelScrolled->delta > 0 ? 0.9f : 1.1f);
-    }
     
     //mouse mvt of the cursor
     unsigned int tileX = static_cast<unsigned int>(_worldPos.x) / _spriteMap._tileSize.x;
     unsigned int tileY = static_cast<unsigned int>(_worldPos.y) / _spriteMap._tileSize.y;
 
-    if (const auto* mouseMoved = event->getIf<sf::Event::MouseButtonPressed>()) {
+    if (const auto* mouseMoved = event->getIf<sf::Event::MouseButtonPressed>())
         if (mouseMoved->button == sf::Mouse::Button::Left) {
-            _cursor.setPosition(sf::Vector2f(
-                static_cast<float>(tileX * _spriteMap._tileSize.x),
-                static_cast<float>(tileY * _spriteMap._tileSize.y)
-            ));
+            _currentTile = tileY * _spriteMap._mapSize.x + tileX;
+            std::cout << "Tile { " << _currentTile << " } is selected" << std::endl;
+            _spriteMap.highlightTile(_currentTile, sf::Color(255, 0, 0, 100));
         }
-    }
 }
 
 void MapEditor::handleKeyPress(sf::Keyboard::Key code, float deltaTime) {
@@ -185,10 +179,9 @@ std::vector<std::vector<int>> MapEditor::createBitMap(int totalElements, int ele
     
     std::vector<std::vector<int>> _bitMap(numRows);
     
-    for (int row = 0; row < numRows; ++row) {
+    for (int row = 0; row < numRows; ++row)
         for (int col = 0; col < elementsPerRow && value < totalElements; ++col)
             _bitMap[row].push_back(value++);
-    }
     return _bitMap;
 }
 
@@ -219,9 +212,4 @@ std::vector<std::vector<int>> MapEditor::createEmptyBitMap(int x, int y)
         for (int col = 0; col < elementsPerRow && value < totalElements; ++col)
             _bitMap[row].push_back(0);
     return _bitMap;
-}
-
-void MapEditor::updateCursor(float deltaTime)
-{
-      
 }

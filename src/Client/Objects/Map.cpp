@@ -127,3 +127,26 @@ void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const
     // Draw the vertex array
     target.draw(_vertices, states);
 }
+
+
+void Map::highlightTile(int tileIndex, const sf::Color& color)
+{
+    if (tileIndex < 0 || tileIndex >= _vertices.getVertexCount() / 6) {
+        std::cerr << "Invalid tile index!" << std::endl;
+        return;
+    }
+
+    // Reset previous highlight if any
+    if (_lastHighlightedTile != -1 && _lastHighlightedTile != tileIndex) {
+        for (int i = 0; i < 6; ++i) {
+            _vertices[_lastHighlightedTile * 6 + i].color = sf::Color::White; // Or original tile color
+        }
+    }
+
+    // Highlight new tile
+    for (int i = 0; i < 6; ++i) {
+        _vertices[tileIndex * 6 + i].color = color;
+    }
+
+    _lastHighlightedTile = tileIndex;
+}

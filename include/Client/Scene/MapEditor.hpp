@@ -29,9 +29,6 @@ class MapEditor : public IScene {
         void handleEvent(const std::optional<sf::Event> &event, float deltaTime);
 
     private:
-        void updateCamera(float deltaTime);
-        void updateCursor(float deltaTime);
-
         void handleKeyPress(sf::Keyboard::Key code, float deltaTime);
         void writeTileIfValid();
         void resetCamera();
@@ -40,6 +37,8 @@ class MapEditor : public IScene {
         void printBitMap(const std::vector<std::vector<int>>& bitMap);
         sf::VertexArray _vertices;
         sf::Texture _tileset;
+
+        std::vector<std::shared_ptr<Map>> _mapList;
 
         Map _spriteMap;
         Map _editMap;
