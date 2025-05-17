@@ -24,14 +24,11 @@ MapEditor::MapEditor()
         {static_cast<unsigned>(_tileSize), static_cast<unsigned>(_tileSize)},
         _emptyBitMap
     );
-    
-    _cursor.setSize({_tileSize, _tileSize});
-    _cursor.setFillColor(sf::Color(255, 0, 0, 100));
-    _cursor.setOutlineThickness(1);
-    _cursor.setOutlineColor(sf::Color(255, 0, 0, 255));
-    _cursor.setPosition(sf::Vector2f{0.0, 0.0});
 
+    _mapList.push_back(_spriteMap);
+    _mapList.push_back(_editMap);
     _HUD->setGrid(_editMap);
+
 }
 
 MapEditor::~MapEditor()
@@ -43,25 +40,16 @@ void MapEditor::draw(sf::RenderWindow *window)
 {   
     _mousePixel = sf::Mouse::getPosition(*window);
     _worldPos = window->mapPixelToCoords(_mousePixel);
+    if(_viewSelector == VIEW_EDIT)
+        _HUD->draw(*window);
 
     window->setView(_cameraView);
-
-    if (_viewSelector == 1) {
-        window->draw(_editMap);
-        _HUD->draw(*window);
-    }
-    else
-        window->draw(_spriteMap);
-
-    window->draw(_cursor);
+    window->draw(_mapList[_viewSelector]);
 }
 
 
 void MapEditor::update(float deltaTime)
 {
-    // //update current tile
-    // _currentTile = static_cast<int>(_cursor.getPosition().y / _spriteMap._tileSize.y) * _spriteMap._mapSize.x + 
-    //                static_cast<int>(_cursor.getPosition().x / _spriteMap._tileSize.x);
 } 
 
 void MapEditor::handleEvent(const std::optional<sf::Event>& event, float deltaTime) {
@@ -74,14 +62,14 @@ void MapEditor::handleEvent(const std::optional<sf::Event>& event, float deltaTi
         _cameraView.zoom(mouseWheelScrolled->delta > 0 ? 0.9f : 1.1f);
     
     //mouse mvt of the cursor
-    unsigned int tileX = static_cast<unsigned int>(_worldPos.x) / _spriteMap._tileSize.x;
-    unsigned int tileY = static_cast<unsigned int>(_worldPos.y) / _spriteMap._tileSize.y;
+    unsigned int tileX = static_cast<unsigned int>(_worldPos.x) / _mapList[_viewSelector]._tileSize.x;
+    unsigned int tileY = static_cast<unsigned int>(_worldPos.y) / _mapList[_viewSelector]._tileSize.y;
 
     if (const auto* mouseMoved = event->getIf<sf::Event::MouseButtonPressed>())
         if (mouseMoved->button == sf::Mouse::Button::Left) {
-            _currentTile = tileY * _spriteMap._mapSize.x + tileX;
+            _currentTile = tileY * _mapList[_viewSelector]._mapSize.x + tileX;
             std::cout << "Tile { " << _currentTile << " } is selected" << std::endl;
-            _spriteMap.highlightTile(_currentTile, sf::Color(255, 0, 0, 100));
+             _mapList[_viewSelector].highlightTile(_currentTile, _highlightedColor);
         }
 }
 
@@ -132,16 +120,16 @@ void MapEditor::handleKeyPress(sf::Keyboard::Key code, float deltaTime) {
 
         // Cursor movement
         case sf::Keyboard::Key::Z:
-            _cursor.setPosition({_cursor.getPosition().x, _cursor.getPosition().y - _tileSize});
+            _currentTile = _mapList[_viewSelector].highlightTile(_currentTile - _mapList[_viewSelector]._mapSize.x, _highlightedColor);
             break;
         case sf::Keyboard::Key::Q:
-            _cursor.setPosition({_cursor.getPosition().x - _tileSize, _cursor.getPosition().y});
+             _currentTile = _mapList[_viewSelector].highlightTile(_currentTile - 1, _highlightedColor);
             break;
         case sf::Keyboard::Key::S:
-            _cursor.setPosition({_cursor.getPosition().x, _cursor.getPosition().y + _tileSize});
+            _currentTile = _mapList[_viewSelector].highlightTile(_currentTile + _mapList[_viewSelector]._mapSize.x, _highlightedColor);
             break;
         case sf::Keyboard::Key::D:
-            _cursor.setPosition({_cursor.getPosition().x + _tileSize, _cursor.getPosition().y});
+            _currentTile = _mapList[_viewSelector].highlightTile(_currentTile + 1, _highlightedColor);
             break;
         default:
             break;
@@ -149,17 +137,16 @@ void MapEditor::handleKeyPress(sf::Keyboard::Key code, float deltaTime) {
 }
 
 void MapEditor::writeTileIfValid() {
-    if (_viewSelector == VIEW_EDIT && _currentTile < _spriteMap._mapSize.x * _spriteMap._mapSize.y) {
-        std::cout << "Tile { " << _currentTile << " } is written" << std::endl;
-        _emptyBitMap[_currentTile / _spriteMap._mapSize.x][_currentTile % _spriteMap._mapSize.x] = _savedTile;
-        _editMap.reload(_emptyBitMap);
+    if (_viewSelector == VIEW_EDIT) {
+        std::cout << "Tile { " << _savedTile << " " << _currentTile / _mapList[_viewSelector]._mapSize.x << " " << _currentTile % _mapList[_viewSelector]._mapSize.x << " } is written" << std::endl;
+        _emptyBitMap[_currentTile / _mapList[_viewSelector]._mapSize.x][_currentTile % _mapList[_viewSelector]._mapSize.x] = _savedTile;
+        _mapList[_viewSelector].reload(_emptyBitMap);
     }
 }
 
 void MapEditor::resetCamera() {
     _cameraView.setCenter({960, 540});
     _cameraView.setSize({1920, 1080});
-    _cursor.setPosition({0, 0});
 }
 
 void MapEditor::saveCurrentTile() {

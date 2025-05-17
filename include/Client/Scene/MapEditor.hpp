@@ -38,7 +38,7 @@ class MapEditor : public IScene {
         sf::VertexArray _vertices;
         sf::Texture _tileset;
 
-        std::vector<std::shared_ptr<Map>> _mapList;
+        std::vector<Map> _mapList;
 
         Map _spriteMap;
         Map _editMap;
@@ -60,6 +60,7 @@ class MapEditor : public IScene {
         int _currentTile = 0;
         int _savedTile = 0;
         int _viewSelector = 0;
+        sf::Color _highlightedColor = sf::Color(255, 100, 100, 100);
 
         enum {
             VIEW_SPRITESHEET = 0,

@@ -116,6 +116,32 @@ bool Map::reload(const std::vector<std::vector<int>>& tiles)
     return true;
 }
 
+void Map::setTile(int tileIndex, int tileValue)
+{
+    if (tileIndex < 0 || tileIndex >= _vertices.getVertexCount() / 6) {
+        std::cerr << "Invalid tile index!" << std::endl;
+        return;
+    }
+
+    int tu = tileValue % (_tileset.getSize().x / _tileSize.x);
+    int tv = tileValue / (_tileset.getSize().x / _tileSize.x);
+
+    sf::Vertex* tri = &_vertices[tileIndex * 6];
+
+    sf::Vector2f texTopLeft(tu * _tileSize.x, tv * _tileSize.y);
+    sf::Vector2f texTopRight((tu + 1) * _tileSize.x, tv * _tileSize.y);
+
+    sf::Vector2f texBottomRight((tu + 1) * _tileSize.x, (tv + 1) * _tileSize.y);
+    sf::Vector2f texBottomLeft(tu * _tileSize.x, (tv + 1) * _tileSize.y);
+
+    setTriangle(tri, 0, tri[0].position, texTopLeft);
+    setTriangle(tri, 1, tri[1].position, texTopRight);
+    setTriangle(tri, 2, tri[2].position, texBottomRight);
+    setTriangle(tri, 3, tri[3].position, texTopLeft);
+    setTriangle(tri, 4, tri[4].position, texBottomRight);
+    setTriangle(tri, 5, tri[5].position, texBottomLeft);
+}
+
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     // Apply transform (if needed, ex: scrolling camera)
@@ -129,17 +155,17 @@ void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const
 }
 
 
-void Map::highlightTile(int tileIndex, const sf::Color& color)
+int Map::highlightTile(int tileIndex, const sf::Color& color)
 {
     if (tileIndex < 0 || tileIndex >= _vertices.getVertexCount() / 6) {
         std::cerr << "Invalid tile index!" << std::endl;
-        return;
+        return _lastHighlightedTile;
     }
 
     // Reset previous highlight if any
     if (_lastHighlightedTile != -1 && _lastHighlightedTile != tileIndex) {
         for (int i = 0; i < 6; ++i) {
-            _vertices[_lastHighlightedTile * 6 + i].color = sf::Color::White; // Or original tile color
+            _vertices[_lastHighlightedTile * 6 + i].color = sf::Color::White;
         }
     }
 
@@ -149,4 +175,5 @@ void Map::highlightTile(int tileIndex, const sf::Color& color)
     }
 
     _lastHighlightedTile = tileIndex;
+    return _lastHighlightedTile;
 }
