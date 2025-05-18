@@ -82,9 +82,9 @@ IdState:
 ### Combat Launch
 **Cl**
 
-Format: **Cmd**_Nb_/_Nb
+Format: **Cmd**_Nb_Nb
 
-It gives the Nb of players in the team1, a /, and the Nb of players in the team2.
+It gives the Nb of players in the team1  and the Nb of players in the team2.
 
 
 ### Set Pokemon Trainer

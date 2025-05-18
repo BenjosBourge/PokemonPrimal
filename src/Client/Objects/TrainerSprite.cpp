@@ -20,6 +20,7 @@ TrainerSprite::TrainerSprite()
     for (int i = 0; i < 6; i++) {
         _pokemons[i] = Pokemon();
     }
+    _inBattle = false;
 }
 
 TrainerSprite::~TrainerSprite()
@@ -27,7 +28,15 @@ TrainerSprite::~TrainerSprite()
     // Destructor implementation
 }
 
+sf::IntRect TrainerSprite::getRect()
+{
+    sf::IntRect rect = Sprite::getRect();
+    int id = _pokemons[0]._id - 1;
+    rect.position.x = 80 * id;
+    return rect;
+}
+
 void TrainerSprite::update(float deltaTime)
 {
-    // Update logic for Trainer
+
 }

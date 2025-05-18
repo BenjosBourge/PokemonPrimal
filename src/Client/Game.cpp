@@ -28,11 +28,11 @@ Game::Game()
 
     globalTextures._textures["player"] = texture;
 
-    if (!texture.loadFromFile("assets/bulbasaur.png"))
+    if (!texture.loadFromFile("assets/pokemon.png"))
         std::cout << "error while loading texture" << std::endl;
     globalTextures._textures["pokemon"] = texture;
 
-    if (!texture.loadFromFile("assets/bulbasaur_back.png"))
+    if (!texture.loadFromFile("assets/pokemon_back.png"))
         std::cout << "error while loading texture" << std::endl;
     globalTextures._textures["pokemon_back"] = texture;
 }

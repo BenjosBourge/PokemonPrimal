@@ -26,7 +26,10 @@ public:
     void update(float deltaTime, sf::RenderWindow *window, NetworkClient &client) override;
 
     void handleEvent(const std::optional<sf::Event> &event, float deltaTime){};
-private:
+
+    int _nbTeam1 = 0;
+    int _nbTeam2 = 0;
+
     std::vector<std::shared_ptr<TrainerSprite>> _trainers;
     std::shared_ptr<HUDBattle> _hudBattle;
 };

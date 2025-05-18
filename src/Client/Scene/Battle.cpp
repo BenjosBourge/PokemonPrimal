@@ -26,7 +26,8 @@ Battle::Battle()
 void Battle::draw(sf::RenderWindow *window)
 {
     for (auto &trainer : _trainers) {
-        trainer->draw(window, _cameraX, _cameraY);
+        if (trainer->_inBattle)
+            trainer->draw(window, _cameraX, _cameraY);
     }
 
     _hudBattle->draw(*window);

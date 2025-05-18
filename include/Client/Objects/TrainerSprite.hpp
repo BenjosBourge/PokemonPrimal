@@ -15,6 +15,9 @@ public:
     TrainerSprite();
     ~TrainerSprite();
 
+    sf::IntRect getRect() override;
+
     void update(float deltaTime) override;
     Pokemon _pokemons[6];
+    bool _inBattle;
 };

@@ -77,24 +77,62 @@ void Game::processToken(const std::string &token)
             _currentState = GameState::STATE_BATTLE;
     }
 
+    if (command == "Cl" && args.size() == 2) {
+        auto &scene = _scenes[GameState::STATE_BATTLE];
+        if (scene) {
+            std::shared_ptr<Battle> battleScene = std::dynamic_pointer_cast<Battle>(scene);
+
+            int nbTeam1 = std::stoi(args[0]);
+            int nbTeam2 = std::stoi(args[1]);
+
+            battleScene->_nbTeam1 = nbTeam1;
+            battleScene->_nbTeam2 = nbTeam2;
+
+            for (int i = 0; i < nbTeam1; i++)
+                battleScene->_trainers[i]->_inBattle = true;
+
+            for (int i = 0; i < nbTeam2; i++)
+                battleScene->_trainers[i + 4]->_inBattle = true;
+        }
+    }
+
     if (command == "SpT") {
-        std::cout << "Trainer:" << args[0] << std::endl;
+        auto &scene = _scenes[GameState::STATE_BATTLE];
+        std::shared_ptr<Battle> battleScene = std::dynamic_pointer_cast<Battle>(scene);
+
+        try {
+            int id = std::stoi(args[0]);
+            if (id < 0 || id >= battleScene->_trainers.size()) {
+                std::cerr << "Error: Trainer ID out of range" << std::endl;
+                return;
+            }
+        } catch (const std::invalid_argument &e) {
+            std::cerr << "Error: Invalid trainer ID" << std::endl;
+            return;
+        }
+
+        int trainerPos = std::stoi(args[0]);
+        if (trainerPos < 0 || trainerPos >= battleScene->_trainers.size()) {
+            std::cerr << "Error: Trainer ID out of range" << std::endl;
+            return;
+        }
+        if (trainerPos >= battleScene->_nbTeam1) {
+            trainerPos = trainerPos % battleScene->_nbTeam1;
+            trainerPos += 4;
+        }
+        auto &trainer = battleScene->_trainers[trainerPos];
+
         int currentArgs = 1;
+        int currentPokemon = 0;
         while (currentArgs < args.size()) {
             if (currentArgs + 1 >= args.size())
                 break;
-            std::cout << "Id: " << args[currentArgs] <<std::endl;
-            std::cout << "AllStats: " << args[currentArgs + 1] << std::endl;
 
-            // get every hexadecimal value
             std::string hex = args[currentArgs + 1];
-
             std::vector<int> values;
             while (hex.size() > 1) {
                 std::string hexValue = hex.substr(0, 2);
-                std::cout << "Hex: " << hexValue << std::endl;
                 std::string value = std::to_string(std::stoi(hexValue, nullptr, 16));
-                std::cout << "Value: " << value << std::endl;
                 hex = hex.substr(2);
                 values.push_back(std::stoi(value));
             }
@@ -104,20 +142,25 @@ void Game::processToken(const std::string &token)
                 return;
             }
 
-            std::cout << "PvMax: " << values[0] << std::endl;
-            std::cout << "Pv: " << values[1] << std::endl;
-            std::cout << "Attack: " << values[2] << std::endl;
-            std::cout << "Defense: " << values[3] << std::endl;
-            std::cout << "SpecialAttack: " << values[4] << std::endl;
-            std::cout << "SpecialDefense: " << values[5] << std::endl;
-            std::cout << "Speed: " << values[6] << std::endl;
-            std::cout << "Lvl: " << values[7] << std::endl;
-            std::cout << "Exp: " << values[8] << std::endl;
-            std::cout << "At1: " << values[9] << std::endl;
-            std::cout << "At2: " << values[10] << std::endl;
-            std::cout << "At3: " << values[11] << std::endl;
-            std::cout << "At4: " << values[12] << std::endl;
+            std::cout << "Pokemon: " << currentPokemon << std::endl;
 
+            try {
+                std::stoi(args[currentArgs]);
+            } catch (const std::invalid_argument &e) {
+                std::cerr << "Error: Invalid Pokemon ID" << std::endl;
+                return;
+            }
+
+            std::cout << "Pokemon ID: " << args[currentArgs] << std::endl;
+            std::cout << static_cast<PokemonId>(std::stoi(args[currentArgs])) << std::endl;
+            trainer->_pokemons[currentPokemon]._id = static_cast<PokemonId>(std::stoi(args[currentArgs]));
+            std::cout << "Id: " << trainer->_pokemons[currentPokemon]._id << std::endl;
+            currentPokemon++;
+
+            if (currentPokemon >= 6) {
+                std::cerr << "Error: too many pokemons" << std::endl;
+                return;
+            }
             currentArgs += 2;
         }
     }
