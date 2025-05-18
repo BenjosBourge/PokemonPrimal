@@ -11,6 +11,8 @@
 #include <SFML/Graphics/Text.hpp>
 #include <iostream>
 
+class NetworkClient;
+
 class Button : public IComponent {
     public:
         Button(sf::Vector2f position = {0, 0}, sf::Vector2f size = {100, 50}, std::string text = "Button") {
@@ -30,6 +32,13 @@ class Button : public IComponent {
             window.draw(_shape);
             window.draw(_text);
         };
+
+        bool isMouseOver(sf::RenderWindow &window) {
+            sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+            return _shape.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos));
+        };
+
+        void (*onClick)(NetworkClient &networkClient) = nullptr;
 
     protected:
     private:

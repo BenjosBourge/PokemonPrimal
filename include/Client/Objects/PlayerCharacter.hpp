@@ -8,11 +8,11 @@
 #include <SFML/Graphics.hpp>
 #include <Objects/Character.hpp>
 
-class Player : public Character {
+class PlayerCharacter : public Character {
 public:
-    Player();
-    Player(CharacterTexture texture);
-    ~Player();
+    PlayerCharacter();
+    PlayerCharacter(CharacterTexture texture);
+    ~PlayerCharacter();
 
     void update(float deltaTime) override;
 };

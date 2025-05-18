@@ -45,10 +45,26 @@ void MapEditor::draw(sf::RenderWindow *window)
         _HUD->draw(*window);
 }
 
-
-void MapEditor::update(float deltaTime)
-{
-} 
+void MapEditor::update(float deltaTime, sf::RenderWindow *window, NetworkClient &client) {
+    _moveCooldown -= deltaTime;
+    if (_moveCooldown <= 0.f) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+            _selector.setPosition({_selector.getPosition().x, _selector.getPosition().y + _tileSize});
+            _moveCooldown = _moveInterval;
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z)) {
+            _selector.setPosition({_selector.getPosition().x, _selector.getPosition().y - _tileSize});
+            _moveCooldown = _moveInterval;
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) {
+            _selector.setPosition({_selector.getPosition().x - _tileSize, _selector.getPosition().y});
+            _moveCooldown = _moveInterval;
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
+            _selector.setPosition({_selector.getPosition().x + _tileSize, _selector.getPosition().y});
+            _moveCooldown = _moveInterval;
+        }
+    }
 
 void MapEditor::handleEvent(const std::optional<sf::Event>& event, float deltaTime) {
     if (!event) return;

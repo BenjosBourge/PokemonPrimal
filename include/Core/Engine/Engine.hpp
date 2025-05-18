@@ -16,7 +16,10 @@
 
 #include <Engine/Systems/MvtSystem.hpp>
 #include <Engine/Systems/PlayerMovementSystem.hpp>
+#include <Engine/Systems/NPCMovementSystem.hpp>
+#include <Engine/Systems/CombatSystem.hpp>
 #include <Engine/Systems/NpcMovementSystem.hpp>
+
 
 #include <Engine/Event.hpp>
 

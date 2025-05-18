@@ -1,7 +1,7 @@
 /*
 ** Pokemon Primal
 ** File description:
-** Menu
+** Overworld
 */
 
 #include <Scene/Overworld.hpp>
@@ -33,7 +33,7 @@ void Overworld::draw(sf::RenderWindow *window)
         character.second->draw(window, _cameraX, _cameraY);
 }
 
-void Overworld::update(float deltaTime)
+void Overworld::update(float deltaTime, sf::RenderWindow *window, NetworkClient &client)
 {
     for (auto &character : _characters)
         character.second->update(deltaTime);

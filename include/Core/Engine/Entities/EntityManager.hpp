@@ -14,6 +14,7 @@
 #include <typeindex>
 #include <unordered_map>
 #include <vector>
+#include <Engine/Entities/EntityFactory.hpp>
 
 class ISystem;
 
@@ -25,6 +26,8 @@ private:
 public:
     EntityManager();
     ~EntityManager();
+
+    std::shared_ptr<Entity> newEntity(std::string tag);
 
     int createEntity(Entity&);
     void destroyEntity(Entity&);
@@ -46,5 +49,7 @@ public:
     void removeConnectedEntity(std::string name);
     std::shared_ptr<Entity> getConnectedEntity(std::string name);
     std::string getConnectedEntityTag(int id);
+
+    EntityFactory _entityFactory;
 };
 #endif
