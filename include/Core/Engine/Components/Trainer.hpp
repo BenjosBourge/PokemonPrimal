@@ -12,14 +12,23 @@
 
 class Trainer : virtual public IComponent {
 public:
+    Trainer(std::string name) {
+        for (int i = 0; i < 6; i++) {
+            _pokemons[i] = Pokemon();
+        }
+        _attackSelected = -1;
+        _name = name;
+    }
     Trainer() {
         for (int i = 0; i < 6; i++) {
             _pokemons[i] = Pokemon();
         }
         _attackSelected = -1;
+        _name = "Trainer";
     }
     ~Trainer() = default;
 
     Pokemon _pokemons[6];
     int _attackSelected;
+    std::string _name;
 };

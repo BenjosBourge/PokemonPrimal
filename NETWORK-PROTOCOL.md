@@ -77,3 +77,10 @@ Format: **Cmd**_IdState
 IdState:
 - 0: Overworld
 - 1: Battle
+
+
+### Combat Launch
+**Cl**
+
+Format: **Cmd**_Id
+

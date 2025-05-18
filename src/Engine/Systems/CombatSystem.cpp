@@ -28,7 +28,14 @@ std::vector<NetworkEvent> CombatSystem::update(std::shared_ptr<EntityManager>& e
 
     for (auto& combat : _combats) {
         bool allReady = true;
-        for (auto& trainer : combat._trainers) {
+        for (auto& trainer : combat._trainers1) {
+            auto &trainerComponent = trainer->getComponent<Trainer>();
+            if (trainerComponent._attackSelected == -1) {
+                allReady = false;
+                break;
+            }
+        }
+        for (auto& trainer : combat._trainers2) {
             auto &trainerComponent = trainer->getComponent<Trainer>();
             if (trainerComponent._attackSelected == -1) {
                 allReady = false;
@@ -39,7 +46,11 @@ std::vector<NetworkEvent> CombatSystem::update(std::shared_ptr<EntityManager>& e
         if (allReady) {
             std::cout << "All trainers are ready" << std::endl;
 
-            for (auto& trainer : combat._trainers) {
+            for (auto& trainer : combat._trainers1) {
+                auto &trainerComponent = trainer->getComponent<Trainer>();
+                trainerComponent._attackSelected = -1;
+            }
+            for (auto& trainer : combat._trainers2) {
                 auto &trainerComponent = trainer->getComponent<Trainer>();
                 trainerComponent._attackSelected = -1;
             }
@@ -47,5 +58,13 @@ std::vector<NetworkEvent> CombatSystem::update(std::shared_ptr<EntityManager>& e
     }
 
     return output;
+}
+
+void CombatSystem::newCombat(std::vector<std::shared_ptr<Entity>> trainers1, std::vector<std::shared_ptr<Entity>> trainers2)
+{
+    Combat combat;
+    combat._trainers1 = trainers1;
+    combat._trainers2 = trainers2;
+    _combats.push_back(combat);
 }
 

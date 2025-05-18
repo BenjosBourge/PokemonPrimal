@@ -44,6 +44,10 @@ std::vector<NetworkEvent> PlayerMovementSystem::update(std::shared_ptr<EntityMan
             player._playerState = CLIENT_BATTLE;
 
             std::shared_ptr<CombatSystem> combatSystem = std::dynamic_pointer_cast<CombatSystem>(_systems["CombatSystem"]);
+            entityManager->_entityFactory.createEntity("DemoTrainer");
+            entityManager->addConnectedEntity("DT", entity->id);
+            std::shared_ptr<Entity> newEntity = entityManager->newEntity("DemoTrainer");
+            combatSystem->newCombat({entity}, {newEntity});
 
             output.emplace_back(entity->tag[entity->tag.size() - 1] - '0', "", COM_SET_STATE, CLIENT_BATTLE);
             output.emplace_back(entity->tag[entity->tag.size() - 1] - '0', "Cs_1:", COM_TCP, CLIENT_BATTLE);

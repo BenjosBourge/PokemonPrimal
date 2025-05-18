@@ -14,7 +14,8 @@ public:
     Combat() {}
     ~Combat() {}
 
-    std::vector<std::shared_ptr<Entity>> _trainers;
+    std::vector<std::shared_ptr<Entity>> _trainers1;
+    std::vector<std::shared_ptr<Entity>> _trainers2;
 };
 
 class CombatSystem : virtual public ISystem {
@@ -23,6 +24,7 @@ public:
     ~CombatSystem();
 
     std::vector<NetworkEvent> update(std::shared_ptr<EntityManager>&, float deltaTime);
+    void newCombat(std::vector<std::shared_ptr<Entity>> trainers1, std::vector<std::shared_ptr<Entity>> trainers2);
 
 private:
     std::vector<Combat> _combats;
