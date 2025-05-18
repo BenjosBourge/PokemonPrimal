@@ -25,7 +25,7 @@ public:
     void draw(sf::RenderWindow *window) override;
     void update(float deltaTime, sf::RenderWindow *window, NetworkClient &client) override;
 
-    void handleEvent(const std::optional<sf::Event> &event){};
+    void handleEvent(const std::optional<sf::Event> &event, float deltaTime){};
 
     void addCharacter(std::string tag);
     void removeCharacter(std::string tag);

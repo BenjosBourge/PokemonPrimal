@@ -9,6 +9,8 @@
 #include <Graph/GUI/IHUD.hpp>
 #include <Graph/GUI/HUDComponents/TextBox.hpp>
 #include <Graph/GUI/HUDComponents/Button.hpp>
+#include <Graph/GUI/HUDComponents/RectBox.hpp>
+
 #include <Objects/Map.hpp>
 #include <string>
 #include <cmath>
@@ -21,19 +23,34 @@ class HUDMapEditor : public IHUD {
             _mouseSelector.setOutlineThickness(1);
             _mouseSelector.setOutlineColor(sf::Color(255, 0, 0, 255));
             _mouseSelector.setPosition(sf::Vector2f{0.0, 0.0});
+
+            for (int i = 0; i < 10; ++i) {
+                std::shared_ptr<RectBox> rect = std::make_shared<RectBox>(
+                    sf::Vector2f{static_cast<float>(i * 20), 1000.0},
+                    sf::Vector2f{16.0, 16.0},
+                    sf::Color{0, 0, 0, 0}
+                );
+                _savedAssetsBar.push_back(rect);
+            }
+
         };
+
         ~HUDMapEditor() = default;
 
 
     void draw(sf::RenderWindow &window) {
+        sf::View guiView = window.getDefaultView();
+
         for (auto &component : _components) {
             component->draw(window);
         }
-        // // Update the mouse selector position
-        // sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-        // _mouseSelector.setPosition(mousePos);
-        // //window.draw(_mouseSelector);
-        // // Draw the mouse selector
+        //
+        // --- Draw HUD (with guiView)
+        window.setView(guiView);
+       
+        for (auto &rect : _savedAssetsBar) {
+            rect->draw(window);
+        }
     };
 
     void setGrid(const Map& map) {
@@ -47,10 +64,12 @@ class HUDMapEditor : public IHUD {
                     static_cast<float>(col * map._tileSize.x),
                     static_cast<float>(row * map._tileSize.y)
                 };
-                std::shared_ptr<TextBox> textBox = std::make_shared<TextBox>(
-                    position, charSize, std::to_string(value)
+                std::shared_ptr<RectBox> rect = std::make_shared<RectBox>(
+                    position,
+                    sf::Vector2f{16.0, 16.0},
+                    sf::Color{0, 0, 0, 0}
                 );
-                _components.push_back(textBox);
+                _components.push_back(rect);
                 value++;
             }
         }
@@ -68,6 +87,6 @@ class HUDMapEditor : public IHUD {
         std::shared_ptr<TextBox> textBox = std::make_shared<TextBox>(
             sf::Vector2f{0.0, 0.0}, charSize, "Hello"
         );
-        std::vector<std::shared_ptr<IComponent>> _components;
-
+        std::vector<std::shared_ptr<RectBox>> _savedAssetsBar;
+        std::vector<std::shared_ptr<IComponent>> _components;        
 };
