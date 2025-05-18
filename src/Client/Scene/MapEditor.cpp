@@ -28,12 +28,10 @@ MapEditor::MapEditor()
     _mapList.push_back(_spriteMap);
     _mapList.push_back(_editMap);
     _HUD->setGrid(_editMap);
-
 }
 
 MapEditor::~MapEditor()
 {
-
 }
 
 void MapEditor::draw(sf::RenderWindow *window)
