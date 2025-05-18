@@ -23,6 +23,8 @@ class HUDMapEditor : public IHUD {
             _mouseSelector.setOutlineThickness(1);
             _mouseSelector.setOutlineColor(sf::Color(255, 0, 0, 255));
             _mouseSelector.setPosition(sf::Vector2f{0.0, 0.0});
+
+            
         };
         ~HUDMapEditor() = default;
 

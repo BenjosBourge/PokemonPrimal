@@ -40,11 +40,11 @@ void MapEditor::draw(sf::RenderWindow *window)
 {   
     _mousePixel = sf::Mouse::getPosition(*window);
     _worldPos = window->mapPixelToCoords(_mousePixel);
-    if(_viewSelector == VIEW_EDIT)
-        _HUD->draw(*window);
-
+    
     window->setView(_cameraView);
     window->draw(_mapList[_viewSelector]);
+    if(_viewSelector == VIEW_EDIT)
+        _HUD->draw(*window);
 }
 
 
