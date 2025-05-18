@@ -18,6 +18,7 @@ public:
         }
         _attackSelected = -1;
         _name = name;
+        _posInCombat = 0;
     }
     Trainer() {
         for (int i = 0; i < 6; i++) {
@@ -25,10 +26,12 @@ public:
         }
         _attackSelected = -1;
         _name = "Trainer";
+        _posInCombat = 0;
     }
     ~Trainer() = default;
 
     Pokemon _pokemons[6];
     int _attackSelected;
     std::string _name;
+    int _posInCombat;
 };

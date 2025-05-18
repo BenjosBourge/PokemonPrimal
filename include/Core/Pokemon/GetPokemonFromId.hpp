@@ -9,6 +9,7 @@
 class Pokemon;
 
 enum PokemonId {
+    NULL_POKEMON,
     BULBASAUR,
     IVYSAUR,
     VENUSAUR,

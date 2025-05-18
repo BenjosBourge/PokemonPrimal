@@ -38,6 +38,7 @@ public:
     ~PokemonMove();
 
     std::string _name;
+    int _id;
     int _power;
     int _accuracy;
     int _pp;

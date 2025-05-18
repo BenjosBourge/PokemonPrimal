@@ -9,7 +9,7 @@
 Pokemon::Pokemon()
 {
     _name = "Default";
-    _id = PokemonId::BULBASAUR;
+    _id = PokemonId::NULL_POKEMON;
     _level = 1;
     _exp = 0;
 

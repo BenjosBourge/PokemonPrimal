@@ -82,5 +82,18 @@ IdState:
 ### Combat Launch
 **Cl**
 
-Format: **Cmd**_Id
+Format: **Cmd**_Nb_/_Nb
+
+It gives the Nb of players in the team1, a /, and the Nb of players in the team2.
+
+
+### Set Pokemon Trainer
+**SpT**
+
+Format: **Cmd**_Id_{Id_PvMaxPvAtkDefAtkSpeDefSpeVitLvlExpAt1IdAt2IdAt3IdAt4Id_}x6
+
+it has to send the 6 pokemon of the trainer.
+Stats are In Hexadecimal and no _ between them
+
+
 

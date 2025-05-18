@@ -8,11 +8,13 @@
 
 PokemonMove::PokemonMove()
 {
-    _name = "Default";
+    _name = "NULL";
+    _id = 0;
     _power = 0;
     _accuracy = 0;
     _pp = 0;
-    _type = Type::NULL_TYPE;
+    _type = NULL_TYPE;
+    _effect = nullptr;
 }
 
 PokemonMove::~PokemonMove()

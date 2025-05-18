@@ -64,7 +64,18 @@ void CombatSystem::newCombat(std::vector<std::shared_ptr<Entity>> trainers1, std
 {
     Combat combat;
     combat._trainers1 = trainers1;
+    int pos = 0;
+    for (auto& trainer : trainers1) {
+        auto &trainerComponent = trainer->getComponent<Trainer>();
+        trainerComponent._posInCombat = pos;
+        pos++;
+    }
     combat._trainers2 = trainers2;
+    for (auto& trainer : trainers2) {
+        auto &trainerComponent = trainer->getComponent<Trainer>();
+        trainerComponent._posInCombat = pos;
+        pos++;
+    }
     _combats.push_back(combat);
 }
 

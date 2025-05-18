@@ -76,6 +76,51 @@ void Game::processToken(const std::string &token)
         else if (id == 1)
             _currentState = GameState::STATE_BATTLE;
     }
+
+    if (command == "SpT") {
+        std::cout << "Trainer:" << args[0] << std::endl;
+        int currentArgs = 1;
+        while (currentArgs < args.size()) {
+            if (currentArgs + 1 >= args.size())
+                break;
+            std::cout << "Id: " << args[currentArgs] <<std::endl;
+            std::cout << "AllStats: " << args[currentArgs + 1] << std::endl;
+
+            // get every hexadecimal value
+            std::string hex = args[currentArgs + 1];
+
+            std::vector<int> values;
+            while (hex.size() > 1) {
+                std::string hexValue = hex.substr(0, 2);
+                std::cout << "Hex: " << hexValue << std::endl;
+                std::string value = std::to_string(std::stoi(hexValue, nullptr, 16));
+                std::cout << "Value: " << value << std::endl;
+                hex = hex.substr(2);
+                values.push_back(std::stoi(value));
+            }
+
+            if (values.size() != 13) {
+                std::cerr << "Error: not enough values" << std::endl;
+                return;
+            }
+
+            std::cout << "PvMax: " << values[0] << std::endl;
+            std::cout << "Pv: " << values[1] << std::endl;
+            std::cout << "Attack: " << values[2] << std::endl;
+            std::cout << "Defense: " << values[3] << std::endl;
+            std::cout << "SpecialAttack: " << values[4] << std::endl;
+            std::cout << "SpecialDefense: " << values[5] << std::endl;
+            std::cout << "Speed: " << values[6] << std::endl;
+            std::cout << "Lvl: " << values[7] << std::endl;
+            std::cout << "Exp: " << values[8] << std::endl;
+            std::cout << "At1: " << values[9] << std::endl;
+            std::cout << "At2: " << values[10] << std::endl;
+            std::cout << "At3: " << values[11] << std::endl;
+            std::cout << "At4: " << values[12] << std::endl;
+
+            currentArgs += 2;
+        }
+    }
 }
 
 void Game::parseClientInput(const std::string &input)
