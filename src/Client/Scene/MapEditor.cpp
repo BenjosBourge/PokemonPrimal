@@ -13,16 +13,16 @@ MapEditor::MapEditor()
     _cameraView.setCenter({640, 360}); // Center of the view
 
     _spriteMap.load(
-        "assets/tilesmap.png", 
-        {static_cast<unsigned>(_tileSize), static_cast<unsigned>(_tileSize)},
-        createBitMap(12288, 192)
+            "assets/tilesmap.png",
+            {static_cast<unsigned>(_tileSize), static_cast<unsigned>(_tileSize)},
+            createBitMap(12288, 192)
     );
 
     _emptyBitMap = createEmptyBitMap(16, 16);
     _editMap.load(
-        "assets/tilesmap.png", 
-        {static_cast<unsigned>(_tileSize), static_cast<unsigned>(_tileSize)},
-        _emptyBitMap
+            "assets/tilesmap.png",
+            {static_cast<unsigned>(_tileSize), static_cast<unsigned>(_tileSize)},
+            _emptyBitMap
     );
 
     _mapList.push_back(_spriteMap);
@@ -35,36 +35,21 @@ MapEditor::~MapEditor()
 }
 
 void MapEditor::draw(sf::RenderWindow *window)
-{   
+{
     _mousePixel = sf::Mouse::getPosition(*window);
     _worldPos = window->mapPixelToCoords(_mousePixel);
-    
+
     window->setView(_cameraView);
     window->draw(_mapList[_viewSelector]);
     if(_viewSelector == VIEW_EDIT)
         _HUD->draw(*window);
 }
 
-void MapEditor::update(float deltaTime, sf::RenderWindow *window, NetworkClient &client) {
-    _moveCooldown -= deltaTime;
-    if (_moveCooldown <= 0.f) {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
-            _selector.setPosition({_selector.getPosition().x, _selector.getPosition().y + _tileSize});
-            _moveCooldown = _moveInterval;
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z)) {
-            _selector.setPosition({_selector.getPosition().x, _selector.getPosition().y - _tileSize});
-            _moveCooldown = _moveInterval;
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) {
-            _selector.setPosition({_selector.getPosition().x - _tileSize, _selector.getPosition().y});
-            _moveCooldown = _moveInterval;
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
-            _selector.setPosition({_selector.getPosition().x + _tileSize, _selector.getPosition().y});
-            _moveCooldown = _moveInterval;
-        }
-    }
+
+void MapEditor::update(float deltaTime, sf::RenderWindow *window, NetworkClient &client)
+{
+
+}
 
 void MapEditor::handleEvent(const std::optional<sf::Event>& event, float deltaTime) {
     if (!event) return;
@@ -74,7 +59,7 @@ void MapEditor::handleEvent(const std::optional<sf::Event>& event, float deltaTi
 
     if (const auto* mouseWheelScrolled = event->getIf<sf::Event::MouseWheelScrolled>())
         _cameraView.zoom(mouseWheelScrolled->delta > 0 ? 0.9f : 1.1f);
-    
+
     //mouse mvt of the cursor
     unsigned int tileX = static_cast<unsigned int>(_worldPos.x) / _mapList[_viewSelector]._tileSize.x;
     unsigned int tileY = static_cast<unsigned int>(_worldPos.y) / _mapList[_viewSelector]._tileSize.y;
@@ -83,7 +68,7 @@ void MapEditor::handleEvent(const std::optional<sf::Event>& event, float deltaTi
         if (mouseMoved->button == sf::Mouse::Button::Left) {
             _currentTile = tileY * _mapList[_viewSelector]._mapSize.x + tileX;
             std::cout << "Tile { " << _currentTile << " } is selected" << std::endl;
-             _mapList[_viewSelector].highlightTile(_currentTile, _highlightedColor);
+            _mapList[_viewSelector].highlightTile(_currentTile, _highlightedColor);
         }
 }
 
@@ -92,8 +77,8 @@ void MapEditor::handleKeyPress(sf::Keyboard::Key code, float deltaTime) {
         case sf::Keyboard::Key::Enter:
             writeTileIfValid();
             break;
-        
-        // Switch between views
+
+            // Switch between views
         case sf::Keyboard::Key::Num1:
             _viewSelector = VIEW_SPRITESHEET;
             break;
@@ -105,12 +90,12 @@ void MapEditor::handleKeyPress(sf::Keyboard::Key code, float deltaTime) {
             resetCamera();
             break;
 
-        // Save the current tile
+            // Save the current tile
         case sf::Keyboard::Key::C:
             saveCurrentTile();
             break;
-        
-        // Camera movement
+
+            // Camera movement
         case sf::Keyboard::Key::Up:
             _cameraView.move({0, -_cameraSpeed * deltaTime});
             break;
@@ -123,8 +108,8 @@ void MapEditor::handleKeyPress(sf::Keyboard::Key code, float deltaTime) {
         case sf::Keyboard::Key::Right:
             _cameraView.move({_cameraSpeed * deltaTime, 0});
             break;
-        
-        // Zoom in and out
+
+            // Zoom in and out
         case sf::Keyboard::Key::O:
             _cameraView.zoom(0.9f);
             break;
@@ -132,12 +117,12 @@ void MapEditor::handleKeyPress(sf::Keyboard::Key code, float deltaTime) {
             _cameraView.zoom(1.1f);
             break;
 
-        // Cursor movement
+            // Cursor movement
         case sf::Keyboard::Key::Z:
             _currentTile = _mapList[_viewSelector].highlightTile(_currentTile - _mapList[_viewSelector]._mapSize.x, _highlightedColor);
             break;
         case sf::Keyboard::Key::Q:
-             _currentTile = _mapList[_viewSelector].highlightTile(_currentTile - 1, _highlightedColor);
+            _currentTile = _mapList[_viewSelector].highlightTile(_currentTile - 1, _highlightedColor);
             break;
         case sf::Keyboard::Key::S:
             _currentTile = _mapList[_viewSelector].highlightTile(_currentTile + _mapList[_viewSelector]._mapSize.x, _highlightedColor);
@@ -177,9 +162,9 @@ std::vector<std::vector<int>> MapEditor::createBitMap(int totalElements, int ele
     }
     const int numRows = std::ceil(totalElements / static_cast<float>(elementsPerRow));
     int value = 0;
-    
+
     std::vector<std::vector<int>> _bitMap(numRows);
-    
+
     for (int row = 0; row < numRows; ++row)
         for (int col = 0; col < elementsPerRow && value < totalElements; ++col)
             _bitMap[row].push_back(value++);
@@ -206,9 +191,9 @@ std::vector<std::vector<int>> MapEditor::createEmptyBitMap(int x, int y)
     }
     const int numRows = std::ceil(totalElements / static_cast<float>(elementsPerRow));
     int value = 0;
-    
+
     std::vector<std::vector<int>> _bitMap(numRows);
-    
+
     for (int row = 0; row < numRows; ++row)
         for (int col = 0; col < elementsPerRow && value < totalElements; ++col)
             _bitMap[row].push_back(0);
