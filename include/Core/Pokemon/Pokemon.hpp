@@ -7,44 +7,8 @@
 #pragma once
 #include <string>
 #include <Pokemon/GetPokemonFromId.hpp>
-
-enum Type {
-    NULL_TYPE,
-    NORMAL,
-    FIRE,
-    FIGHTING,
-    WATER,
-    FLYING,
-    GRASS,
-    POISON,
-    ELECTRIC,
-    GROUND,
-    PSYCHIC,
-    ROCK,
-    ICE,
-    BUG,
-    DRAGON,
-    GHOST,
-    DARK,
-    STEEL,
-    FAIRY
-};
-
-class Pokemon;
-
-class PokemonMove {
-public:
-    PokemonMove();
-    ~PokemonMove();
-
-    std::string _name;
-    int _id;
-    int _power;
-    int _accuracy;
-    int _pp;
-    Type _type;
-    void (* _effect)(Pokemon &attacker, Pokemon &defender);
-};
+#include <Pokemon/PokemonType.hpp>
+#include <Pokemon/PokemonMove.hpp>
 
 class Pokemon {
 public:

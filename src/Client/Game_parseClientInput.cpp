@@ -151,6 +151,10 @@ void Game::processToken(const std::string &token)
                 return;
             }
 
+            for (int i = 0; i < 13; i++) {
+                std::cout << "Value " << i << ": " << values[i] << std::endl;
+            }
+
             std::cout << "Pokemon ID: " << args[currentArgs] << std::endl;
             std::cout << static_cast<PokemonId>(std::stoi(args[currentArgs])) << std::endl;
             trainer->_pokemons[currentPokemon]._id = static_cast<PokemonId>(std::stoi(args[currentArgs]));
