@@ -19,5 +19,6 @@ public:
 
     void update(float deltaTime) override;
     Pokemon _pokemons[6];
+    int _currentPokemon;
     bool _inBattle;
 };

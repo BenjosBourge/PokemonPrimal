@@ -24,8 +24,19 @@ public:
     void draw(sf::RenderWindow &window) override;
     void buttonClicked(sf::RenderWindow *window, NetworkClient &networkClient);
 
+    void setText(int id, const std::string &text, bool visible)
+    {
+        if (id < 0 || id >= _textsHp.size())
+            return;
+        auto textBox = std::dynamic_pointer_cast<TextBox>(_textsHp[id]);
+        if (textBox) {
+            textBox->_text.setString(text);
+            textBox->_visible = visible;
+        }
+    }
 protected:
 
 private:
     std::vector<std::shared_ptr<IComponent>> _components;
+    std::vector<std::shared_ptr<IComponent>> _textsHp;
 };

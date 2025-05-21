@@ -16,7 +16,7 @@ Battle::Battle()
             trainer->_texturePath = "pokemon_back";
         } else {
             trainer->_spriteX = 800 + (i - 4) * 100;
-            trainer->_spriteY = 100;
+            trainer->_spriteY = 200;
         }
         _trainers.push_back(trainer);
     }
@@ -25,9 +25,16 @@ Battle::Battle()
 
 void Battle::draw(sf::RenderWindow *window)
 {
-    for (auto &trainer : _trainers) {
-        if (trainer->_inBattle)
+    for (int i = 0; i < _trainers.size(); i++) {
+        auto &trainer = _trainers[i];
+        if (trainer->_inBattle) {
             trainer->draw(window, _cameraX, _cameraY);
+            auto currentPokemon = trainer->_pokemons[trainer->_currentPokemon];
+
+            std::string text = std::to_string(currentPokemon._currentHp) + "/" + std::to_string(currentPokemon._maxHp);
+            _hudBattle->setText(i, text, true);
+        } else
+            _hudBattle->setText(i, "0/0", false);
     }
 
     _hudBattle->draw(*window);

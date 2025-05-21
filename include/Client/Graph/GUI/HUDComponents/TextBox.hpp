@@ -12,21 +12,23 @@
 #include <iostream>
 
 class TextBox : public IComponent {
-    public:
-        TextBox(sf::Vector2f position = {0, 0}, int size = 10, std::string text = "TextBox") {
-            _text.setCharacterSize(size);
-            _text.setString(text);
-            _text.setPosition(position);
-        };
+public:
+    TextBox(sf::Vector2f position = {0, 0}, int size = 10, std::string text = "TextBox") {
+        _text.setCharacterSize(size);
+        _text.setString(text);
+        _text.setPosition(position);
+        _visible = true;
+    };
 
-        ~TextBox() = default;
+    ~TextBox() = default;
 
-        void draw(sf::RenderWindow &window) {
-            window.draw(_text);
-        };
+    void draw(sf::RenderWindow &window) {
+        if (!_visible)
+            return;
+        window.draw(_text);
+    };
 
-    protected:
-    private:
-        sf::Text _text = sf::Text(globalFont, "Some Text", 10);
-        sf::RectangleShape _shape;
+    bool _visible;
+    sf::Text _text = sf::Text(globalFont, "Some Text", 10);
+    sf::RectangleShape _shape;
 };

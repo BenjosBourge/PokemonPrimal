@@ -42,12 +42,33 @@ HUDBattle::HUDBattle()
     _components.push_back(button2);
     _components.push_back(button3);
     _components.push_back(button4);
+
+    //hp texts
+    std::shared_ptr<TextBox> text1 = std::make_shared<TextBox>(sf::Vector2f(100, 600), 20, "HP: 0/0");
+    std::shared_ptr<TextBox> text2 = std::make_shared<TextBox>(sf::Vector2f(200, 600), 20, "HP: 0/0");
+    std::shared_ptr<TextBox> text3 = std::make_shared<TextBox>(sf::Vector2f(300, 600), 20, "HP: 0/0");
+    std::shared_ptr<TextBox> text4 = std::make_shared<TextBox>(sf::Vector2f(400, 600), 20, "HP: 0/0");
+    std::shared_ptr<TextBox> text5 = std::make_shared<TextBox>(sf::Vector2f(800, 100), 20, "HP: 0/0");
+    std::shared_ptr<TextBox> text6 = std::make_shared<TextBox>(sf::Vector2f(900, 100), 20, "HP: 0/0");
+    std::shared_ptr<TextBox> text7 = std::make_shared<TextBox>(sf::Vector2f(1000, 100), 20, "HP: 0/0");
+    std::shared_ptr<TextBox> text8 = std::make_shared<TextBox>(sf::Vector2f(1100, 100), 20, "HP: 0/0");
+    _textsHp.push_back(text1);
+    _textsHp.push_back(text2);
+    _textsHp.push_back(text3);
+    _textsHp.push_back(text4);
+    _textsHp.push_back(text5);
+    _textsHp.push_back(text6);
+    _textsHp.push_back(text7);
+    _textsHp.push_back(text8);
 };
 
 
 void HUDBattle::draw(sf::RenderWindow &window)
 {
     for (auto &component : _components) {
+        component->draw(window);
+    }
+    for (auto &component : _textsHp) {
         component->draw(window);
     }
 };

@@ -21,6 +21,7 @@ TrainerSprite::TrainerSprite()
         _pokemons[i] = Pokemon();
     }
     _inBattle = false;
+    _currentPokemon = 0;
 }
 
 TrainerSprite::~TrainerSprite()
