@@ -51,8 +51,5 @@ public:
     Type _type2;
 
     /* moves */
-    PokemonMove _move1;
-    PokemonMove _move2;
-    PokemonMove _move3;
-    PokemonMove _move4;
+    PokemonMove _moves[4];
 };

@@ -66,8 +66,8 @@ std::vector<NetworkEvent> PlayerMovementSystem::update(std::shared_ptr<EntityMan
                     + getHexa(pokemon._currentDefense) + getHexa(pokemon._currentSpeAttack) + getHexa(pokemon._currentSpeDefense)
                     + getHexa(pokemon._currentSpeed) + getHexa(pokemon._level) + getHexa(pokemon._exp);
 
-                dataPokemon += getHexa(pokemon._move1._id) + getHexa(pokemon._move2._id)
-                    + getHexa(pokemon._move3._id) + getHexa(pokemon._move4._id);
+                for (int i = 0; i < 4; i++)
+                    dataPokemon += getHexa(pokemon._moves[i]._id);
 
                 dataPokemon += "_";
             }
@@ -91,8 +91,8 @@ std::vector<NetworkEvent> PlayerMovementSystem::update(std::shared_ptr<EntityMan
                                + getHexa(pokemon._currentDefense) + getHexa(pokemon._currentSpeAttack) + getHexa(pokemon._currentSpeDefense)
                                + getHexa(pokemon._currentSpeed) + getHexa(pokemon._level) + getHexa(pokemon._exp);
 
-                dataPokemon += getHexa(pokemon._move1._id) + getHexa(pokemon._move2._id)
-                               + getHexa(pokemon._move3._id) + getHexa(pokemon._move4._id);
+                for (int i = 0; i < 4; i++)
+                    dataPokemon += getHexa(pokemon._moves[i]._id);
 
                 dataPokemon += "_";
             }

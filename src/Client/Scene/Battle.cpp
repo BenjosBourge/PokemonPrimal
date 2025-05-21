@@ -37,6 +37,16 @@ void Battle::draw(sf::RenderWindow *window)
             _hudBattle->setText(i, "0/0", false);
     }
 
+    auto currentPokemon = _trainers[_ownPlayer]->_pokemons[_trainers[_ownPlayer]->_currentPokemon];
+    for (int i = 0; i < 4; i++) {
+        auto &move = currentPokemon._moves[i];
+        if (move._id != PokemonMoveId::NULL_MOVE) {
+            std::string text = move._name;
+            _hudBattle->setAttack(i, text, true);
+        } else
+            _hudBattle->setAttack(i, "NULL", false);
+    }
+
     _hudBattle->draw(*window);
 }
 

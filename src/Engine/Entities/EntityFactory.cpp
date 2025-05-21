@@ -26,12 +26,18 @@ Entity& EntityFactory::createEntity(std::string name) {
         entity->createComponent<Player>();
         entity->createComponent<Trainer>();
         entity->getComponent<Trainer>()._pokemons[0] = getPokemonFromId(CHARMANDER);
+        entity->getComponent<Trainer>()._pokemons[0]._level = 5;
+        entity->getComponent<Trainer>()._pokemons[0].actualizeCurrentStats();
     } else if (name == "NPC") {
         entity->createComponent<Position>(1, 1);
         entity->createComponent<NPC>();
     } else if (name == "DemoTrainer") {
         entity->createComponent<Trainer>();
         entity->getComponent<Trainer>()._pokemons[0] = getPokemonFromId(BULBASAUR);
+        entity->getComponent<Trainer>()._pokemons[0]._level = 5;
+        entity->getComponent<Trainer>()._pokemons[0].actualizeCurrentStats();
+        std::cout << "DemoTrainer created" << std::endl;
+        std::cout << "Pokemon Max HP: " << entity->getComponent<Trainer>()._pokemons[0]._maxHp << std::endl;
     } else {
     std::cout << "Entity " << name << " not found" << std::endl;
     }   

@@ -88,3 +88,25 @@ void HUDBattle::buttonClicked(sf::RenderWindow *window, NetworkClient &networkCl
         }
     }
 }
+
+void HUDBattle::setText(int id, const std::string &text, bool visible)
+{
+    if (id < 0 || id >= _textsHp.size())
+        return;
+    auto textBox = std::dynamic_pointer_cast<TextBox>(_textsHp[id]);
+    if (textBox) {
+        textBox->_text.setString(text);
+        textBox->_visible = visible;
+    }
+}
+
+void HUDBattle::setAttack(int id, const std::string &text, bool visible)
+{
+    if (id < 0 || id >= _components.size())
+        return;
+    auto button = std::dynamic_pointer_cast<Button>(_components[id]);
+    if (button) {
+        button->_text.setString(text);
+        button->_visible = visible;
+    }
+}

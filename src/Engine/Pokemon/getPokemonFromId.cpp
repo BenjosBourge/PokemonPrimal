@@ -21,7 +21,7 @@ Pokemon getPokemonFromId(PokemonId id)
     else if (id == PokemonId::CHARMELEON)
         pokemon = Pokemon("Charmeleon", 58, 64, 58, 80, 65, 80, Type::FIRE);
     else if (id == PokemonId::CHARIZARD)
-        pokemon = Pokemon("Charizard", 78, 84, 78, 109, 85, 100, Type::FIRE);
+        pokemon = Pokemon("Charizard", 78, 84, 78, 109, 85, 100, Type::FIRE, Type::FLYING);
     else if (id == PokemonId::SQUIRTLE)
         pokemon = Pokemon("Squirtle", 44, 48, 65, 50, 64, 43, Type::WATER);
     else if (id == PokemonId::WARTORTLE)

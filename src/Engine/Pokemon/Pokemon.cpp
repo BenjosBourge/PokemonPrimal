@@ -26,10 +26,10 @@ Pokemon::Pokemon()
     _type1 = Type::NORMAL;
     _type2 = Type::NULL_TYPE;
 
-    _move1 = pokemonMoves[SCRATCH];
-    _move2 = pokemonMoves[NULL_MOVE];
-    _move3 = pokemonMoves[NULL_MOVE];
-    _move4 = pokemonMoves[NULL_MOVE];
+    _moves[0] = pokemonMoves[SCRATCH];
+    _moves[1] = pokemonMoves[NULL_MOVE];
+    _moves[2] = pokemonMoves[NULL_MOVE];
+    _moves[3] = pokemonMoves[NULL_MOVE];
 }
 
 Pokemon::Pokemon(std::string name, int hp, int attack, int defense, int speAttack, int speDefense, int speed, Type type1, Type type2) : Pokemon()

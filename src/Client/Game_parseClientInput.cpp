@@ -141,9 +141,6 @@ void Game::processToken(const std::string &token)
                 std::cerr << "Error: not enough values" << std::endl;
                 return;
             }
-
-            std::cout << "Pokemon: " << currentPokemon << std::endl;
-
             try {
                 std::stoi(args[currentArgs]);
             } catch (const std::invalid_argument &e) {
@@ -151,14 +148,28 @@ void Game::processToken(const std::string &token)
                 return;
             }
 
-            for (int i = 0; i < 13; i++) {
-                std::cout << "Value " << i << ": " << values[i] << std::endl;
-            }
-
-            std::cout << "Pokemon ID: " << args[currentArgs] << std::endl;
             std::cout << static_cast<PokemonId>(std::stoi(args[currentArgs])) << std::endl;
             trainer->_pokemons[currentPokemon]._id = static_cast<PokemonId>(std::stoi(args[currentArgs]));
-            std::cout << "Id: " << trainer->_pokemons[currentPokemon]._id << std::endl;
+            //PvMaxPvAtkDefAtkSpeDefSpeVitLvlExpAt1IdAt2IdAt3IdAt4Id
+            trainer->_pokemons[currentPokemon]._maxHp = values[0];
+            trainer->_pokemons[currentPokemon]._currentHp = values[1];
+            trainer->_pokemons[currentPokemon]._currentAttack = values[2];
+            trainer->_pokemons[currentPokemon]._currentDefense = values[3];
+            trainer->_pokemons[currentPokemon]._currentSpeAttack = values[4];
+            trainer->_pokemons[currentPokemon]._currentSpeDefense = values[5];
+            trainer->_pokemons[currentPokemon]._currentSpeed = values[6];
+            trainer->_pokemons[currentPokemon]._level = values[7];
+            trainer->_pokemons[currentPokemon]._exp = values[8];
+            trainer->_pokemons[currentPokemon]._moves[0] = pokemonMoves[static_cast<PokemonMoveId>(values[9])];
+            trainer->_pokemons[currentPokemon]._moves[1] = pokemonMoves[static_cast<PokemonMoveId>(values[10])];
+            trainer->_pokemons[currentPokemon]._moves[2] = pokemonMoves[static_cast<PokemonMoveId>(values[11])];
+            trainer->_pokemons[currentPokemon]._moves[3] = pokemonMoves[static_cast<PokemonMoveId>(values[12])];
+
+            std::cout << "Pokemon Moves: " << trainer->_pokemons[currentPokemon]._moves[0]._name << " "
+                      << trainer->_pokemons[currentPokemon]._moves[1]._name << " "
+                      << trainer->_pokemons[currentPokemon]._moves[2]._name << " "
+                      << trainer->_pokemons[currentPokemon]._moves[3]._name << std::endl;
+
             currentPokemon++;
 
             if (currentPokemon >= 6) {

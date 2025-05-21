@@ -30,6 +30,8 @@ public:
     int _nbTeam1 = 0;
     int _nbTeam2 = 0;
 
+    int _ownPlayer = 0;
+
     std::vector<std::shared_ptr<TrainerSprite>> _trainers;
     std::shared_ptr<HUDBattle> _hudBattle;
 };
