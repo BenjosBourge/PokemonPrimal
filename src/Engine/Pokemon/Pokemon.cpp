@@ -5,6 +5,7 @@
 */
 
 #include <Pokemon/Pokemon.hpp>
+#include <iostream>
 
 Pokemon::Pokemon()
 {
@@ -69,6 +70,54 @@ Pokemon::~Pokemon()
 
 }
 
+
+//combat
+void Pokemon::takeDamage(Pokemon &attacker, PokemonMove &move)
+{
+    auto attack = float(attacker._currentAttack);
+    auto defense = float(_currentDefense);
+    auto power = float(move._power);
+
+    if (move._spe) {
+        attack = float(attacker._currentSpeAttack);
+        defense = float(_currentSpeDefense);
+    }
+
+    //apply modifier except for critical hit
+
+    float damage = ((2.*float(attacker._level) / 5. + 2.) * power * attack / defense) / 50. + 2.;
+
+    if (move._type == attacker._type1 || move._type == attacker._type2) {
+        damage *= 1.5;
+    }
+
+    damage *= typeEffectiveness(move._type);
+
+    int damageInt = int(damage + 0.5);
+    std::cout << "DamageInt: " << damageInt << std::endl;
+    if (damageInt < 0)
+        damageInt = 0;
+
+    if (damageInt > _currentHp)
+        _currentHp = 0;
+    else
+        _currentHp -= damageInt;
+}
+
+float Pokemon::typeEffectiveness(Type type)
+{
+    float effectiveness = 1.0;
+
+    effectiveness *= typeTable[_type1][type];
+    if (_type2 != Type::NULL_TYPE) {
+        effectiveness *= typeTable[_type2][type];
+    }
+
+    return effectiveness;
+}
+
+
+//stats
 int Pokemon::getCurrentStatFromLevel(int stat)
 {
     int iv = 0;

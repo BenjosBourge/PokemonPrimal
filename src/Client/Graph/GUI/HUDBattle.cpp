@@ -74,8 +74,9 @@ void HUDBattle::draw(sf::RenderWindow &window)
 };
 
 
-void HUDBattle::buttonClicked(sf::RenderWindow *window, NetworkClient &networkClient)
+bool HUDBattle::buttonClicked(sf::RenderWindow *window, NetworkClient &networkClient)
 {
+    bool click = false;
     for (auto &component : _components) {
         if (std::dynamic_pointer_cast<Button>(component)) {
             std::shared_ptr<Button> button = std::dynamic_pointer_cast<Button>(component);
@@ -83,10 +84,12 @@ void HUDBattle::buttonClicked(sf::RenderWindow *window, NetworkClient &networkCl
             if (button->isMouseOver(*window)) {
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
                     button->onClick(networkClient);
+                    click = true;
                 }
             }
         }
     }
+    return click;
 }
 
 void HUDBattle::setText(int id, const std::string &text, bool visible)

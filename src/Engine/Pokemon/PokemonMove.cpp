@@ -15,9 +15,12 @@ PokemonMove::PokemonMove()
     _pp = 0;
     _type = NULL_TYPE;
     _effect = nullptr;
+    _user = 0;
+    _target = 0;
+    _spe = false;
 }
 
-PokemonMove::PokemonMove(std::string name, PokemonMoveId id, int power, int accuracy, int pp,
+PokemonMove::PokemonMove(std::string name, PokemonMoveId id, int power, bool spe, int accuracy, int pp,
                            Type type, void (*effect)(Pokemon &attacker, Pokemon &defender)) : PokemonMove()
 {
     _name = name;
@@ -27,6 +30,7 @@ PokemonMove::PokemonMove(std::string name, PokemonMoveId id, int power, int accu
     _pp = pp;
     _type = type;
     _effect = effect;
+    _spe = spe;
 }
 
 PokemonMove::~PokemonMove()

@@ -14,6 +14,9 @@ public:
     Combat() {}
     ~Combat() {}
 
+    void turn();
+    std::shared_ptr<Entity> getTrainerFromPos(int pos);
+
     std::vector<std::shared_ptr<Entity>> _trainers1;
     std::vector<std::shared_ptr<Entity>> _trainers2;
 };

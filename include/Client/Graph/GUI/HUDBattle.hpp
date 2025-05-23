@@ -22,7 +22,7 @@ public:
 
 
     void draw(sf::RenderWindow &window) override;
-    void buttonClicked(sf::RenderWindow *window, NetworkClient &networkClient);
+    bool buttonClicked(sf::RenderWindow *window, NetworkClient &networkClient);
 
     void setText(int id, const std::string &text, bool visible);
     void setAttack(int id, const std::string &text, bool visible);

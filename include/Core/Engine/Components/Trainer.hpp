@@ -14,24 +14,27 @@ class Trainer : virtual public IComponent {
 public:
     Trainer(std::string name) {
         for (int i = 0; i < 6; i++) {
-            _pokemons[i] = Pokemon();
+            _pokemons[i] = std::make_shared<Pokemon>();
         }
         _attackSelected = -1;
         _name = name;
         _posInCombat = 0;
+        _target = 0;
     }
     Trainer() {
         for (int i = 0; i < 6; i++) {
-            _pokemons[i] = Pokemon();
+            _pokemons[i] = std::make_shared<Pokemon>();
         }
         _attackSelected = -1;
         _name = "Trainer";
         _posInCombat = 0;
+        _target = 0;
     }
     ~Trainer() = default;
 
-    Pokemon _pokemons[6];
+    std::shared_ptr<Pokemon> _pokemons[6];
     int _attackSelected;
     std::string _name;
     int _posInCombat;
+    int _target;
 };

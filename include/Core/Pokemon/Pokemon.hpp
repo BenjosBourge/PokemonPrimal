@@ -7,7 +7,7 @@
 #pragma once
 #include <string>
 #include <Pokemon/GetPokemonFromId.hpp>
-#include <Pokemon/PokemonType.hpp>
+#include <Pokemon/TypeTable.hpp>
 #include <Pokemon/PokemonMove.hpp>
 
 class Pokemon {
@@ -18,6 +18,9 @@ public:
     Pokemon(std::string name, int hp, int attack, int defense, int speAttack,
             int speDefense, int speed, Type type1);
     ~Pokemon();
+
+    void takeDamage(Pokemon &attacker, PokemonMove &move);
+    float typeEffectiveness(Type type);
 
     std::string _name;
     PokemonId _id;

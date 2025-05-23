@@ -59,15 +59,15 @@ std::vector<NetworkEvent> PlayerMovementSystem::update(std::shared_ptr<EntityMan
 
             std::string dataPokemon;
             for (auto &pokemon : entity->getComponent<Trainer>()._pokemons) {
-                if (pokemon._id == NULL_POKEMON)
+                if (pokemon->_id == NULL_POKEMON)
                     continue;
-                dataPokemon += std::to_string(pokemon._id) + "_";
-                dataPokemon += getHexa(pokemon._maxHp) + getHexa(pokemon._currentHp) + getHexa(pokemon._currentAttack)
-                    + getHexa(pokemon._currentDefense) + getHexa(pokemon._currentSpeAttack) + getHexa(pokemon._currentSpeDefense)
-                    + getHexa(pokemon._currentSpeed) + getHexa(pokemon._level) + getHexa(pokemon._exp);
+                dataPokemon += std::to_string(pokemon->_id) + "_";
+                dataPokemon += getHexa(pokemon->_maxHp) + getHexa(pokemon->_currentHp) + getHexa(pokemon->_currentAttack)
+                    + getHexa(pokemon->_currentDefense) + getHexa(pokemon->_currentSpeAttack) + getHexa(pokemon->_currentSpeDefense)
+                    + getHexa(pokemon->_currentSpeed) + getHexa(pokemon->_level) + getHexa(pokemon->_exp);
 
                 for (int i = 0; i < 4; i++)
-                    dataPokemon += getHexa(pokemon._moves[i]._id);
+                    dataPokemon += getHexa(pokemon->_moves[i]._id);
 
                 dataPokemon += "_";
             }
@@ -84,15 +84,15 @@ std::vector<NetworkEvent> PlayerMovementSystem::update(std::shared_ptr<EntityMan
             pos = newEntity->getComponent<Trainer>()._posInCombat;
             dataPokemon = "";
             for (auto &pokemon : newEntity->getComponent<Trainer>()._pokemons) {
-                if (pokemon._id == NULL_POKEMON)
+                if (pokemon->_id == NULL_POKEMON)
                     continue;
-                dataPokemon += std::to_string(pokemon._id) + "_";
-                dataPokemon += getHexa(pokemon._maxHp) + getHexa(pokemon._currentHp) + getHexa(pokemon._currentAttack)
-                               + getHexa(pokemon._currentDefense) + getHexa(pokemon._currentSpeAttack) + getHexa(pokemon._currentSpeDefense)
-                               + getHexa(pokemon._currentSpeed) + getHexa(pokemon._level) + getHexa(pokemon._exp);
+                dataPokemon += std::to_string(pokemon->_id) + "_";
+                dataPokemon += getHexa(pokemon->_maxHp) + getHexa(pokemon->_currentHp) + getHexa(pokemon->_currentAttack)
+                               + getHexa(pokemon->_currentDefense) + getHexa(pokemon->_currentSpeAttack) + getHexa(pokemon->_currentSpeDefense)
+                               + getHexa(pokemon->_currentSpeed) + getHexa(pokemon->_level) + getHexa(pokemon->_exp);
 
                 for (int i = 0; i < 4; i++)
-                    dataPokemon += getHexa(pokemon._moves[i]._id);
+                    dataPokemon += getHexa(pokemon->_moves[i]._id);
 
                 dataPokemon += "_";
             }

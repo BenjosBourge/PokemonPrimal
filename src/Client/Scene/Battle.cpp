@@ -52,7 +52,16 @@ void Battle::draw(sf::RenderWindow *window)
 
 void Battle::update(float deltaTime, sf::RenderWindow *window, NetworkClient &client)
 {
-    _hudBattle->buttonClicked(window, client);
+    if (_timerClick > 0) {
+        _timerClick -= deltaTime;
+        if (_timerClick < 0)
+            _timerClick = 0;
+    } else {
+        bool click = _hudBattle->buttonClicked(window, client);
+        if (click) {
+            _timerClick = 0.5;
+        }
+    }
     for (auto &trainer : _trainers) {
         trainer->update(deltaTime);
     }

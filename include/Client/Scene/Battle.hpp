@@ -34,4 +34,6 @@ public:
 
     std::vector<std::shared_ptr<TrainerSprite>> _trainers;
     std::shared_ptr<HUDBattle> _hudBattle;
+
+    float _timerClick = 0.;
 };
