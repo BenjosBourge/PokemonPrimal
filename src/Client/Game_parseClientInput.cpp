@@ -179,6 +179,24 @@ void Game::processToken(const std::string &token)
             currentArgs += 2;
         }
     }
+
+    if (command == "At" && args.size() == 3) {
+        auto &scene = _scenes[GameState::STATE_BATTLE];
+        std::shared_ptr<Battle> battleScene = std::dynamic_pointer_cast<Battle>(scene);
+
+        int defTrainerPos = std::stoi(args[1]);
+        if (defTrainerPos < 0 || defTrainerPos >= battleScene->_trainers.size()) {
+            std::cerr << "Error: Trainer ID out of range" << std::endl;
+            return;
+        }
+        if (defTrainerPos >= battleScene->_nbTeam1) {
+            defTrainerPos = defTrainerPos % battleScene->_nbTeam1;
+            defTrainerPos += 4;
+        }
+        auto &trainer = battleScene->_trainers[defTrainerPos];
+
+        trainer->_pokemons[trainer->_currentPokemon]._currentHp -= std::stoi(args[2]);
+    }
 }
 
 void Game::parseClientInput(const std::string &input)

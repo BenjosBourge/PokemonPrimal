@@ -96,4 +96,9 @@ it has to send the 6 pokemon of the trainer.
 Stats are In Hexadecimal and no _ between them
 
 
+### Attack
+**At**
+
+Format: **Cmd**_IdAt_IdDef_Dmg
+
 

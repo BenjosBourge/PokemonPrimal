@@ -19,7 +19,7 @@ public:
             int speDefense, int speed, Type type1);
     ~Pokemon();
 
-    void takeDamage(Pokemon &attacker, PokemonMove &move);
+    int takeDamage(Pokemon &attacker, PokemonMove &move);
     float typeEffectiveness(Type type);
 
     std::string _name;

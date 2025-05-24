@@ -48,7 +48,9 @@ std::vector<NetworkEvent> CombatSystem::update(std::shared_ptr<EntityManager>& e
         if (allReady) {
             std::cout << "All trainers are ready" << std::endl;
 
-            combat.turn();
+            std::vector<NetworkEvent> no = combat.turn();
+            for (auto &n : no)
+                output.push_back(n);
 
             for (auto& trainer : combat._trainers1) {
                 auto &trainerComponent = trainer->getComponent<Trainer>();
@@ -88,8 +90,10 @@ void CombatSystem::newCombat(std::vector<std::shared_ptr<Entity>> trainers1, std
 
 // Combat methods
 
-void Combat::turn()
+std::vector<NetworkEvent> Combat::turn()
 {
+    std::vector<NetworkEvent> output;
+
     std::vector<PokemonMove> moves;
     for (auto& trainer : _trainers1) {
         auto &trainerComponent = trainer->getComponent<Trainer>();
@@ -143,10 +147,13 @@ void Combat::turn()
         auto targetPokemon = targetTrainer._pokemons[0];
 
         if (move._power > 0) {
-            targetPokemon->takeDamage(*pokemon, move);
-
+            int damage = targetPokemon->takeDamage(*pokemon, move);
+            std::string event = "At_" + std::to_string(move._user) + "_" + std::to_string(move._target) + "_" + std::to_string(damage);
+            NetworkEvent networkEvent(-1, event, COM_TCP_BROADCAST, CLIENT_BATTLE);
+            output.push_back(networkEvent);
         }
     }
+    return output;
 }
 
 std::shared_ptr<Entity> Combat::getTrainerFromPos(int pos)

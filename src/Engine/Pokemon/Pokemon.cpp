@@ -72,7 +72,7 @@ Pokemon::~Pokemon()
 
 
 //combat
-void Pokemon::takeDamage(Pokemon &attacker, PokemonMove &move)
+int Pokemon::takeDamage(Pokemon &attacker, PokemonMove &move)
 {
     auto attack = float(attacker._currentAttack);
     auto defense = float(_currentDefense);
@@ -102,6 +102,7 @@ void Pokemon::takeDamage(Pokemon &attacker, PokemonMove &move)
         _currentHp = 0;
     else
         _currentHp -= damageInt;
+    return damageInt;
 }
 
 float Pokemon::typeEffectiveness(Type type)

@@ -14,7 +14,7 @@ public:
     Combat() {}
     ~Combat() {}
 
-    void turn();
+    std::vector<NetworkEvent> turn();
     std::shared_ptr<Entity> getTrainerFromPos(int pos);
 
     std::vector<std::shared_ptr<Entity>> _trainers1;
