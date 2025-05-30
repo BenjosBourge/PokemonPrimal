@@ -18,7 +18,7 @@ Each client listens on the port 54000 for the UDP protocol.
 Format: **Cmd**_Port
 
 ### Movement
-**Up, Do, Le, Ri**
+**Up, Do, Le, Ri, Sp**
 
 Format: **Cmd**_State
 
@@ -27,22 +27,27 @@ Cmd:
 - Do: Down
 - Ri: Right
 - Le: Left
+- Sp: Space
 
 State:
 - P: Pressed
 - R: Released
 
+### Button CLicked
+**Btn**
+Format: **Cmd**_Id
+
 
 
 ## Server → Client
 
-### Player Created
+### PlayerCharacter Created
 **Pc**
 
 Format: **Cmd**_Id
 
 
-### Player Disconnected
+### PlayerCharacter Disconnected
 **Pd**
 
 Format: **Cmd**_Id
@@ -62,3 +67,38 @@ When getting self position, always in TCP.
 Format: **Cmd**_Id
 
 To know when a character stop moving.
+
+
+### Change State
+**Cs**
+
+Format: **Cmd**_IdState
+
+IdState:
+- 0: Overworld
+- 1: Battle
+
+
+### Combat Launch
+**Cl**
+
+Format: **Cmd**_Nb_Nb
+
+It gives the Nb of players in the team1  and the Nb of players in the team2.
+
+
+### Set Pokemon Trainer
+**SpT**
+
+Format: **Cmd**_Id_{Id_PvMaxPvAtkDefAtkSpeDefSpeVitLvlExpAt1IdAt2IdAt3IdAt4Id_}x6
+
+it has to send the 6 pokemon of the trainer.
+Stats are In Hexadecimal and no _ between them
+
+
+### Attack
+**At**
+
+Format: **Cmd**_IdAt_IdDef_Dmg
+
+

@@ -8,6 +8,7 @@
 
 #include <SFML/Network.hpp>
 #include <SFML/System.hpp>
+#include <Engine/Event.hpp>
 
 class ClientConnection {
 public:
@@ -21,6 +22,7 @@ public:
     std::string _tcpBuffer;
     std::string _udpBuffer;
     int _udpPort;
+    ClientState _state;
 };
 
 class NetworkServer {

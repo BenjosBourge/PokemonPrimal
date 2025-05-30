@@ -15,6 +15,7 @@ Game::Game()
     _scenes[GameState::STATE_MENU] = std::make_shared<Menu>();
     _scenes[GameState::STATE_OVERWORLD] = std::make_shared<Overworld>();
     _scenes[GameState::STATE_MAPEDIT] = std::make_shared<MapEditor>();
+    _scenes[GameState::STATE_BATTLE] = std::make_shared<Battle>();
     
     //change this to change scene
     _currentState = GameState::STATE_OVERWORLD;
@@ -24,7 +25,16 @@ Game::Game()
     sf::Texture texture;
     if (!texture.loadFromFile("assets/player.png"))
         std::cout << "error while loading texture" << std::endl;
+
     globalTextures._textures["player"] = texture;
+
+    if (!texture.loadFromFile("assets/pokemon.png"))
+        std::cout << "error while loading texture" << std::endl;
+    globalTextures._textures["pokemon"] = texture;
+
+    if (!texture.loadFromFile("assets/pokemon_back.png"))
+        std::cout << "error while loading texture" << std::endl;
+    globalTextures._textures["pokemon_back"] = texture;
 }
 
 Game::~Game()
@@ -43,21 +53,20 @@ void Game::run()
 
     while (window.isOpen())
     {
-        sf::Time deltaTime = clock.restart();
-        _deltaTime = deltaTime.asSeconds();
+        _deltaTime = clock.restart().asSeconds();
 
         while (const std::optional event = window.pollEvent())
         {
             if (event->is<sf::Event::Closed>())
                 window.close();
             inputHandling(event);  
-            _scenes[_currentState]->handleEvent(event);
+            _scenes[_currentState]->handleEvent(event, _deltaTime);
         }
 
         std::string inputs = _client.receivePacket();
         parseClientInput(inputs);
 
-        _scenes[_currentState]->update(_deltaTime);
+        _scenes[_currentState]->update(_deltaTime, _window, _client);
 
         window.clear(sf::Color::Black);
         _scenes[_currentState]->draw(&window);

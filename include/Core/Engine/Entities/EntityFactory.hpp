@@ -14,6 +14,8 @@
 #include <Engine/Components/Position.hpp>
 #include <Engine/Components/Input.hpp>
 #include <Engine/Components/NPC.hpp>
+#include <Engine/Components/Player.hpp>
+#include <Engine/Components/Trainer.hpp>
 
 class EntityFactory {
 public:

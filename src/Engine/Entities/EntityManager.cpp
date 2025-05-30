@@ -10,6 +10,14 @@ EntityManager::EntityManager() { }
 
 EntityManager::~EntityManager() { }
 
+std::shared_ptr<Entity> EntityManager::newEntity(std::string tag)
+{
+    int id = createEntity(_entityFactory.createEntity(tag));
+    std::shared_ptr<Entity> entity = getEntityById(id);
+
+    return entity;
+}
+
 int EntityManager::createEntity(Entity& entity)
 {
     nbEntities++;
@@ -58,6 +66,12 @@ void EntityManager::destroyEntityById(int id)
 
 void EntityManager::addConnectedEntity(std::string name, int id)
 {
+    std::string originalName = name;
+    int i = 0;
+    while (_connectedEntities.find(name) != _connectedEntities.end()) {
+        name = originalName + std::to_string(i);
+        i++;
+    }
     _entities[id]->tag = name;
     _connectedEntities[name] = id;
 }

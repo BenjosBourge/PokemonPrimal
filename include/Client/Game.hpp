@@ -12,6 +12,7 @@
 #include <Scene/Menu.hpp>
 #include <Scene/Overworld.hpp>
 #include <Scene/MapEditor.hpp>
+#include <Scene/Battle.hpp>
 
 #include <SFML/Network.hpp>
 #include <SFML/Network/Packet.hpp>
@@ -30,6 +31,7 @@ enum class GameState {
     STATE_MENU,
     STATE_OVERWORLD,
     STATE_MAPEDIT,
+    STATE_BATTLE
 };
 
 class Game {
@@ -79,6 +81,7 @@ private:
         {sf::Keyboard::Key::S, { [&]() { _client.sendPacket("Do_P"); }, [&]() { _client.sendPacket("Do_R"); }, false, PRESSED_RELEASED}},
         {sf::Keyboard::Key::D, { [&]() { _client.sendPacket("Ri_P"); }, [&]() { _client.sendPacket("Ri_R"); }, false, PRESSED_RELEASED}},
         {sf::Keyboard::Key::Q, { [&]() { _client.sendPacket("Le_P"); }, [&]() { _client.sendPacket("Le_R"); }, false, PRESSED_RELEASED}},
+        {sf::Keyboard::Key::Space, { [&]() { _client.sendPacket("Sp_P"); }, [&]() { _client.sendPacket("Sp_R"); }, false, PRESSED_RELEASED}},
     };   
 };
 

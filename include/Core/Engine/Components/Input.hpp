@@ -15,12 +15,14 @@ public:
     bool _downPressed = false;
     bool _leftPressed = false;
     bool _rightPressed = false;
+    bool _spacePressed = false;
 
     Input() {
         _upPressed = false;
         _downPressed = false;
         _leftPressed = false;
         _rightPressed = false;
+        _spacePressed = false;
     }
 
     ~Input() = default;

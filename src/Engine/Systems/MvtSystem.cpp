@@ -29,7 +29,7 @@ std::vector<NetworkEvent> MvtSystem::update(std::shared_ptr<EntityManager>& enti
                 position.inMotion = false;
 
                 std::string eventType = "Pir_" + entity->tag + ":";
-                events.emplace_back(-1, eventType, COM_TCP_BROADCAST);
+                events.emplace_back(-1, eventType, COM_TCP_BROADCAST, CLIENT_OVERWORLD);
             }
             continue;
         }
@@ -53,9 +53,9 @@ std::vector<NetworkEvent> MvtSystem::update(std::shared_ptr<EntityManager>& enti
                                     std::to_string(position.x) + "_" +
                                     std::to_string(position.y) + ":";
             if (entity->tag[0] == 'P')
-                events.emplace_back(entity->tag[entity->tag.size() - 1] - '0', eventType, COM_TCP_BROADCAST);
+                events.emplace_back(entity->tag[entity->tag.size() - 1] - '0', eventType, COM_TCP_BROADCAST, CLIENT_OVERWORLD);
             else
-                events.emplace_back(-1, eventType, COM_BROADCAST);
+                events.emplace_back(-1, eventType, COM_BROADCAST, CLIENT_OVERWORLD);
             position.inMotion = true;
         }
     }
