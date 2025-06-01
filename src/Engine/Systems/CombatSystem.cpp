@@ -151,6 +151,13 @@ std::vector<NetworkEvent> Combat::turn()
             std::string event = "At_" + std::to_string(move._user) + "_" + std::to_string(move._target) + "_" + std::to_string(damage);
             NetworkEvent networkEvent(-1, event, COM_TCP_BROADCAST, CLIENT_BATTLE);
             output.push_back(networkEvent);
+
+            if (targetPokemon->_currentHp <= 0) {
+                targetPokemon->_currentHp = 0;
+                event = "Fp_" + std::to_string(move._target);
+                NetworkEvent networkEvent(-1, event, COM_TCP_BROADCAST, CLIENT_BATTLE);
+                output.push_back(networkEvent);
+            }
         }
     }
     return output;

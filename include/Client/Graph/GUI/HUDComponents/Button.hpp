@@ -21,6 +21,7 @@ public:
         _shape.setFillColor(sf::Color::Black);
         _shape.setOutlineThickness(2);
 
+        _text.setString(text);
         _text.setPosition({_shape.getPosition().x,
                            _shape.getPosition().y}
         );
@@ -43,7 +44,7 @@ public:
         return _shape.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos));
     };
 
-    void (*onClick)(NetworkClient &networkClient) = nullptr;
+    void (*onClick)(std::shared_ptr<IHUD> hud, NetworkClient &networkClient) = nullptr;
 
     bool _visible = true;
     sf::Text _text = sf::Text(globalFont, "Some Text", 20);

@@ -6,7 +6,7 @@
 
 #include <Pokemon/Pokemon.hpp>
 
-Pokemon getPokemonFromId(PokemonId id)
+Pokemon getPokemonFromId(PokemonId id, int level)
 {
     Pokemon pokemon;
 
@@ -30,5 +30,9 @@ Pokemon getPokemonFromId(PokemonId id)
         pokemon = Pokemon("Blastoise", 79, 83, 100, 85, 105, 78 ,Type::WATER);
 
     pokemon._id = id;
+    pokemon._level = level;
+    pokemon.actualizeCurrentStats();
+    pokemon._currentHp = pokemon._maxHp;
+    pokemon.getRandomMoves();
     return pokemon;
 }

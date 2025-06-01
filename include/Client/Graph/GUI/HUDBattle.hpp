@@ -24,11 +24,17 @@ public:
     void draw(sf::RenderWindow &window) override;
     bool buttonClicked(sf::RenderWindow *window, NetworkClient &networkClient);
 
+    void showMoveButtons(bool visible);
+
     void setText(int id, const std::string &text, bool visible);
     void setAttack(int id, const std::string &text, bool visible);
+
+    bool _isMoveButtonsVisible = false;
 protected:
 
 private:
-    std::vector<std::shared_ptr<IComponent>> _components;
+
+    std::vector<std::shared_ptr<IComponent>> _moveButton;
+    std::vector<std::shared_ptr<IComponent>> _menuButton;
     std::vector<std::shared_ptr<IComponent>> _textsHp;
 };

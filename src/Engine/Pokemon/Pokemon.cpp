@@ -4,6 +4,7 @@
 ** Pokemon
 */
 
+#include <Pokemon/PokemonMoveSet.hpp>
 #include <Pokemon/Pokemon.hpp>
 #include <iostream>
 
@@ -27,7 +28,7 @@ Pokemon::Pokemon()
     _type1 = Type::NORMAL;
     _type2 = Type::NULL_TYPE;
 
-    _moves[0] = pokemonMoves[SCRATCH];
+    _moves[0] = pokemonMoves[NULL_MOVE];
     _moves[1] = pokemonMoves[NULL_MOVE];
     _moves[2] = pokemonMoves[NULL_MOVE];
     _moves[3] = pokemonMoves[NULL_MOVE];
@@ -145,4 +146,29 @@ void Pokemon::actualizeCurrentStats()
     _currentSpeAttack = getCurrentStatFromLevel(_speAttack);
     _currentSpeDefense = getCurrentStatFromLevel(_speDefense);
     _currentSpeed = getCurrentStatFromLevel(_speed);
+}
+
+
+void Pokemon::getRandomMoves()
+{
+    std::vector<std::pair<int, PokemonMove>> moves = pokemonMoveSets[_id];
+    for (const auto &move : moves) {
+        if (move.first <= _level) {
+            bool set = false;
+
+            for (auto & _move : _moves)
+                if (_move._id == NULL_MOVE) {
+                    _move = move.second;
+                    set = true;
+                    break;
+                }
+
+            if (!set) {
+                int index = rand() % 6;
+                if (index < 4)
+                    _moves[index] = move.second;
+            }
+        } else
+            break;
+    }
 }

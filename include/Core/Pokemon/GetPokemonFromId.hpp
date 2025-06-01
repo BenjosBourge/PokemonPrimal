@@ -21,4 +21,4 @@ enum PokemonId {
     BLASTOISE
 };
 
-Pokemon getPokemonFromId(PokemonId id);
+Pokemon getPokemonFromId(PokemonId id, int level);

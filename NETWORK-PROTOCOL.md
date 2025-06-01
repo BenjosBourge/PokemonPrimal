@@ -38,6 +38,15 @@ State:
 Format: **Cmd**_Id
 
 
+### Battle Run
+**BRn**
+
+
+### Battle Move
+**BMv**
+
+
+
 
 ## Server → Client
 

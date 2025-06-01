@@ -55,4 +55,7 @@ public:
 
     /* moves */
     PokemonMove _moves[4];
+
+    /* Generation */
+    void getRandomMoves();
 };
